@@ -18,7 +18,10 @@ This section is for advanced users.
 How to use
 ----------
 Clone and do the following to get the site up and running.
+
+```ruby
 bundle install
 nanoc compile
 nanoc view
+```
 
