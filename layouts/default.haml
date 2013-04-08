@@ -32,33 +32,123 @@
         #sub-nav.nav-container
           %ul.menu
             %li.first.expanded.js-maintopic
-              %a{:href => "/introduction.html"} Introduction
-            %li.first.expanded.active-trail.js-maintopic
+              %a{:href => "#"} Introduction
+              %ul.menu.js-guides
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/overview.html"} Overview
+                %li.leaf.js-subtopic
+                  %a{:href => "/introduction/pivotalhd-component.html"} Pivotal HD Component
+                %li.leaf.js-topic
+                  %a{:href => "/introduction/yarn.html"} YARN
+                %li.leaf.js-topic
+                  %a{:href => "/introduction/hive.html"} Hive
+                %li.leaf.js-topic
+                  %a{:href => "/introduction/pig.html"} Pig
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/hbase.html"} Hbase
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/hawq.html"} HAWQ
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/mahout.html"} Mahout
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/dataloader.html"} DataLoader
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/sqoop.html"} Sqoop
+                %li.first.leaf.js-topic
+                  %a{:href => "/introduction/hve.html"} HVE
+            %li.expanded.js-maintopic
+              %a{:href => "#"} Installation
+              %ul.menu.js-guides
+                %li.first.leaf.js-topic
+                  %a{:href => "/installation/single-node.html"} Single Node
+                %li.leaf.js-topic
+                  %a{:href => "/installation/multi-node.html"} Multi Node
+                %li.leaf.js-topic
+                  %a{:href => "/installation/multi-node-vsphere-hve.html"} Multi Node vSphere & HVE
+
+            %li.expanded.active-trail.js-maintopic
               %a.active-trail{:href => "#"} Getting Started
               %ul.menu.js-guides
                 %li.first.leaf.js-topic
-                  %a{:href => "/getting-started/single-node-cluster.html"} Single Node Cluster
-                %li.leaf.js-topic
-                  %a{:href => "/getting-started/multi-node-cluster.html"} Multi Node Cluster
-                %li.leaf.js-topic
-                  %a{:href => "/getting-started/hive/intro.html"} Hive
+                  %a{:href => "/getting-started/map-reduce-java.html"} MapReduce with Java
                   %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/map-reduce-java/exercise1.html"} Exercise 1
                     %li.leaf.js-subtopic
-                      %a{:href => "/getting-started/hive/installation.html"} Installation
+                      %a{:href => "/getting-started/map-reduce-java/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/map-reduce-ruby.html"} MapReduce with Ruby
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/map-reduce-ruby/exercise1.html"} Exercise 1
                     %li.leaf.js-subtopic
-                      %a{:href => "/getting-started/hive/summerization-pattern.html"} Summerization Pattern
-                      %ul.menu.js-inner-subguides
-                        %li.leaf.inner-subtopic
-                          %a{:href => "/getting-started/hive/tutorial/exercise1.html"} Exercise 1
-                        %li.leaf.inner-subtopic
-                          %a{:href => "/getting-started/hive/tutorial/exercise2.html"} Exercise 2
-                        %li.leaf.inner-subtopic
-                          %a{:href => "/getting-started/hive/tutorial/exercise3.html"} Exercise 3
+                      %a{:href => "/getting-started/map-reduce-ruby/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/hive.html"} Hive
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/hive/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/hive/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/pig.html"} Pig
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/pig/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/pig/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/hawq.html"} HAWQ
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/hawq/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/hawq/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/data-loader.html"} DataLoader
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/data-loader/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/data-loader/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/spring-data-hadoop.html"} Spring Data Hadoop
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/spring-data-hadoop/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/spring-data-hadoop/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/getting-started/sqoop.html"} Sqoop
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/getting-started/sqoop/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/getting-started/sqoop/exercise2.html"} Exercise 2
             %li.last.expanded.js-maintopic
-              %a{:href => "#"} DeepDive
+              %a{:href => "#"} Deep Dive
               %ul.menu.js-guides
                 %li.first.leaf.js-topic
-                  %a{:href => "/deepdive/intro.html"} Introduction
+                  %a{:href => "/deep-dive/summerization.html"} Summerization
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/deep-dive/summerization/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/deep-dive/summerization/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/deep-dive/filtering-patterns.html"} Filtering Patterns
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/deep-dive/filtering-patterns/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/deep-dive/filtering-patterns/exercise2.html"} Exercise 2
+                %li.leaf.js-topic
+                  %a{:href => "/deep-dive/machine-learning.html"} Machine Learning
+                  %ul.menu.js-subguides
+                    %li.first.leaf.js-subtopic
+                      %a{:href => "/deep-dive/machine-learning/exercise1.html"} Exercise 1
+                    %li.leaf.js-subtopic
+                      %a{:href => "/deep-dive/machine-learning/exercise2.html"} Exercise 2
         .body-container.content
           = yield
     / FOOTER
