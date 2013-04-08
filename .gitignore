@@ -1,0 +1,8 @@
+i*.*~
+.*~
+*~
+.DS_Store
+tmp
+output/public
+manifest.yml
+/vendor
