@@ -1,3 +1,7 @@
+.content {
+  font-family: Arial, Tahoma, Helvetica, sans-serif;
+}
+
 .content dl {
   margin-left: 10px;
 }
@@ -63,6 +67,37 @@ p code {
   color: #868686;
 }
 
+.content p {
+  font-size: 15px;
+  color: rgb(88, 89, 91);
+  margin-bottom: 12px;
+}
+
+.content h3 {
+  font-size: 17px;
+  font-weight: bold;
+  height: 22px;
+  margin-bottom: 5px;
+}
+
+.content h4 {
+  color: rgb(75, 170, 71);
+  font-size: 15px;
+  height: 19px;
+}
+
+.content h2 {
+  font-size: 25px;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: 20px;
+  color: rgb(75, 170, 71);
+}
+
+.content ul li {
+  color: rgb(88, 89, 91);
+}
 /*------------------------------------------------------------------------------
      Pre/Code Styles
 ------------------------------------------------------------------------------*/
