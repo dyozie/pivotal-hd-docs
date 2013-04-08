@@ -7,12 +7,14 @@ Introduction to Apache Hadoop
 The goal of the document is to give a brief introduction to Hadoop version 2.x platform eco system.
 
 
-##Overview
-The amount of data in expanding rapidly. The new era of business intelligence here with Big data. Big data is being generated continuosly from various sources. The examplesof big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance, and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis, and visualization of the data. 
+##Overview  
 
-Enterprises are slowly adopting Big data platforms like Apache Hadoop. Multiple commercial distributions are
+The amount of data is expanding rapidly. The new era of business intelligence is here with Big data. Big data is being generated continuosly from various sources. The examples of big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis and visualization of the data. 
 
-##Predictive Analytics 
+Enterprises are slowly adopting Big data platforms like Apache Hadoop. 
+
+##Predictive Analytics  
+
 Predictive analytics is an area of statistical analysis that deals with extracting information from data and using it to predict 
 trends and behavior patterns. In business, predictive models exploit patterns found in historical and transactional data 
 to identify risks and opportunities. Models capture relationships among many factors to allow assessment of risk or 
@@ -21,8 +23,8 @@ potential associated with a particular set of conditions.
 Traditional analytics environments are complex programming environments separated from the sources of data, 
 Extracting data from the source database platform with traditional analytics programs is slow and complex.
 With the advent of Big Data, Enterprises require an analytics ecosystem that is architecturally
-capable of near - real time processing of predictive models, a platform capable of delivering accurate,
-actionable, and timely predictive insight - no matter the size or the location of the data.
+capable of near - real time processing of predictive models - a platform capable of delivering accurate,
+actionable, and timely predictive insight, no matter the size or the location of the data.
 Organizations are finding new ways to use data that was previously believed to be of little value, 
 or far too expensive to retain, to better serve their constituents. 
 
@@ -48,29 +50,29 @@ The entire Apache Hadoop platform consists of the Hadoop kernel, MapReduce and H
 as well as a number of related projects including Apache Hive, Apache HBase, and others.
 
 #####Hadoop releases
-There are multiple releases of Hadoop available. It is some time confusing which one to use.
+There are multiple releases of Hadoop available. It is some times confusing which one to use.
 Apache Hadoop 1.0.0(0.20->eventually became 1.0.0) should be the choice for using Hadoop V1. Hadoop version 2.0(0.23 eventually became 2.x) is in alpha and will take some time before it becomes available.
 
 Hadoop 2.x maintains API compatibility with previous stable release (hadoop-0.20.205). This means that all Map-Reduce jobs should still run unchanged on top of MRv2 with just a recompile.
 
 Hadoop 2.0 Architecture
 -----------------------
-Apache Hadoop 2.0 Big data eco system offers the has the following services:  
+Apache Hadoop 2.0 Big data eco system offers the following services:  
   
-#####HDFS - Hadoop File System, a distributed storage
+#####HDFS - Hadoop File System, a distributed storage system.
 
-#####YARN - Framework for running distributed applications. MapReduce is one application
+#####YARN - A framework for running distributed applications. MapReduce is one application.
+_A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)_
 
 #####ZooKeeper - A quorum of servers for configuration management 
 
-#####HBase - A columnar, sparsely distributed data base
+#####HBase - A columnar, sparsely distributed data base.
 
-#####Hive - A framework for running  SQL like queries
+#####Hive - A framework for running  SQL like queries.
 
-#####Pig - A data flow language somewhat similar to Hive  
+#####Pig - A data flow language somewhat similar to Hive. 
 
-A detailed view of YARN architecture is presented below:
-http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html
+
 
 A brief introduction to each of the service is given below:
  
@@ -81,7 +83,7 @@ Within Hadoop, the data is divided into blocks, and copies of these blocks are s
 With this kind of architecture Hadoop can scale to thousands of machines, providing built-in fault tolerance and fault compensation capabilities. 
 
 An overview of HDFS architecture is shown below:
-![HDFS Architecture](/images/hdfs-diagram.png)
+[HDFS Architecture](/images/hdfs-diagram.png)
 FIG. 1
 The replication factor provides the fault tolerance for the data and helps increase the performance using Data locality. 
 The map and reduce functions are executed on smaller subsets of your larger data sets, and 

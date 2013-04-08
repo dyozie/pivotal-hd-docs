@@ -4,7 +4,7 @@ title: Running Hadoop on Multi Node Cluster
 
 Running Hadoop 2.0.3-alpha On Ubuntu Linux - Multi Node Cluster
 --------------------------------------------------------------
-The goal of this tutorial is to run Hadoop 2.x on a on multi-node cluster. 
+The goal of this tutorial is to run Hadoop 2.x on a multi-node cluster. 
 For this exercise, we would be using two Ubuntu Linux boxes.
 
 Prerequisities  
@@ -12,27 +12,27 @@ Prerequisities
 
 * Two Linux boxes with Ubuntu 12.* or One Linux box and one VM on the same box
 * Running Hadoop Version 2 - Single Node cluster. Complete this tutorial before proceeding further.
-[Singlenode Hadoop installation] (getting-started/single-node-cluster.html)  
+[Singlenode Hadoop installation](single-node-cluster.html)  
 
 This tutorial has been tested with the following software versions:
 
     Ubuntu Linux 12.04 LTS
     JDK 1.7 
 	
-Through out the tutorial, commands to be executed on the master and slave node are mentioned as follows:  
+Through out the tutorial,commands to be executed on the master and slave node are mentioned as follows:  
 
-#####master -  execute commands on the master node
+#####master	-	execute commands on the master node
 
-#####slave - execute commands on the slave node
+#####slave	- 	execute commands on the slave node
 
 Overview
 --------
 The following picture gives a brief overview of the cluster.
 ![Two Node Cluster](/images/multi-node.png)
 
-FIG. 1 shows a two node cluster. Since, we have only two nodes, we will use the master node as both master and slave. For clarity, master and slave1 are shown as separate nodes, however in this tutorial, master will also act as one of the slave.
+FIG. 1 shows a two node cluster. Since, we have only two nodes, we will use the master node as both master and slave. For clarity, master and slave1 are shown as separate nodes. However, in this tutorial,master will also act as one of the slave.
 
-Master node runs both the namenode and the ResourceManager and Namenode. Since Master is also a slave, NodeManger and  DatNode also runs on the master node.
+Master node runs both the Namenode and ResourceManager.Since Master is also a slave, NodeManger and DataNode also runs on the master node.
 
 ####Master
 * NameNode
@@ -78,21 +78,21 @@ Verify that both machines ping each other
 From the master machine issue the following command
 
 ```bash
-ping master
+gpuser@master$ping slave
 ```
 
 #####slave - Ping master from slave
 From the slave machine issue the following command
 
 ```bash
-ping slave
+gpuser@slave$ping master
 ```
 The ping should be successful, if not contact your IT support to fix any networking issues.
 
 ####Step 2: Creating dedicated user and storage directories
 
 * Create user gpuser(home dir /home/gpuser) and group gp on both master and slave
-* Create the following directories on namenode and masternode under home directory `/home/gpuser`
+* Create the following directories on namenode and masternode under home directory ___/home/gpuser___
 
 #####master
 ```bash
@@ -111,20 +111,20 @@ mkdir -p data/datanode
 Install SSH 
 
 ```bash
-gpuser@ubuntu:~$sudo apt-get install ssh 
-gpuser@ubuntu:~$sudo apt-get install rsync
+gpuser@master:~$sudo apt-get install ssh 
+gpuser@master:~$sudo apt-get install rsync
 ```
 Generate public/private RSA key pairs using the following command.
 
 ```bash
-gpuser@ubuntu:~$ ssh-keygen -t rsa -P ""
+gpuser@master:~$ ssh-keygen -t rsa -P ""
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/gpuser/.ssh/id_rsa): 
 Created directory '/home/gpuser/.ssh'.
 Your identification has been saved in /home/gpuser/.ssh/id_rsa.
 Your public key has been saved in /home/gpuser/.ssh/id_rsa.pub.
 The key fingerprint is:
-3c:f7:ca:f2:49:a7:05:ee:90:66:05:0f:7b:a9:63:fc gpuser@ubuntu
+3c:f7:ca:f2:49:a7:05:ee:90:66:05:0f:7b:a9:63:fc gpuser@master
 The key's randomart image is:
 +--[ RSA 2048]----+
 |                 |
@@ -144,12 +144,12 @@ Press Enter to save the key in the default location.
 Enable ssh to the local machine using the following command.
                  
 ```bash
-gpuser@ubuntu:~$ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys   
+gpuser@master:~$ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ```
-* Test the ssh setup by connecting to the local machine with the gpuser user.  
+* Test the ssh setup by connecting to the local machine with the gpuser user.
         
 ```bash
-gpuser@ubuntu:~$ ssh localhost
+gpuser@master:~$ ssh localhost
 
 The authenticity of host 'localhost (127.0.0.1)' can't be established.
 ECDSA key fingerprint is ca:96:1c:5a:38:f8:9f:99:45:d4:57:82:3c:1b:64:b7.
@@ -169,7 +169,7 @@ repeat the above steps on slave
 ```bash
 gpuser@master~$ ssh-copy-id -i $HOME/.ssh/id_rsa.pub gpuser@slave
 ```
-Execute the command `ssh slave` to verify ssh to slave works without the password
+Execute the command ___ssh slave___ to verify ssh to slave works without the password
 
 ```bash
 gpuser@master:~$ ssh slave
@@ -193,7 +193,7 @@ of Hadoop on  master.
 ####Step 5: Master node configuration
 Set the following environement variables in .bashrc
 
-Open `.bashrc` file in the home folder and add the following lines at the end
+Open ___.bashrc___ file in the home folder and add the following lines at the end
 
 ```bash  
  export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha      
@@ -212,29 +212,22 @@ Source the variables using the following command
 $ source ~/.bashrc
 ```
 
-Search for JAVA_HOME and set export JAVA_HOME variable in `libexec/hadoop-config.sh`
+Search for JAVA_HOME and set export JAVA_HOME variable in ___libexec/hadoop-config.sh___
 
 ```xml
 export JAVA_HOME=$HOME/java/jdk1.7.0_17
 ```
-
-Search for JAVA_HOME and set export JAVA_HOME variable in `etc/hadoop/yarn-env.sh`
+Add following lines at start of script in ___etc/hadoop/yarn-env.sh___ :
 
 ```xml
 export JAVA_HOME=$HOME/java/jdk1.7.0_17
-```
-
-Add following lines at start of script in `etc/hadoop/yarn-env.sh` :
-
-```xml
-	export JAVA_HOME=$HOME/java/jdk1.7.0_17
-	export HADOOP_HOME=/home/hadoop-2.0.3-alpha
-	export HADOOP_MAPRED_HOME=$HADOOP_HOME
-	export HADOOP_COMMON_HOME=$HADOOP_HOME
-	export HADOOP_HDFS_HOME=$HADOOP_HOME
-	export YARN_HOME=$HADOOP_HOME
-	export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-	export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export HADOOP_HOME=/home/hadoop-2.0.3-alpha
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export YARN_HOME=$HADOOP_HOME
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ```
 
 
@@ -242,14 +235,14 @@ Hadoop configration files at located at  $HADOOP_HOME/etc/hadoop.
 Update the configuration files with the following entries respectively.
 
 #####$HADOOP_HOME/etc/hadoop/master 
-Open `master` file and add the following line
+Open ___master___ file and add the following line
 
 ```xml
 master
 ```
 
 #####$HADOOP_HOME/etc/hadoop/slaves
-Open `slaves` file and add the following lines
+Open ___slaves___ file and add the following lines
 
 ```xml
 master
@@ -284,11 +277,11 @@ Open the file and copy the following contents respectively.
    </property>
     <property>
    <name>dfs.namenode.name.dir</name>
-   <value>file:/home/data/namenode</value>
+   <value>file:/home/gpuser/data/namenode</value>
  </property>
  <property>
    <name>dfs.datanode.data.dir</name>
-   <value>file:/home/data/datanode</value>
+   <value>file:/home/gpuser/data/datanode</value>
  </property>
  </configuration>
 ```
@@ -351,7 +344,7 @@ gpuser@slave:~$ ls -al hadoop-2.0.3-alpha
 ```
 ####Step 7: Slave node configuration
 
-Open `.bashrc` file in the home folder and add the following lines at the end
+Open ___.bashrc___ file in the home folder and add the following lines at the end
 
 ```bash  
  export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha      
@@ -369,17 +362,17 @@ Source the variables using the following command
 ```bash
 $ source ~/.bashrc
 ```
-Search for JAVA_HOME and set export JAVA_HOME variable in `libexec/hadoop-config.sh`
+Search for JAVA_HOME and set export JAVA_HOME variable in ___libexec/hadoop-config.sh___
 
 ```xml
 export JAVA_HOME=$HOME/java/jdk1.7.0_17
 ```
-Search for JAVA_HOME and set export JAVA_HOME variable in `etc/hadoop/yarn-env.sh`
+Search for JAVA_HOME and set export JAVA_HOME variable in ___etc/hadoop/yarn-env.sh___
 
 ```xml
 export JAVA_HOME=$HOME/java/jdk1.7.0_17
 ```
-Remove the file $HADOO_HOME/etc/hadoop/slaves
+Remove the file $HADOOP_HOME/etc/hadoop/slaves
 
 #####slave
 ```bash
@@ -439,11 +432,11 @@ open the file and copy the following contents respectively
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file:/home/data/namenode</value>
+    <value>file:/home/gpuser/data/namenode</value>
   </property>
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>file:/home/data/datanode</value>
+    <value>file:/home/gpuser/data/datanode</value>
   </property>  
 </configuration>
 ```
@@ -467,7 +460,6 @@ Namenode needs to be initialized before starting with Hadoop File System. Nameno
 ```bash
 gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop namenode -format  
 
-o/p:
 
 
 Formatting using clusterid: CID-8b844021-d1ea-4b0a-a625-d17dcc133299
@@ -507,7 +499,7 @@ gpuser@master:~/hadoop-2.0.3-alpha$
 
 ```bash       
 $ sbin/hadoop-daemon.sh start namenode
-$ sbin/hadoop-daemon.sh start datanode
+$ sbin/hadoop-daemons.sh start datanode
 ```
 
 
@@ -552,6 +544,7 @@ $ jps
 16407 NameNode
 16409 ResourceManager
 16410 NodeManager
+16542 HistoryServer
 ```
 
 Verify yarn services running in slave node
@@ -584,7 +577,7 @@ Open the browser with the following URL's
 Verify the installation by running the Wordcount Example. This is an example to count the number of times, each word appears in the given input data set.  
 Create input dir and create a sample file 'animals.txt' with the following content. Use your favoirite editor vi or emacs or gedit.
 
-```bash
+```xml
 cat dog elephant zebra wolf     
 cat dog elephant zebra wolf      
 cat dog elephant zebra wolf      
@@ -594,18 +587,15 @@ cat dog elephant zebra wolf
 Copy the animals.txt file from local filesystem to a '/input' file in hadoop filesystem using              
 
 ```bash
-gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -copyFromLocal \
-      input/animals.txt /input
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -copyFromLocal /home/animals.txt /input
 ```
 
 Run the wordcount MapReduce program
 
 ```bash
-gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop jar \
-		share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar 
-		wordcount /input /output  
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar wordcount /input /output  
 
-gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -ls /
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -ls /
 DEPRECATED: Use of this script to execute hdfs command is deprecated.
 Instead use the hdfs command for it.
 
@@ -617,7 +607,7 @@ drwxrwx---   - gpuser supergroup          0 2013-04-04 02:42 /tmp
 Use dfs cat command to see the output
 
 ```bash
-gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -cat /output/*       
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -cat /output/*       
 cat 4
 dog 4
 elephant 4
