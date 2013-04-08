@@ -19,20 +19,20 @@ This tutorial has been tested with the following software versions:
     Ubuntu Linux 12.04 LTS
     JDK 1.7 
 	
-Through out the tutorial, commands to be executed on the master and slave node are mentioned as follows:  
+Through out the tutorial,commands to be executed on the master and slave node are mentioned as follows:  
 
-#####master -  execute commands on the master node
+#####master	-	execute commands on the master node
 
-#####slave - execute commands on the slave node
+#####slave	- 	execute commands on the slave node
 
 Overview
 --------
 The following picture gives a brief overview of the cluster.
 ![Two Node Cluster](/images/multi-node.png)
 
-FIG. 1 shows a two node cluster. Since, we have only two nodes, we will use the master node as both master and slave. For clarity, master and slave1 are shown as separate nodes. However, in this tutorial, master will also act as one of the slave.
+FIG. 1 shows a two node cluster. Since, we have only two nodes, we will use the master node as both master and slave. For clarity, master and slave1 are shown as separate nodes. However, in this tutorial,master will also act as one of the slave.
 
-Master node runs both the Namenode and ResourceManager . Since Master is also a slave, NodeManger and  DataNode also runs on the master node.
+Master node runs both the Namenode and ResourceManager.Since Master is also a slave, NodeManger and DataNode also runs on the master node.
 
 ####Master
 * NameNode
@@ -78,14 +78,14 @@ Verify that both machines ping each other
 From the master machine issue the following command
 
 ```bash
-ping slave
+gpuser@master$ping slave
 ```
 
 #####slave - Ping master from slave
 From the slave machine issue the following command
 
 ```bash
-ping master
+gpuser@slave$ping master
 ```
 The ping should be successful, if not contact your IT support to fix any networking issues.
 
@@ -169,7 +169,7 @@ repeat the above steps on slave
 ```bash
 gpuser@master~$ ssh-copy-id -i $HOME/.ssh/id_rsa.pub gpuser@slave
 ```
-Execute the command `ssh slave` to verify ssh to slave works without the password
+Execute the command ___ssh slave___ to verify ssh to slave works without the password
 
 ```bash
 gpuser@master:~$ ssh slave
@@ -193,7 +193,7 @@ of Hadoop on  master.
 ####Step 5: Master node configuration
 Set the following environement variables in .bashrc
 
-Open `.bashrc` file in the home folder and add the following lines at the end
+Open ___.bashrc___ file in the home folder and add the following lines at the end
 
 ```bash  
  export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha      
@@ -220,14 +220,14 @@ export JAVA_HOME=$HOME/java/jdk1.7.0_17
 Add following lines at start of script in ___etc/hadoop/yarn-env.sh___ :
 
 ```xml
-	export JAVA_HOME=$HOME/java/jdk1.7.0_17
-	export HADOOP_HOME=/home/hadoop-2.0.3-alpha
-	export HADOOP_MAPRED_HOME=$HADOOP_HOME
-	export HADOOP_COMMON_HOME=$HADOOP_HOME
-	export HADOOP_HDFS_HOME=$HADOOP_HOME
-	export YARN_HOME=$HADOOP_HOME
-	export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-	export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export JAVA_HOME=$HOME/java/jdk1.7.0_17
+export HADOOP_HOME=/home/hadoop-2.0.3-alpha
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export YARN_HOME=$HADOOP_HOME
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ```
 
 
@@ -235,14 +235,14 @@ Hadoop configration files at located at  $HADOOP_HOME/etc/hadoop.
 Update the configuration files with the following entries respectively.
 
 #####$HADOOP_HOME/etc/hadoop/master 
-Open `master` file and add the following line
+Open ___master___ file and add the following line
 
 ```xml
 master
 ```
 
 #####$HADOOP_HOME/etc/hadoop/slaves
-Open `slaves` file and add the following lines
+Open ___slaves___ file and add the following lines
 
 ```xml
 master
@@ -277,11 +277,11 @@ Open the file and copy the following contents respectively.
    </property>
     <property>
    <name>dfs.namenode.name.dir</name>
-   <value>master:/home/data/namenode</value>
+   <value>file:/home/gpuser/data/namenode</value>
  </property>
  <property>
    <name>dfs.datanode.data.dir</name>
-   <value>master:/home/data/datanode</value>
+   <value>file:/home/gpuser/data/datanode</value>
  </property>
  </configuration>
 ```
@@ -344,7 +344,7 @@ gpuser@slave:~$ ls -al hadoop-2.0.3-alpha
 ```
 ####Step 7: Slave node configuration
 
-Open `.bashrc` file in the home folder and add the following lines at the end
+Open ___.bashrc___ file in the home folder and add the following lines at the end
 
 ```bash  
  export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha      
@@ -432,11 +432,11 @@ open the file and copy the following contents respectively
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>master:/home/data/namenode</value>
+    <value>file:/home/gpuser/data/namenode</value>
   </property>
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>master:/home/data/datanode</value>
+    <value>file:/home/gpuser/data/datanode</value>
   </property>  
 </configuration>
 ```
@@ -544,6 +544,7 @@ $ jps
 16407 NameNode
 16409 ResourceManager
 16410 NodeManager
+16542 HistoryServer
 ```
 
 Verify yarn services running in slave node
@@ -592,9 +593,7 @@ gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -copyFromLocal /home/animals.
 Run the wordcount MapReduce program
 
 ```bash
-gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop jar \
-		share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar 
-		wordcount /input /output  
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar wordcount /input /output  
 
 gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -ls /
 DEPRECATED: Use of this script to execute hdfs command is deprecated.
