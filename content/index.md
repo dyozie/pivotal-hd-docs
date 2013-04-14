@@ -9,6 +9,10 @@ The goal of the document is to give a brief introduction to Hadoop version 2.x p
 
 ##Overview  
 
+![HBase](/images/hbase2.jpeg)
+
+FIG.1 An overview of HBase
+
 The amount of data is expanding rapidly. The new era of business intelligence is here with Big data. Big data is being generated continuosly from various sources. The examples of big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis and visualization of the data. 
 
 Enterprises are slowly adopting Big data platforms like Apache Hadoop. 

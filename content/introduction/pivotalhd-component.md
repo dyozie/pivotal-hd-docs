@@ -1,0 +1,41 @@
+---
+title: Pivotal HD Components
+---
+
+Introduction to Pivotal HD
+-------------------------
+
+
+Pivotal HD Components
+--------------------
+
+Pivotal HD comes packed with lot of tools on the top of Apache Hadoop 2.0 distrobution.
+
+
+An overview of Pivotal HD components is shown in FIG. 1
+
+![Pivotal HD Architecture](/images/pivotalhd_architecture.png)
+
+
+* HDFS - Hadoop File System, a distributed storage system.
+
+* YARN - A framework for running distributed applications. MapReduce is one such application.
+
+_A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)_
+
+* HBase - A columnar, sparsely distributed data base.
+
+* Hive - A framework for running  SQL like queries.
+
+* Pig - A data flow language somewhat similar to Hive.
+
+* ZooKeeper - A quorum of servers for configuration management
+
+* HAWQ - A massively parallel SQL query engine
+
+* DataLoader - A massively parallel SQL query engine
+
+* Sqoop - A massively parallel SQL query engine
+
+* Flume - A massively parallel SQL query engine
+
