@@ -2,6 +2,7 @@
 $(function() {
   var activeItem,
       helpList = $('#sub-nav .js-maintopic'),
+      subtopicGuides = $('#sub-nav .js-subguides'),
       firstOccurrence = true
 
   // hide list items at startup
@@ -12,11 +13,15 @@ $(function() {
       $('#sub-nav .js-maintopic a').each(function(){
         var url = $(this).attr('href').toString()
         if(url.indexOf(docUrl[1]) >= 0 && url.length == docUrl[1].length){
-          // $(this).parent('li').addClass('active')
           $(this).attr('class', "active")
           var parentTopic = $(this).parentsUntil('#sub-nav > ul').last()
           parentTopic.addClass('js-current')
-          parentTopic.find('.js-expand-btn').toggleClass('collapsed expanded')
+          subtopicGuides.hide()
+          $(this).parents('ul.js-subguides').show()
+          if($(this).parent('li').hasClass('js-topic')) {
+            $(this).parent('li').children('ul.js-subguides').show();
+          }
+          // parentTopic.find('.js-expand-btn').toggleClass('collapsed expanded')
         }
       })
     }
