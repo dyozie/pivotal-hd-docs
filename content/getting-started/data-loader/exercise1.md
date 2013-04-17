@@ -2,6 +2,5 @@
 title: Coming soon
 ---
 
-..Coming Soon
------------
+####..Coming Soon
 
