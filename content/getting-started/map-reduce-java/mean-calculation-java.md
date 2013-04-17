@@ -5,7 +5,7 @@ title: Basic Example on MapReduce
 Compute the Average energy consumption of a household per year
 --------------------------------------------------------------
 The given data set has energy consumption of the households for 5 years. The data is recorded every minute for the past 5 years.
-The goal of the tutorial is to compute the average energy consumption of the household per year.
+The goal of the exercise is to compute the average energy consumption of the household per year.
 
 Use case
 --------
@@ -33,8 +33,6 @@ A Sample from the data set
 16/12/2006,17:27:00,5.388,0.502,233.740,23.000,0.000,1.000,17.000    
 16/12/2006,17:28:00,3.666,0.528,235.680,15.800,0.000,1.000,17.000    
 
-
-
 Approach
 --------
 
@@ -45,72 +43,71 @@ Map- Reduce functions can be implemented by using the 'Key-value ' pair. By taki
 As shown in the fig. 1, the mapper will extract the year(key) and the value(energy consumed) as key-value pairs.
 All the pairs are collected across all the mappers and send to reduce part. In the Reducer, all the values are added and divided by the total number of records to compute the mean energy consumption.
 
-Working with the tutorial
+Working with the exercise
 --------------------------
 
 ###Step 1: Import the project into eclipse
-For the impatient, the solution for the exercise is available here.
 
-The solution is available here. Click here to download. Import the project into eclipse.
+Down the exercise from 
+[here](/code/average_energy.tar.gz "here")
+and extract into a folder. This will create average_energy folder.
 
-```java
+From Eclipse File Menu, click Import and select 'Existing Projects into Workspace'
+![select import](/images/gs/avg_energy/mean-1.png)
 
-File -> Import  
-	Maven -> Existing Maven Project  
-Browse  
-Find github directory on your computer -> open  
-Select all projects -> finish   
+Click browse
+![browse folder](/images/gs/avg_energy/mean-2.png)
 
-```
+Select the extracted folder average_energy
+![browse and select folder](/images/gs/avg_energy/mean-3.png)
+
+Click the check box corresponding average_energy. 
+You can deselect other entries if any
+![select project](/images/gs/avg_energy/mean-4.png)
+
 
 ###Step 2: Designing the mapper
-The mapper function will  process each input record to calculate the sum of energy values of the  three meters. The output key is the 'year' which is parsed from the data attribute. The output value is the sum of three columns: sub_metering_1,sub_metering_2,sub_metering_3. 
+The mapper function will  process each input record to calculate the sum of energy values of the three meters. The output key is the 'year' which is parsed from the data attribute. The output value is the sum of three columns: sub_metering_1,sub_metering_2,sub_metering_3. 
+
+
+Copy the following code and paste it to the map method.
 
 #### Mapper code:
 
 ```java
-@Override
-protected void map(LongWritable key, Text value, Context context)
-    throws IOException, InterruptedException {
+	// check if record is valid
+	if (isValidRecord(value.toString())) {
+		return;
+	}
 
-// check if record is valid
-if (HouseHoldPowerUtills.isValidRecord(value.toString())) {
-    // check if record has special charecters
-    HouseHoldPowerUtills record = new HouseHoldPowerUtills(
-            value.toString());
+	//Prepare the PowerConsumption Record using the value
+	PowerConsumptionRecord record = new PowerConsumptionRecord(
+			value.toString());
 
-    double consumption = record.getSub_metering_1()
-            + record.getSub_metering_2() + record.getSub_metering_3();
-
-    context.write(new IntWritable(record.getYear()),
-            new DoubleWritable(consumption));
-
-    }
-}
+	double sumOfMeters = record.getSub_metering_1()
+			+ record.getSub_metering_2() + record.getSub_metering_3();
+	year.set(record.getYear());
+	consumption.set(sumOfMeters);
+	context.write(year, consumption);
 ```
 
 ###Step 3: Designing the Reducer  
 
-THe reducer iterates through all the values pertaining to the year , sum is calculated by adding the present value to the cumulative value and  increments the count. Finally, the average consumption for the year is calculated by dividing the sum by the count.  
+THe reducer iterates through all the values for the year, sum is calculated by adding the present value to the cumulative value and  increments the count. Finally, the average consumption for the year is calculated by dividing the sum by the total count.
 
 ####Reducer code  
 
 ```java
-@Override
-    protected void reduce(IntWritable key, Iterable<DoubleWritable> values,
-            Context context) throws IOException, InterruptedException {
-
-        double totalVolume = 0.0;
-        double totalRecords = 0;
-        for (DoubleWritable value : values) {
-            totalVolume += value.get();
-            totalRecords++;
-        }
-        double mean = totalVolume / totalRecords;
-        context.write(key, new DoubleWritable(mean));
-    }
+	double totalVolume = 0.0;
+	double totalRecords = 0;
+	for (DoubleWritable value : values) {
+		totalVolume += value.get();
+		totalRecords++;
+	}
+	double mean = totalVolume / totalRecords;
+	consumption.set(mean);
+	context.write(key, consumption);
 ```    
-    
 
 ###Step 4: Unit testing Mapper
 
@@ -214,23 +211,21 @@ MRUnit also supports testing the map and reduce functions in the same test. It i
 public void testMeanMapReduce() throws Exception 
 {
 
-mapReduceDriver
-.withInput(
-new LongWritable(0),
-new Text(
-	"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
-.withInput(
-new LongWritable(1),
-new Text(
-	"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
-.withInput(
-new LongWritable(2),
-new Text(
-	"16/12/2006;17:24:00;4.216;0.418;3;18.400;0.000;1.000;17.000"))
-.withOutput(new IntWritable(2006), new DoubleWritable(18.00))
-
-.runTest();
-
+	mapReduceDriver
+	.withInput(
+	new LongWritable(0),
+	new Text(
+		"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
+	.withInput(
+	new LongWritable(1),
+	new Text(
+		"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
+	.withInput(
+	new LongWritable(2),
+	new Text(
+		"16/12/2006;17:24:00;4.216;0.418;3;18.400;0.000;1.000;17.000"))
+	.withOutput(new IntWritable(2006), new DoubleWritable(18.00))
+	.runTest();
 }
 ```   
 
@@ -387,3 +382,7 @@ The output should be like this :
 The average energy consumption  for each year  in the dataset is shown above. It is interestig to see that, average is high on 2006, it went down in 2007 and 2008 and slowly increasing, but has not reached 2006 levels.
 
 ###Congratulations! You have successfully completed Exercise 1 of 'Map-Reduce with Java'
+The solution is available __[here](/code/average_energy_solution.tar.gz "here")__
+You can also run the code with the full data set. The data set can be obtained from
+[link](http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption "DataSet")
+

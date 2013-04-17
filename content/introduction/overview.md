@@ -4,7 +4,7 @@ title: Introduction to Pivotal HD
 
 Overview
 -------
-The new era of business intelligence is here with Big data. Big data is being generated continuosly from various different sources. The examples of big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance, and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis, and visualization of the data.
+The new era of business intelligence is here with Big data. Big data is being generated continuously from various different sources. The examples of big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance, and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis, and visualization of the data.
 
 About Pivotal HD
 ----------------
