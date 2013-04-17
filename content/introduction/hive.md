@@ -8,7 +8,7 @@ Hive is a data warehouse system for Hadoop that facilitates easy data summarizat
 ad-hoc queries, and the analysis of large datasets stored in Hadoop compatible file systems.
 Hive is initially developed by Facebook, Hive is now part of Apache.
 The paper describes how Hive can be used to build a PetaByte Scale warehouse using Hive
-http://infolab.stanford.edu/~ragho/hive-icde2010.pdf
+[hive-icde2010.pdf](http://infolab.stanford.edu/~ragho/hive-icde2010.pdf)
 
 
 About Hive
@@ -18,7 +18,7 @@ An overview of Hive is shown below:
 
 ![Hive](/images/hive1.jpg)
 
-FIG. 1 Hive Overview
+**FIG. 1 Hive Overview**
 
 Hive provides a mechanism to project structure onto this data and query the data using a SQL-like language called HiveQL. At the same time this language also allows traditional map/reduce programmers to plug in their custom mappers and
 reducers when it is inconvenient or inefficient to express this logic in HiveQL.

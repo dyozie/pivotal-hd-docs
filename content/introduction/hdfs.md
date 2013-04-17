@@ -15,7 +15,7 @@ An overview of HDFS architecture is shown below:
 
 ![HDFS Architecture](/images/hdfs-diagram.png)
 
-FIG. 1 HDFS Architecture
+**FIG. 1 HDFS Architecture**
 
 The replication factor provides the fault tolerance for the data and helps increase the performance using Data locality.
 The map and reduce functions are executed on smaller subsets of your larger data sets, and
