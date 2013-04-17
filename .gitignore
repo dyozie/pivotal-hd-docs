@@ -1,8 +1,9 @@
-i*.*~
+*.*~
 .*~
 *~
 .DS_Store
 tmp
-output/public
+output/
 manifest.yml
 /vendor
+crash.log

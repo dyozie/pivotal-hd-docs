@@ -15,7 +15,7 @@ Prerequisites
 -------------
 
 * Hadoop must be installed as per installation instructions
-	[Hadoop installation](/installation/single-node.html)
+  [Hadoop installation](/installation/single-node.html)
 * Eclipse must have been installed
 * Maven for building and running the example using command line
 
@@ -48,47 +48,47 @@ Working with the exercise
 
 ###Step 1: Import the project into eclipse
 
-Down the exercise from 
-[here](/code/average_energy.tar.gz "here")
-and extract into a folder. This will create average_energy folder.
+Download the exercise from [here](/code/average_energy.tar.gz "here") and extract into a folder. This will create average_energy folder.
 
-From Eclipse File Menu, click Import and select 'Existing Projects into Workspace'
-![select import](/images/gs/avg_energy/mean-1.png)
+* From Eclipse File Menu, click Import and select 'Existing Projects into Workspace'
 
-Click browse
-![browse folder](/images/gs/avg_energy/mean-2.png)
+  ![select import](/images/gs/avg_energy/mean-1.png)
 
-Select the extracted folder average_energy
-![browse and select folder](/images/gs/avg_energy/mean-3.png)
+* Click browse
 
-Click the check box corresponding average_energy. 
-You can deselect other entries if any
-![select project](/images/gs/avg_energy/mean-4.png)
+  ![browse folder](/images/gs/avg_energy/mean-2.png)
+
+* Select the extracted folder average_energy
+
+  ![browse and select folder](/images/gs/avg_energy/mean-3.png)
+
+* Click the check box corresponding average_energy. You can deselect other entries if any
+
+  ![select project](/images/gs/avg_energy/mean-4.png)
 
 
 ###Step 2: Designing the mapper
 The mapper function will  process each input record to calculate the sum of energy values of the three meters. The output key is the 'year' which is parsed from the data attribute. The output value is the sum of three columns: sub_metering_1,sub_metering_2,sub_metering_3. 
-
 
 Copy the following code and paste it to the map method.
 
 #### Mapper code:
 
 ```java
-	// check if record is valid
-	if (isValidRecord(value.toString())) {
-		return;
-	}
+// check if record is valid
+if (isValidRecord(value.toString())) {
+  return;
+}
 
-	//Prepare the PowerConsumption Record using the value
-	PowerConsumptionRecord record = new PowerConsumptionRecord(
-			value.toString());
+//Prepare the PowerConsumption Record using the value
+PowerConsumptionRecord record = new PowerConsumptionRecord(
+    value.toString());
 
-	double sumOfMeters = record.getSub_metering_1()
-			+ record.getSub_metering_2() + record.getSub_metering_3();
-	year.set(record.getYear());
-	consumption.set(sumOfMeters);
-	context.write(year, consumption);
+double sumOfMeters = record.getSub_metering_1()
+    + record.getSub_metering_2() + record.getSub_metering_3();
+year.set(record.getYear());
+consumption.set(sumOfMeters);
+context.write(year, consumption);
 ```
 
 ###Step 3: Designing the Reducer  
@@ -98,16 +98,16 @@ THe reducer iterates through all the values for the year, sum is calculated by a
 ####Reducer code  
 
 ```java
-	double totalVolume = 0.0;
-	double totalRecords = 0;
-	for (DoubleWritable value : values) {
-		totalVolume += value.get();
-		totalRecords++;
-	}
-	double mean = totalVolume / totalRecords;
-	consumption.set(mean);
-	context.write(key, consumption);
-```    
+double totalVolume = 0.0;
+double totalRecords = 0;
+for (DoubleWritable value : values) {
+  totalVolume += value.get();
+  totalRecords++;
+}
+double mean = totalVolume / totalRecords;
+consumption.set(mean);
+context.write(key, consumption);
+```
 
 ###Step 4: Unit testing Mapper
 
@@ -117,33 +117,31 @@ MRUnit is a test framework  to unit test MapReduce code.  It should be noted tha
 Create the mapper Driver and ReduceDriver as part of the setup.
 
 ```java
-
 @Before
 public void setUp() throws Exception {
 
-	AverageConsumptionMapper mapper = new AverageConsumptionMapper();
-	AverageConsumptionReducer reducer = new AverageConsumptionReducer();
-	mapDriver = MapDriver.newMapDriver(mapper);
-	reduceDriver = ReduceDriver.newReduceDriver(reducer);
-	mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
+  AverageConsumptionMapper mapper = new AverageConsumptionMapper();
+  AverageConsumptionReducer reducer = new AverageConsumptionReducer();
+  mapDriver = MapDriver.newMapDriver(mapper);
+  reduceDriver = ReduceDriver.newReduceDriver(reducer);
+  mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
 }
 ```
 It is done by using MapDriver class and only tests the map function .   
 (_Specify the key/value input and output types for the mapper being tested in this class._)   
 
 ```java     
-
 @Test
 public void testMeanMapper() throws Exception {
 
-	final LongWritable inputKey = new LongWritable(0);
-	final Text inputValue = new Text(
-			"16/12/2006;17:24:00;4.216;0.418;234.840;18.400;0.000;1.000;17.000");
-	final IntWritable outputKey = new IntWritable(2006);
-	final DoubleWritable outputValue = new DoubleWritable(18.0);
+  final LongWritable inputKey = new LongWritable(0);
+  final Text inputValue = new Text(
+      "16/12/2006;17:24:00;4.216;0.418;234.840;18.400;0.000;1.000;17.000");
+  final IntWritable outputKey = new IntWritable(2006);
+  final DoubleWritable outputValue = new DoubleWritable(18.0);
 
-	mapDriver.withInput(inputKey, inputValue)
-		.withOutput(outputKey, outputValue).runTest();
+  mapDriver.withInput(inputKey, inputValue)
+    .withOutput(outputKey, outputValue).runTest();
 
 }
 ```
@@ -175,14 +173,14 @@ It is done by using ReduceDriver class and only tests the reduce function .
 public void testMeanReducer() throws Exception {
 
 new ReduceDriver<IntWritable, DoubleWritable, IntWritable, DoubleWritable>()
-	.withReducer(new AverageConsumptionReducer())
-	.withInputKey(new IntWritable(2006))
-	.withInputValues(
-			Arrays.asList(new DoubleWritable(3.00),
-					new DoubleWritable(3.00), new DoubleWritable(
-							3.00)))
-	.withOutput(new IntWritable(2006), new DoubleWritable(3.00))
-	.runTest();
+  .withReducer(new AverageConsumptionReducer())
+  .withInputKey(new IntWritable(2006))
+  .withInputValues(
+      Arrays.asList(new DoubleWritable(3.00),
+          new DoubleWritable(3.00), new DoubleWritable(
+              3.00)))
+  .withOutput(new IntWritable(2006), new DoubleWritable(3.00))
+  .runTest();
 }
 ```
 
@@ -210,22 +208,21 @@ MRUnit also supports testing the map and reduce functions in the same test. It i
 @Test
 public void testMeanMapReduce() throws Exception 
 {
-
-	mapReduceDriver
-	.withInput(
-	new LongWritable(0),
-	new Text(
-		"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
-	.withInput(
-	new LongWritable(1),
-	new Text(
-		"16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
-	.withInput(
-	new LongWritable(2),
-	new Text(
-		"16/12/2006;17:24:00;4.216;0.418;3;18.400;0.000;1.000;17.000"))
-	.withOutput(new IntWritable(2006), new DoubleWritable(18.00))
-	.runTest();
+  mapReduceDriver
+  .withInput(
+  new LongWritable(0),
+  new Text(
+    "16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
+  .withInput(
+  new LongWritable(1),
+  new Text(
+    "16/12/2006;17:24:00;4.216;0.418;3.0;18.400;0.000;1.000;17.000"))
+  .withInput(
+  new LongWritable(2),
+  new Text(
+    "16/12/2006;17:24:00;4.216;0.418;3;18.400;0.000;1.000;17.000"))
+  .withOutput(new IntWritable(2006), new DoubleWritable(18.00))
+  .runTest();
 }
 ```   
 
@@ -260,7 +257,6 @@ Load data into HDFS.
 ```bash
 cd $HADOOP_HOME
 $bin/hadoop dfs -copyFromLocal /home/laxman/input/household.txt /household
-
 ```   
 
 Go to the project home directory and issue the build command using maven
@@ -312,54 +308,54 @@ $bin/hadoop jar project_dir/target/GettingStarted-0.0.1-SNAPSHOT.jar com.pivotal
 13/04/13 11:52:41 INFO mapreduce.Job: Job job_1365833749426_0002 completed successfully
 13/04/13 11:52:41 INFO mapreduce.Job: Counters: 43
 File System Counters
-	FILE: Number of bytes read=28689926
-	FILE: Number of bytes written=57596089
-	FILE: Number of read operations=0
-	FILE: Number of large read operations=0
-	FILE: Number of write operations=0
-	HDFS: Number of bytes read=132964916
-	HDFS: Number of bytes written=113
-	HDFS: Number of read operations=9
-	HDFS: Number of large read operations=0
-	HDFS: Number of write operations=2
+  FILE: Number of bytes read=28689926
+  FILE: Number of bytes written=57596089
+  FILE: Number of read operations=0
+  FILE: Number of large read operations=0
+  FILE: Number of write operations=0
+  HDFS: Number of bytes read=132964916
+  HDFS: Number of bytes written=113
+  HDFS: Number of read operations=9
+  HDFS: Number of large read operations=0
+  HDFS: Number of write operations=2
 Job Counters 
-	Launched map tasks=2
-	Launched reduce tasks=1
-	Rack-local map tasks=2
-	Total time spent by all maps in occupied slots (ms)=41805
-	Total time spent by all reduces in occupied slots (ms)=8378
+  Launched map tasks=2
+  Launched reduce tasks=1
+  Rack-local map tasks=2
+  Total time spent by all maps in occupied slots (ms)=41805
+  Total time spent by all reduces in occupied slots (ms)=8378
 Map-Reduce Framework
-	Map input records=2075259
-	Map output records=2049280
-	Map output bytes=24591360
-	Map output materialized bytes=28689932
-	Input split bytes=188
-	Combine input records=0
-	Combine output records=0
-	Reduce input groups=5
-	Reduce shuffle bytes=28689932
-	Reduce input records=2049280
-	Reduce output records=5
-	Spilled Records=4098560
-	Shuffled Maps =2
-	Failed Shuffles=0
-	Merged Map outputs=2
-	GC time elapsed (ms)=1656
-	CPU time spent (ms)=51020
-	Physical memory (bytes) snapshot=711925760
-	Virtual memory (bytes) snapshot=3067699200
-	Total committed heap usage (bytes)=619970560
+  Map input records=2075259
+  Map output records=2049280
+  Map output bytes=24591360
+  Map output materialized bytes=28689932
+  Input split bytes=188
+  Combine input records=0
+  Combine output records=0
+  Reduce input groups=5
+  Reduce shuffle bytes=28689932
+  Reduce input records=2049280
+  Reduce output records=5
+  Spilled Records=4098560
+  Shuffled Maps =2
+  Failed Shuffles=0
+  Merged Map outputs=2
+  GC time elapsed (ms)=1656
+  CPU time spent (ms)=51020
+  Physical memory (bytes) snapshot=711925760
+  Virtual memory (bytes) snapshot=3067699200
+  Total committed heap usage (bytes)=619970560
 Shuffle Errors
-	BAD_ID=0
-	CONNECTION=0
-	IO_ERROR=0
-	WRONG_LENGTH=0
-	WRONG_MAP=0
-	WRONG_REDUCE=0
+  BAD_ID=0
+  CONNECTION=0
+  IO_ERROR=0
+  WRONG_LENGTH=0
+  WRONG_MAP=0
+  WRONG_REDUCE=0
 File Input Format Counters 
-	Bytes Read=132964728
+  Bytes Read=132964728
 File Output Format Counters 
-	Bytes Written=113
+  Bytes Written=113
 ```   
 
 
@@ -372,11 +368,11 @@ $bin/hadoop dfs -cat /output/*
 The output should be like this :  
 
 ```java
-2006	10.873181156784286
-2007	8.66401492133901
-2008	8.3997608677086
-2009	9.095407810941456
-2010	9.333240051246847
+2006  10.873181156784286
+2007  8.66401492133901
+2008  8.3997608677086
+2009  9.095407810941456
+2010  9.333240051246847
 ```
 
 The average energy consumption  for each year  in the dataset is shown above. It is interestig to see that, average is high on 2006, it went down in 2007 and 2008 and slowly increasing, but has not reached 2006 levels.

@@ -44,59 +44,59 @@ The following are built-in aggregate functions are supported in Hive:
 
 ##Built in Functions in Hive
 
-####bigint	 count(*), count(expr), count(DISTINCT expr[, expr_.])	 count(*) 
+###bigint   count(*), count(expr), count(DISTINCT expr[, expr_.])   count(*) 
 Returns the total number of retrieved rows, including rows containing NULL values; count(expr) - Returns the number of rows for which the supplied expression is non-NULL; count(DISTINCT expr[, expr]) - Returns the number of rows for which the supplied expression(s) are unique and non-NULL.
 
-####double	 sum(col), sum(DISTINCT col)	 
+###double   sum(col), sum(DISTINCT col)   
 Returns the sum of the elements in the group or the sum of the distinct values of the column in the group
 
-####double	 avg(col), avg(DISTINCT col)	 
+###double   avg(col), avg(DISTINCT col)   
 Returns the average of the elements in the group or the average of the distinct values of the column in the group
 
-####double	 min(col)	 
+###double   min(col)   
 Returns the minimum of the column in the group
 
-####double	 max(col)	 
+###double   max(col)   
 Returns the maximum value of the column in the group
 
-####double	 variance(col), var_pop(col)	 
+###double   variance(col), var_pop(col)   
 Returns the variance of a numeric column in the group
 
-####double	 var_samp(col)	 
+###double   var_samp(col)   
 Returns the unbiased sample variance of a numeric column in the group
 
-####double	 stddev_pop(col)	 
+###double   stddev_pop(col)   
 Returns the standard deviation of a numeric column in the group
 
 
-####double	 stddev_samp(col)	 
+###double   stddev_samp(col)   
 Returns the unbiased sample standard deviation of a numeric column in the group
 
-####double	 covar_pop(col1, col2)	 
+###double   covar_pop(col1, col2)   
 Returns the population covariance of a pair of numeric columns in the group
 
-####double	 covar_samp(col1, col2)	 
+###double   covar_samp(col1, col2)   
 Returns the sample covariance of a pair of a numeric columns in the group
 
-####double	 corr(col1, col2)	 
+###double   corr(col1, col2)   
 Returns the Pearson coefficient of correlation of a pair of a numeric columns in the group
 
-####double	 percentile(BIGINT col, p)	 
+###double   percentile(BIGINT col, p)   
 Returns the exact pth percentile of a column in the group (does not work with floating point types). p must be between 0 and 1. NOTE: A true percentile can only be computed for integer values. Use PERCENTILE_APPROX if your input is non-integral.
 
-####array<double>	percentile(BIGINT col, array(p1 [, p2]...))	 
+###array<double>  percentile(BIGINT col, array(p1 [, p2]...))   
 Returns the exact percentiles p1, p2, ... of a column in the group (does not work with floating point types). pi must be between 0 and 1. NOTE: A true percentile can only be computed for integer values. Use PERCENTILE_APPROX if your input is non-integral.
 
-####double	 percentile_approx(DOUBLE col, p [, B])	 
+###double   percentile_approx(DOUBLE col, p [, B])   
 Returns an approximate pth percentile of a numeric column (including floating point types) in the group. The B parameter controls approximation accuracy at the cost of memory. Higher values yield better approximations, and the default is 10,000. When the number of distinct values in col is smaller than B, this gives an exact percentile value.
 
-####array<double>	 percentile_approx(DOUBLE col, array(p1 [, p2]...) [, B])	 
+###array<double>   percentile_approx(DOUBLE col, array(p1 [, p2]...) [, B])   
 Same as above, but accepts and returns an array of percentile values instead of a single one.
 
-####array<struct {'x','y'}>	 histogram_numeric(col, b)	 
+###array<struct {'x','y'}>   histogram_numeric(col, b)   
 Computes a histogram of a numeric column in the group using b non-uniformly spaced bins. The output is an array of size b of double-valued (x,y) coordinates that represent the bin centers and heights
 
-####array	 collect_set(col)	 
+###array   collect_set(col)   
 Returns a set of objects with duplicate elements eliminated
 
 The example query below gives an average of one meter reading over all the records.
@@ -149,7 +149,7 @@ gpuser@ubuntu$cd dataset
 
 #Will enter hive shell for issuing hive queries
 
-hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity	 float,	sub_metering_1	 float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED 
+hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED 
 FIELDS TERMINATED BY '\;'
 LINES TERMINATED BY '\n';
 
@@ -184,11 +184,11 @@ Ended Job = job_1365823789752_0011
 Execution completed successfully
 Mapred Local Task Succeeded . Convert the Join into MapJoin
 OK
-2006	10.818931624546664
-2007	8.66401492133901
-2008	8.3997608677086
-2009	9.095407810941456
-2010	9.333240051246847
+2006  10.818931624546664
+2007  8.66401492133901
+2008  8.3997608677086
+2009  9.095407810941456
+2010  9.333240051246847
 Time taken: 123.134 seconds
 ```
 
@@ -198,7 +198,7 @@ Repeat the steps 1 and 2 with original data in place of the sample data.
 
 Confirm that the [original data] is at the path mentioned under.
 
-####Loading data
+###Loading data
 
 ```bash
 
@@ -210,7 +210,7 @@ OK
 Time taken: 5.845 seconds
 ```
 
-####Run the hive query   
+###Run the hive query   
 
 ```bash
 
@@ -221,14 +221,14 @@ Ended Job = job_1365823789752_0003
 Execution completed successfully
 Mapred Local Task Succeeded . Convert the Join into MapJoin
 OK
-2006	10.873181156784284
-2007	8.66401492133901
-2008	8.3997608677086
-2009	9.095407810941456
-2010	9.333240051246847
+2006  10.873181156784284
+2007  8.66401492133901
+2008  8.3997608677086
+2009  9.095407810941456
+2010  9.333240051246847
 Time taken: 64.919 seconds
 
 ```
 
-####Congratulations! You have just finished  the tutorial. Compare the rresults with the MapReduce with Java tutorial.
+###Congratulations! You have just finished  the tutorial. Compare the rresults with the MapReduce with Java tutorial.
 

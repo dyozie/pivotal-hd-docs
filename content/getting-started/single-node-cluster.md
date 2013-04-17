@@ -45,7 +45,7 @@ Set JAVA_HOME  by adding the following lines at the end of ___.bashrc___ file lo
 ```
 Verify the Java installation with the following command:
 
-```bash	
+```bash  
 gpuser@ubuntu:~$source ~/.bashrc
 gpuser@ubuntu:~$java -version  
 ```
@@ -157,24 +157,24 @@ Update the configuration files with the following entries respectively.
 #####yarn-site.xml  
 ```xml
 <configuration>
-	<property>
-		<name>yarn.nodemanager.aux-services</name>
-		<value>mapreduce.shuffle</value>
-	</property>
-	<property>
-		<name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
-		<value>org.apache.hadoop.mapred.ShuffleHandler</value>
-	</property>         
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce.shuffle</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>         
 </configuration>
 ```
 #####core-site.xml
 
 ```xml
 <configuration>
-	<property>
-		 <name>fs.default.name</name>
-		 <value>hdfs://localhost:9000</value>
-	</property>  
+  <property>
+     <name>fs.default.name</name>
+     <value>hdfs://localhost:9000</value>
+  </property>  
 </configuration>
 ```
 
@@ -182,18 +182,18 @@ Update the configuration files with the following entries respectively.
 
 ```xml
 <configuration>
-	<property>
-		<name>dfs.replication</name>
-		<value>1</value>
-	</property>
-	<property>
-		<name>dfs.namenode.name.dir</name>
-		<value>file:/home/gpuser/data/namenode</value>
-	</property>
-	<property>
-		<name>dfs.datanode.data.dir</name>
-		<value>file:/home/gpuser/data/datanode</value>
-	</property>  
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/home/gpuser/data/namenode</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/home/gpuser/data/datanode</value>
+  </property>  
 </configuration>
 ```
 
@@ -203,10 +203,10 @@ If this file does not exist, create it and paste the content provided below:
 ```xml
 <?xml version="1.0"?>
 <configuration>
-	<property>
-		 <name>mapreduce.framework.name</name>
-		 <value>yarn</value>
-	</property>
+  <property>
+     <name>mapreduce.framework.name</name>
+     <value>yarn</value>
+  </property>
 </configuration>
 ```
 
@@ -323,7 +323,7 @@ starting historyserver, logging to /home/gpuser/hadoop-2.0.3-alpha/logs/mapred-g
 gpuser@ubuntu:~/hadoop-2.0.3-alpha$jps
 18509 Jps
 17107 NameNode
-17170 DataNode	    
+17170 DataNode      
 17252 ResourceManager
 17309 NodeManager
 17626 JobHistoryServer    
@@ -366,8 +366,8 @@ Run the wordcount MapReduce program
 
 ```bash
 gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop jar \
-		share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar 
-		wordcount /input /output  
+    share/hadoop/mapreduce/hadoop-mapreduce-examples-2.*-alpha.jar 
+    wordcount /input /output  
 
 gpuser@ubuntu:~/hadoop-2.0.3-alpha$ bin/hadoop dfs -ls /
 DEPRECATED: Use of this script to execute hdfs command is deprecated.

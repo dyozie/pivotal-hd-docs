@@ -91,7 +91,7 @@ p code {
 .content h2 {
   font-size: 25px;
   font-weight: bold;
-  height: 32px;
+  min-height: 32px;
   line-height: 32px;
   margin-bottom: 10px;
   color: rgb(75, 170, 71);

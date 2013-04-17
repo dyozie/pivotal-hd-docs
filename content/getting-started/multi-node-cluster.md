@@ -18,12 +18,12 @@ This tutorial has been tested with the following software versions:
 
     Ubuntu Linux 12.04 LTS
     JDK 1.7 
-	
+  
 Through out the tutorial,commands to be executed on the master and slave node are mentioned as follows:  
 
-#####master	-	execute commands on the master node
+#####master  -  execute commands on the master node
 
-#####slave	- 	execute commands on the slave node
+#####slave  -   execute commands on the slave node
 
 Overview
 --------
@@ -65,9 +65,9 @@ slave - 172.16.109.128
 * Edit /etc/hosts on the both master and slave. Add the following lines in /etc/hosts file
 
 ```xml
-localhost	127.0.0.1
-172.16.109.1	master
-172.16.109.128	slave
+localhost  127.0.0.1
+172.16.109.1  master
+172.16.109.128  slave
 ```
 
 Make sure other entries are removed or commented in the/etc/hosts file.
