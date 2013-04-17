@@ -6,9 +6,10 @@ Overview
 -------
 
 A brief overview of yarn archtecture is show below:
+
 ![yarn](/images/yarn-architecture.png)
 
-FIG. 2  YARN Architecture
+**FIG. 2  YARN Architecture**
 
 YARN allows applications to launch any process and, unlike existing Hadoop MapReduce in hadoop-1.x (aka MR1), it isn’t limited to Java applications alone. Yarn has the following main services.
 
@@ -33,5 +34,3 @@ This granualirty in define resources and allocating them allows the resource man
 
 ###History Server
 History server maintains the history of all the jobs. After a job is complere, application master will not longer be available for any queries. The designers chose to have an independent history server for managing the history of the jobs.
-
-

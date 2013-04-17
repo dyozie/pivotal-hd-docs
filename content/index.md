@@ -11,7 +11,7 @@ The goal of the document is to give a brief introduction to Hadoop version 2.x p
 
 ![HBase](/images/hbase2.jpeg)
 
-FIG.1 An overview of HBase
+**FIG.1 An overview of HBase**
 
 The amount of data is expanding rapidly. The new era of business intelligence is here with Big data. Big data is being generated continuosly from various sources. The examples of big data sources include Web logs, RFID and sensor data, social networks, Internet search indexing, call detail records, military surveillance and complex data in astronomic, bio/geo chemical, genomics, and atmospheric sciences. The volume of Big Data is creating challenges in capturing, storing, searching, sharing, analysis and visualization of the data. 
 
@@ -87,8 +87,11 @@ Within Hadoop, the data is divided into blocks, and copies of these blocks are s
 With this kind of architecture Hadoop can scale to thousands of machines, providing built-in fault tolerance and fault compensation capabilities. 
 
 An overview of HDFS architecture is shown below:
-[HDFS Architecture](/images/hdfs-diagram.png)
-FIG. 1
+
+![HDFS Architecture](/images/hdfs-diagram.png)
+
+**FIG. 1**
+
 The replication factor provides the fault tolerance for the data and helps increase the performance using Data locality. 
 The map and reduce functions are executed on smaller subsets of your larger data sets, and 
 this provides the scalability that is needed for big data processing.
@@ -107,8 +110,10 @@ YARN
 Hadoop version 1.0 had Jobtracker taking care resource management and job scheduling. With the new architecture, resource management and jobs scheduling has becomer separate services.
 
 A brief overview of yarn archtecture is show below:
+
 ![yarn](/images/yarn.png)
-FIG. 2  YARN Architecture
+
+**FIG. 2  YARN Architecture**
 
 YARN allows applications to launch any process and, unlike existing Hadoop MapReduce in hadoop-1.x (aka MR1), it isn’t limited to Java applications alone. Yarn has the following main services.
 

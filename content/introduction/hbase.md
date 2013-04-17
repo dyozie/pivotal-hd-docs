@@ -15,12 +15,12 @@ An overview of HBase is shown below:
 
 ![HBase](/images/hbase2.jpeg)
 
-FIG. 1 HBase Overview
+**FIG. 1 HBase Overview**
 
 
 ![HBase](/images/hbase3.jpeg)
 
-FIG. 2 HBase Table
+**FIG. 2 HBase Table**
 
 
 These cells are sorted by the row key. This is a very important property as it allows for searching ("give me all values for which the key is between X and Y"), rather than just retrieving a value for a known key.
@@ -58,5 +58,5 @@ An over view of HBase architecture is shown below:
 
 ![Hive](/images/hbase1.png)
 
-FIG. 2 HBase Architecture overview
+**FIG. 2 HBase Architecture overview**
 

@@ -71,6 +71,7 @@ p code {
   font-size: 15px;
   color: rgb(88, 89, 91);
   margin-bottom: 12px;
+  text-align: justify;
 }
 
 .content h3 {
@@ -78,6 +79,7 @@ p code {
   font-weight: bold;
   height: 22px;
   margin-bottom: 5px;
+  padding-top: 5px;
 }
 
 .content h4 {
@@ -91,8 +93,12 @@ p code {
   font-weight: bold;
   height: 32px;
   line-height: 32px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: rgb(75, 170, 71);
+}
+
+.content h5 {
+  font-size: 15px;
 }
 
 .content ul li {
