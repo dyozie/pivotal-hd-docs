@@ -32,6 +32,7 @@ $(function() {
     $(this).hasClass('js-current') != true){
       $(this).find('.js-guides').children().hide()
     } else {
+      $(this).find('.js-guides').show()
       activeItem = $(this).index()
       firstOccurrence = false
     }
@@ -57,6 +58,7 @@ $(function() {
       return true;
     } else if(activeItem != clickedTopic.index()){
       if(helpList.eq(activeItem)){
+        $(this).siblings('.js-guides').show()
         helpList.eq(activeItem).find('.js-guides li').toggle(100)
       }
       activeItem = clickedTopic.index()

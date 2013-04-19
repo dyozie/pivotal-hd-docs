@@ -134,8 +134,13 @@ li.expanded, li.collapsed, li.leaf {
 	width: 776px;
 }
 
+.js-guides {
+	display: none;
+}
+
 .js-subguides {
 	margin-left: 10px;
+	display: none;
 }
 
 .js-inner-subguides {
