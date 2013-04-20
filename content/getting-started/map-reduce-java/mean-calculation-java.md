@@ -27,11 +27,13 @@ The [data set](/getting-started/dataset.html) selected provides the electicity c
 A Sample from the data set   
 .`date`........`time`.... `KW`...`KVAR`...`V(i)`....`I(i)`..`kw1`...`kw2`...`kw3 `    
 
-16/12/2006,17:24:00,4.216,0.418,234.840,18.400,0.000,1.000,17.000    
-16/12/2006,17:25:00,5.360,0.436,233.630,23.000,0.000,1.000,16.000    
-16/12/2006,17:26:00,5.374,0.498,233.290,23.000,0.000,2.000,17.000    
-16/12/2006,17:27:00,5.388,0.502,233.740,23.000,0.000,1.000,17.000    
-16/12/2006,17:28:00,3.666,0.528,235.680,15.800,0.000,1.000,17.000    
+16/12/2006;17:24:00;4.216;0.418;234.840;18.400;0.000;1.000;1.000    
+16/12/2006;17:25:00;5.360;0.436;233.630;23.000;0.000;1.000;1.000    
+16/12/2006;17:26:00;5.374;0.498;233.290;23.000;0.000;2.000;2.000    
+16/12/2006;17:27:00;5.388;0.502;233.740;23.000;0.000;2.000;2.000    
+16/12/2006;17:28:00;3.666;0.528;235.680;15.800;0.000;1.000;1.000    
+02/05/2008;17:26:00;5.374;0.498;233.290;23.000;0.000;2.000;2.000
+16/11/2010;17:27:00;5.388;0.502;233.740;23.000;0.000;2.000;2.000
 
 Approach
 --------
@@ -70,13 +72,32 @@ Download the exercise from [here](/code/average_energy.tar.gz "here") and extrac
 ###Step 2: Designing the mapper
 The mapper function will  process each input record to calculate the sum of energy values of the three meters. The output key is the 'year' which is parsed from the data attribute. The output value is the sum of three columns: sub_metering_1,sub_metering_2,sub_metering_3. 
 
-Copy the following code and paste it to the map method.
 
 #### Mapper code:
+The mapper code is shown below:
+
+```xml
+public class AverageConsumptionMapper extends
+		Mapper<LongWritable, Text, IntWritable, DoubleWritable>  {
+
+....
+
+@Override
+	protected void map(LongWritable key, Text value, Context context)
+			throws IOException, InterruptedException {
+		
+	}
+
+}
+
+```
+Each line of input is passed as Key, Value to the map method of mapper. See that, the Key(LongWritable) and Value(Text) datatypes should be correct and should be same as that of defined in the class while extending the Mapper Abstract class as shown above:
+
+Copy the following code and paste it to the map method.
 
 ```java
 // check if record is valid
-if (isValidRecord(value.toString())) {
+if (!isValidRecord(value.toString())) {
   return;
 }
 
@@ -90,12 +111,32 @@ year.set(record.getYear());
 consumption.set(sumOfMeters);
 context.write(year, consumption);
 ```
+The code checks if the line is valid. If valid, the line is parsed to a POJO class.
+The sum of meters readings is calculated and writtn to the local disk of the mapper using context.write api.
 
 ###Step 3: Designing the Reducer  
 
 THe reducer iterates through all the values for the year, sum is calculated by adding the present value to the cumulative value and  increments the count. Finally, the average consumption for the year is calculated by dividing the sum by the total count.
 
+
 ####Reducer code  
+The Reducer code is shown below:
+```xml
+public class AverageConsumptionReducer extends
+		Reducer<IntWritable, DoubleWritable, IntWritable, DoubleWritable> {
+
+...
+
+	@Override
+	protected void reduce(IntWritable key, Iterable<DoubleWritable> values,
+			Context context) throws IOException, InterruptedException {
+
+	}
+```
+The output of Mapper is passed to Reducer as Key and list of values. The output of all the maps is grouped with a common key and send to the Reducer grouped by the common key.
+The Key(IntWritable) and values (Iterable<DoubleWritable> values) are passed to the Reducer.
+
+Copy the following code and paste it to the Reduce method.
 
 ```java
 double totalVolume = 0.0;
@@ -109,7 +150,50 @@ consumption.set(mean);
 context.write(key, consumption);
 ```
 
-###Step 4: Unit testing Mapper
+###Step 4: Writing the MapReduce Driver Code
+The MapReducer Driver code is shown below:
+
+```xml
+Job job = new Job(new Configuration());
+job.setJarByClass(AverageConsumptionDriver.class);
+
+job.setMapperClass(AverageConsumptionMapper.class);
+job.setReducerClass(AverageConsumptionReducer.class);
+
+job.setInputFormatClass(TextInputFormat.class);
+
+job.setMapOutputKeyClass(IntWritable.class);
+job.setMapOutputValueClass(DoubleWritable.class);
+
+job.setOutputKeyClass(IntWritable.class);
+job.setOutputValueClass(DoubleWritable.class);
+
+FileInputFormat.addInputPath(job, new Path(args[0]));
+
+Path output = new Path(args[1]);
+FileSystem.get(new Configuration()).delete(output, true);
+FileOutputFormat.setOutputPath(job, output);
+
+int result = job.waitForCompletion(true) ? 0 : 1;
+System.exit(result);
+```
+
+The MapReducer Driver is a simply a main program that creates the Job and Submits the Job.
+The driver does the following:
+
+* Create the Job with the configuration. Since we are running the program in eclipse and standalone mode, the configuration object takes the default values.
+* setJarByClass(AverageConsumptionDriver.class) - Informs the MapRedeuce Framework to run this main class
+* setMapperClass(AverageConsumptionMapper.class)  - Sets the mapper to AverageConsumptionMapper
+* setReducerClass(AverageConsumptionReducer.class)  - Sets the Reducer to AverageConsumptionReducer
+* setInputFormatClass(TextInputFormat.class)  - Depends in the inputformation. In this example, we are using TextInputFormat.
+* setMapOutputKeyClass(IntWritable.class) - Sets the output key class for the mapper.
+* setMapOutputValueClass(DoubleWritable.class) - Sets the output value class for the mapper. The output is written to the local disk of the mapper
+* setOutputKeyClass(IntWritable.class) - Sets the output Key class for the Reducer, which is also the Output of the MapReduce Job
+* setOutValueClass(DoubleWritable.class) - Sets the output value class for the Reducer
+* FileInputFormat.addInputPath() - Set the input path for the MapReduce Job
+* FileInputFormat.setOutputPath() - Set the ouput path for the MapReduce Job
+
+###Step 5: Unit testing Mapper
 
 We use __MRUnit__ to write various tests for this Job. Three key classes in MRUnits are MapDriver for __Mapper Testing__, __ReduceDriver__   for Reducer Testing and __MapReduceDriver__ for end to end MapReduce Job testing.    
 MRUnit is a test framework  to unit test MapReduce code.  It should be noted that MRUnit supports both the old (org.apache.hadoop.mapred)    and new (org.apache.hadoop.mapreduce) MapReduce APIs          
@@ -163,7 +247,7 @@ Key ----  2006
 Value ---   18.0
 ```
 
-###Step 5: Unit Testing Reducer
+###Step 6: Unit Testing Reducer
 It is done by using ReduceDriver class and only tests the reduce function .     
 (_Specify the key/value input and output types for the reducer being tested in this class._)  
 
@@ -199,7 +283,7 @@ Key-- 2006
 Values—3.0
 ``` 
 
-###Step 6: Testing Mapper and Reducer together
+###Step 7: Testing Mapper and Reducer together
    
 MRUnit also supports testing the map and reduce functions in the same test. It is done by using MapReduceDriver class and  tests both the map and reduce functions  
   
@@ -250,30 +334,64 @@ Output:
 2006   18.00
 ```
 
-###Step 7: Running the Map-Reduce execution from the command line
+###Step 8: Running the Map-Reduce  in eclipse
+
+The MapReduce programs can run in standalone mode in Eclipse. The Mapper and Reducer programs are designed, developed and tested before running them on the cluster. With eclipse IDE, the mapper and reducer code can also be debugged in case of issues. This allows developer to process data for all kinds of sample input before running it in the cluster.
+
+From Eclipse Main Menu, select Run and Run Configuration
+
+![Run in Eclipse](/images/gs/avg_energy/run.png)
+
+Select the AverageConsumptionDriver in the PackageBrowser and click + sign on the top right handside to create a Run Configuration.
+Edit the Arguments by supplying input path of the file and output folder.
+
+![Run in Eclipse](/images/gs/avg_energy/arguments.png)
+
+Click Run to run the MapReduce program.
+The console output should be as follows:
+
+![Run in Eclipse](/images/gs/avg_energy/console.png)
+
+The output can be seen in the output directory.
+
+```bash
+#ls
+#ls output
+_SUCCESS	part-r-00000
+
+#cat part-r-00000
+2006	2.8
+2008	4.0
+2010	4.0
+```
+
+###Step 9: Running the Map-Reduce execution in the cluster
 
 Load data into HDFS. 
 
 ```bash
 cd $HADOOP_HOME
-$bin/hadoop dfs -copyFromLocal /home/laxman/input/household.txt /household
+$bin/hadoop dfs -copyFromLocal /home/laxman/input/sample-data.txt /household
 ```   
 
 Go to the project home directory and issue the build command using maven
 Replace the PROJECT_DIR with the directory of the project.
 The command will build the project and creates the jar file in target dir as GettingStarted-0.0.1-SNAPSHOT.jar
 
+Make sure that HADOOP_HOME is to hadoop installation directory. The program picks up the configuration files from HADOOP_HOME directory.
+Otherwise, the MapReduce program will run in standalone mode
+
 ```bash
 cd PROJECT_DIR
 $ mvn package
 
-#Now change dir to HADOOP_HOME and run the mapreduce job.
-
 cd $HADOOP_HOME
-
 $bin/hadoop jar project_dir/target/GettingStarted-0.0.1-SNAPSHOT.jar com.pivotal.hadoop.summary.AverageConsumptionDriver /household /output
+```
 
-#The following output is seen on the console.
+The following output is seen on the console.
+
+```xml
 13/04/13 11:51:52 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 13/04/13 11:51:53 INFO service.AbstractService: Service:org.apache.hadoop.yarn.client.YarnClientImpl is inited.
 13/04/13 11:51:53 INFO service.AbstractService: Service:org.apache.hadoop.yarn.client.YarnClientImpl is started.
@@ -359,7 +477,7 @@ File Output Format Counters
 ```   
 
 
-###Step 7: Checking the output
+###Step 10: Checking the output
 To see output, type   
 
 ```java
