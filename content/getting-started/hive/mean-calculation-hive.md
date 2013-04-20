@@ -1,5 +1,5 @@
 ---
-title: Basic Example on MapReduce
+title: Basic Example using Hive
 ---
 
 Compute the Average energy consumption of a household per year
@@ -8,7 +8,7 @@ The given data set has energy consumption of the households for 5 years. The dat
 for the past 5 years. The goal of the tutorial is to compute the average energy consumption of the household per year.
 
 Use case
---------
+-------
 To find out the mean consumption of house hold energy for consequtive years from 2006 to 2010.
 
 Prerequisites
@@ -34,13 +34,23 @@ Sample data set
 02/05/2008;17:26:00;5.374;0.498;233.290;23.000;0.000;2.000;2.000
 16/11/2010;17:27:00;5.388;0.502;233.740;23.000;0.000;2.000;2.000
 
-
 To find out the mean consumption of house hold energy for consequtive years from 2006 to 2011. 
 
+The full data set obtained from [here](http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption).
 
 Approach
 --------
-The following are built-in aggregate functions are supported in Hive:
+The use case very typical in most of the dataware housing applications. In relational databases, one has to create the table schema before inserting the data. With Hadoop and Hive combination, one need not worry about schema at the time of creation. With Hive, logical schema can be deduced giving the power to user to consumer the data when requrired. 
+
+Since, Hive is like SQL query language, the logical stucture can be created using SQL syntax. Once the table is created, we can query the databases with DML staatemente. Hive supports richer tuples like Bag, Array and Maps unlike standard SQL.
+
+The following are the steps for analyzing the data using Hive:
+
+* Get the sample of the data from the bigdata, understand the structure and map the structure to an SQL Like table. SQL like, since Hive supports richer data types. Hive also regular expressions while deducing the data and can be used to deal with several different structures of data 
+* Create the logical schema using SQL statemnts.
+* Write queries using Hive similar to SQL. Hive suppots multiple joins, order by, group clauses, like queries.
+
+Hive comes with several aggregate buit-in functions and are mentioned below: 
 
 ##Built in Functions in Hive
 
@@ -99,7 +109,7 @@ Computes a histogram of a numeric column in the group using b non-uniformly spac
 ###array   collect_set(col)   
 Returns a set of objects with duplicate elements eliminated
 
-The example query below gives an average of one meter reading over all the records.
+A sample query below gives an example of average of one meter reading over all the records.
 
 ```bash
 
@@ -129,25 +139,44 @@ The GROUP BY statement is often used in conjunction with aggregate functions to 
 
 
 Working with the tutorial
-------------------------
+-----------------------
 
-###Step 1: Create the sample from the original dataset
+###Step 1: Create the sample data from the original dataset
 
-Use any text editor and copy the  above sample data into sample.csv file
+Use any text editor and copy the  above sample data into dataset/sample.csv file
 
-```bash
-gpuser@ubuntu$mkdir dataset
-gpuser@ubuntu$cd dataset
-
-#copy the contents to sample.csv
+```xml
+16/12/2006,17:24:00,4.216,0.418,234.840,18.400,0.000,1.000,1.000    
+16/12/2006,17:25:00,5.360,0.436,233.630,23.000,0.000,1.000,1.000    
+16/12/2006,17:26:00,5.374,0.498,233.290,23.000,0.000,2.000,2.000    
+16/12/2006,17:27:00,5.388,0.502,233.740,23.000,0.000,2.000,2.000    
+16/12/2006,17:28:00,3.666,0.528,235.680,15.800,0.000,1.000,1.000    
+02/05/2008;17:26:00;5.374;0.498;233.290;23.000;0.000;2.000;2.000
+16/11/2010;17:27:00;5.388;0.502;233.740;23.000;0.000;2.000;2.000
 ```
+
+A single line of data is shown below:
+
+16/11/2010;17:27:00;5.388;0.502;233.740;23.000;0.000;2.000;2.000
+
+The fileds are separated by ';' and can be used to split the line to fields using this separator.  
 
 ###Step 2: Create Hive Table
 
-```bash
-#hive -x
+The queries can be designed and tried out in local mode before running with the Hadoop Clusters.
+Hive compiler generates map-reduce jobs for most queries. These jobs are then submitted to the Map-Reduce cluster. The queries can be run locally by setting  the variable: 
 
-#Will enter hive shell for issuing hive queries
+```bash
+
+#hive -x
+hive> SET mapred.job.tracker=local;
+'''
+
+###Step 2: Create Hive table
+
+```bash
+#hive -x 
+hive> SET mapred.job.tracker=local;
 
 hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED 
 FIELDS TERMINATED BY '\;'
@@ -156,15 +185,15 @@ LINES TERMINATED BY '\n';
 OK
 Time taken: 0.156 seconds
 ```
+See that the create table has fields terminated by ";" and lines terminated by "\n"
 
 ###Step 3: Loading data
-
-Confirm that the [sample data] is at the path mentioned below.
+Load the data into the table from the sample.csv
 
 ```bash
-
+#hive -x 
+hive> SET mapred.job.tracker=local;
 hive>LOAD DATA LOCAL INPATH '../dataset/sample.csv' INTO TABLE household_pwr_consumption;
-
 
 Copying data from file:/home/gpuser/dataset/sample.csv
 Copying file: file:/home/gpuser/dataset/sample.csv
@@ -176,8 +205,12 @@ Time taken: 0.367 seconds
 ###Step 4: Run the hive query with Sample Data   
    
 ```bash
-
-hive>select substring(powerdate,length(powerdate)-3,length(powerdate)) as year , avg(Sub_metering_1)+avg(Sub_metering_2)+avg(Sub_metering_3) as average from household_pwr_consumption group by substring(powerdate,length(powerdate)-3,length(powerdate));
+#hive -x 
+hive> SET mapred.job.tracker=local;
+hive> select substring(powerdate,length(powerdate)-3,length(powerdate)) as year, 
+	avg(Sub_metering_1)+avg(Sub_metering_2)+avg(Sub_metering_3) as average 
+	from household_pwr_consumption 
+	group by substring(powerdate,length(powerdate)-3,length(powerdate));
 
 MapReduce Total cumulative CPU time: 51 seconds 540 msec
 Ended Job = job_1365823789752_0011
@@ -192,23 +225,33 @@ OK
 Time taken: 123.134 seconds
 ```
 
-###Step 5: Testing the  Query with full dataset
+###Step 5: Testing the  Query with full dataset on HDFS Cluster
 
-Repeat the steps 1 and 2 with original data in place of the sample data. 
+Copy the full data set to hdfs using the command
 
-Confirm that the [original data] is at the path mentioned under.
+```bash
+bin/hadoop fs -put original.csv /usr/gpuser/dataset/orignial.csv
+
+```
 
 ###Loading data
 
 ```bash
+#hive  -x
 
-hive>LOAD DATA LOCAL INPATH '../dataset/original.csv' INTO TABLE household_pwr_consumption;
-Copying data from file:/home/gpuser/dataset/original.csv
-Copying file: file:/home/gpuser/dataset/original.csv
-Loading data to table default.household_pwr_consumption
-OK
+hive>drop table household_pwr_consumption;
+
+hive>SET mapred.job.tracker=localhost:50030
+
+hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\;'
+LINES TERMINATED BY '\n';
+LOCATION '/usr/gpuser/dataset/orignial.csv'
+
 Time taken: 5.845 seconds
+
 ```
+See that the LOCATION is pointing to the correct location of the file in HDFS.
 
 ###Run the hive query   
 

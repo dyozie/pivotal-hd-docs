@@ -36,7 +36,7 @@ A Sample from the data set
 Approach
 --------
 
-Map- Reduce functions can be implemented by using the 'Key-value ' pair. By taking  'year' as  __key__, we can group the values year wise. By taking the sum of all the sub-meter readings as __value__, we form the key-value pair. The sum values will be used by the reducer to find  mean for the selected key value i.e., the year. 
+Map-Reduce functions can be implemented by using the 'Key-value ' pair. By taking  'year' as  __key__, we can group the values year wise. By taking the sum of all the sub-meter readings as __value__, we form the key-value pair. The sum values will be used by the reducer to find  mean for the selected key value i.e., the year. 
 
 ![map_reduce](/images/map_reduce.png)
 
