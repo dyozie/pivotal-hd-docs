@@ -80,10 +80,8 @@ The default properties can be overriden with the configuration directory that Hi
 The Hive shell is only one of several services that you can run using the hive command.
 Type hive –service help to get a list of available service names; the most useful are described below.
 
-*cli
-     The command line interface to Hive (the shell). This is the default service.
-* hiveserver
-Runs Hive as a server exposing a Thrift service, enabling access from a range of clients written in different languages. Applications using the Thrift, JDBC, and ODBC connectors need to run a Hive server to communicate with Hive. Set the HIVE_PORT environment variable to specify the port the server will listen on (defaults to 10,000).
+* cli -  The command line interface to Hive (the shell). This is the default service.
+* hiveserver - Runs Hive as a server exposing a Thrift service, enabling access from a range of clients written in different languages. Applications using the Thrift, JDBC, and ODBC connectors need to run a Hive server to communicate with Hive. Set the HIVE_PORT environment variable to specify the port the server will listen on (defaults to 10,000).
 
 ###Data Model
 Hive organizes tables into partitions, a way of dividing a table into coarse-grained parts based on the value of a partition column, such as date. Using partitions can make it faster to do queries on slices of the data.
