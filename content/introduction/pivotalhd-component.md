@@ -21,8 +21,6 @@ An overview of Pivotal HD components is shown in FIG. 1
 
 * YARN - A framework for running distributed applications. MapReduce is one such application.
 
-_A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)_
-
 * HBase - A columnar, sparsely distributed data base.
 
 * Hive - A framework for running  SQL like queries.
