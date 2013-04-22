@@ -26,7 +26,7 @@ YARN allows applications to launch any process and, unlike existing Hadoop MapRe
 
 A brief overview of yarn archtecture is show below:
 
-![yarn](/images/yarn-architecture.png)
+![yarn](/images/introduction/yarn.png)
 
 **FIG. 2  YARN Architecture**
 

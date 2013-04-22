@@ -14,7 +14,7 @@ Pivotal HD comes packed with lot of tools on the top of Apache Hadoop 2.0 distro
 
 An overview of Pivotal HD components is shown in FIG. 1
 
-![Pivotal HD Architecture](/images/pivotalhd_architecture.png)
+![Pivotal HD Architecture](/images/introduction/phd.png)
 
 
 * HDFS - Hadoop File System, a distributed storage system.
@@ -33,7 +33,7 @@ An overview of Pivotal HD components is shown in FIG. 1
 
 * DataLoader - A massively parallel SQL query engine
 
-* Sqoop - A massively parallel SQL query engine
+* Sqoop - A tool for importing data from Database to HDFS and viceversa 
 
-* Flume - A massively parallel SQL query engine
+* Flume - A scalable data importing system to Hadoop
 

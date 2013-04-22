@@ -170,7 +170,7 @@ Hive compiler generates map-reduce jobs for most queries. These jobs are then su
 
 #hive -x
 hive> SET mapred.job.tracker=local;
-'''
+```
 
 ###Step 2: Create Hive table
 
@@ -181,7 +181,6 @@ hive> SET mapred.job.tracker=local;
 hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED 
 FIELDS TERMINATED BY '\;'
 LINES TERMINATED BY '\n';
-
 OK
 Time taken: 0.156 seconds
 ```
@@ -207,10 +206,7 @@ Time taken: 0.367 seconds
 ```bash
 #hive -x 
 hive> SET mapred.job.tracker=local;
-hive> select substring(powerdate,length(powerdate)-3,length(powerdate)) as year, 
-	avg(Sub_metering_1)+avg(Sub_metering_2)+avg(Sub_metering_3) as average 
-	from household_pwr_consumption 
-	group by substring(powerdate,length(powerdate)-3,length(powerdate));
+hive> SELECT SPLIT(powerdate, '\\/')[2],avg(Sub_metering_1 + Sub_metering_2 + Sub_metering_3)from household_pwr_consumption group by SPLIT(powerdate, '\\/')[2];
 
 MapReduce Total cumulative CPU time: 51 seconds 540 msec
 Ended Job = job_1365823789752_0011
@@ -230,11 +226,11 @@ Time taken: 123.134 seconds
 Copy the full data set to hdfs using the command
 
 ```bash
-bin/hadoop fs -put original.csv /usr/gpuser/dataset/orignial.csv
+gpuser@master:~/hadoop-2.0.3-alpha$ bin/hadoop fs -put /home/gpuser/dataset/original.csv /usr/gpuser/dataset/orignial.csv
 
 ```
 
-###Loading data
+###Creating Table and Loading data
 
 ```bash
 #hive  -x
@@ -243,21 +239,21 @@ hive>drop table household_pwr_consumption;
 
 hive>SET mapred.job.tracker=localhost:50030
 
-hive>CREATE TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\;'
-LINES TERMINATED BY '\n';
-LOCATION '/usr/gpuser/dataset/orignial.csv'
+hive>CREATE EXTERNAL TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED
+     FIELDS TERMINATED BY '\;'
+     LINES TERMINATED BY '\n'
+     LOCATION '/usr/gpuser/dataset';
 
 Time taken: 5.845 seconds
 
 ```
-See that the LOCATION is pointing to the correct location of the file in HDFS.
+The Create External Table will create the table in the Hive Meta DB store. The Location specified should be a directory where the data files are available. One could also try LOADING the data as demonstrated with the sample dataset.
 
 ###Run the hive query   
 
 ```bash
 
-hive>select substring(powerdate,length(powerdate)-3,length(powerdate)) as year , avg(Sub_metering_1 + Sub_metering_2 + Sub_metering_3) as average from household_pwr_consumption group by year;
+hive>SELECT SPLIT(powerdate, '\\/')[2],avg(Sub_metering_1 + Sub_metering_2 + Sub_metering_3)from household_pwr_consumption group by SPLIT(powerdate, '\\/')[2];
 
 MapReduce Total cumulative CPU time: 44 seconds 100 msec
 Ended Job = job_1365823789752_0003
@@ -273,5 +269,8 @@ Time taken: 64.919 seconds
 
 ```
 
+You can see that output in the console.
+
 ###Congratulations! You have just finished  the tutorial. Compare the rresults with the MapReduce with Java tutorial.
+
 
