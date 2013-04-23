@@ -22,7 +22,7 @@ About Hive
 
 An overview of Hive is shown below:
 
-![Hive](/images/hive1.jpg)
+![Hive](/images/introduction/hive.png)
 
 **FIG. 1 Hive Overview**
 

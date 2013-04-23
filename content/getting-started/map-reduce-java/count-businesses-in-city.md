@@ -238,11 +238,7 @@ public void testCityBusinessMapperReducer() throws Exception {
 
 ###Step 8: Running the Map-Reduce  in eclipse
 
-The CityBusinessDriver main class can be executed from within the eclipse IDE. Follow the MeanCalculationExample to run the MapReduce Program in the eclipse IDE.
-
-###Step 9: Running the Map-Reduce execution in the cluster
-
-TBD..
+The CityBusinessDriver main class can be executed from within the eclipse IDE. Follow the Average Energy Consumption exercise to run the MapReduce Program in the eclipse IDE.
 
 ###Congratulations! You have successfully completed Exercise 2 of 'Map-Reduce with Java'
 The solution is available __[here](/code/count-businesses-incity.tar.gz "here")__

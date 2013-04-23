@@ -66,7 +66,9 @@ History server maintains the history of all the jobs. After a job is complere, a
 
 A brief overview of how YARN works is shown in Fig. 2
 
-![yarn-walkthro](/images/introduction/rmdetails.jpg)
+![yarn-walkthro](/images/introduction/rmdetails.png)
+
+Fig. 2  A detailed walk-thro of component interactions in Yarn
 
 The following are the steps to run an Application on YARN cluster.
 
@@ -79,9 +81,9 @@ The following are the steps to run an Application on YARN cluster.
 * [7] The Resource Manager returns a list of containers.
 * [8] Application Master requests the Node Manager to launch the containers for that particular job
 * [9] Node Manager creates the container. Container executes the client specific code on the cotainer  
-* [10] Client can ask for Application report to the Applications Manager
-* [11] Applications manager replies with the report
+* [10] Application master manages the job execution till the job is complete 
+* [11] Client asks for Application status report
 
 ###Migrating older MapReduce applications to run on YARN (Hadoop 2.0):
 
-All client-facing MapReduce interfaces are unchanged, which means that there is no need to make any source code changes to run on top of Hadoop 2.0.
+The MapReduce API and interfaces are sames as Hadoop 1.x and hence no code changes are required to to move MapReduce applications from Hadoop 1.x to 2.x.

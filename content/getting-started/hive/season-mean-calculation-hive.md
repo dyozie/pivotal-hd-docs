@@ -116,8 +116,6 @@ Time taken: 0.367 seconds
 
 ###Step 4: Run the hive query with Sample Data   
 
-
-
 The intermediate table household_season_average can also be created using the following command:
 
 ```xml
@@ -142,19 +140,17 @@ group by SPLIT(powerdate, '\\/')[2],split(powerdate, '\\/')[1];
 ```bash
 
 
-hive> SELECT SEASON,YEAR,AVG(total_metering) FROM household_season_average WHERE SEASON IN ('Winter','spring','Summer','Autumn') GROUP BY YEAR,SEASON;
+hive> SELECT SEASON,YEAR,AVG(total_metering) FROM household_season_average WHERE SEASON IN ('Winter','spring','Summer','Autumn') GROUP BY SEASON,YEAR;
 
 MapReduce Jobs Launched: 
 Job 0: Map: 1  Reduce: 1   Cumulative CPU: 4.05 sec   HDFS Read: 503 HDFS Write: 148 SUCCESS
 Total MapReduce CPU Time Spent: 4 seconds 50 msec
 OK
-Summer	2006	18.25
-Winter	2006	17.5
-spring	2006	18.166685104370117
-Winter	2007	17.166666984558105
-spring	2008	18.5
-Summer	2009	18.0
-spring	2009	17.5
+Summer    2009    6.554104637179215
+Summer    2010    6.851599270520128
+Winter    2006    10.873181156784284
+Winter    2007    10.515401433911585
+Winter    2008    9.009141332648413
 Time taken: 27.491 seconds
 ```
 ###Step 5: Testing the  Query with full dataset on HDFS Cluster
@@ -177,16 +173,24 @@ hive>drop table household_season_average;
 
 hive>SET mapred.job.tracker=localhost:50030
 
-hive>CREATE EXTERNAL TABLE IF NOT EXISTS household_pwr_consumption(powerdate string,time string,global_active_power float,global_reactive_power  float,voltage float,global_intensity   float,  sub_metering_1   float,sub_metering_2 float,sub_metering_3 float)ROW FORMAT DELIMITED
-     FIELDS TERMINATED BY '\;'
-     LINES TERMINATED BY '\n'
-     LOCATION '/usr/gpuser/dataset';
+hive>CREATE EXTERNAL TABLE IF NOT EXISTS household_pwr_consumption(powerdate string, \
+	time string, \
+	global_active_power float, \
+	global_reactive_power  float,\
+	voltage float, \
+	global_intensity   float,  \
+	sub_metering_1   float, \
+	sub_metering_2 float, \
+	sub_metering_3 float) \
+	ROW FORMAT DELIMITED \
+	FIELDS TERMINATED BY '\;' \
+	LINES TERMINATED BY '\n' \
+	LOCATION '/usr/gpuser/dataset';
 
 Time taken: 5.845 seconds
 
 ```
 See that the LOCATION is pointing to the correct location of the file in HDFS.
-
 
 ###Run the hive query   
 
@@ -221,16 +225,30 @@ Time taken: 29.313 seconds
 
 ```bash
 
-hive>SELECT SEASON,YEAR,AVG(total_metering) 
-	FROM household_season_average 
-	WHERE SEASON IN ('Winter','spring','Summer','Autumn') 
-	GROUP BY YEAR,SEASON;
+hive>SELECT SEASON,YEAR,AVG(total_metering) \
+	FROM household_season_average  \
+	WHERE SEASON IN ('Winter','spring','Summer','Autumn')  \
+	GROUP BY SEASON,YEAR;
 
 MapReduce Jobs Launched: 
 Job 0: Map: 1  Reduce: 1   Cumulative CPU: 4.52 sec   HDFS Read: 34297 HDFS Write: 511 SUCCESS
 Total MapReduce CPU Time Spent: 4 seconds 520 msec
 OK
-TBD
+Autumn    2007    8.900047306803538
+Autumn    2008    8.851105225397083
+Autumn    2009    9.766095281571333
+Autumn    2010    9.041768318327808
+Summer    2007    6.685403431096115
+Summer    2008    6.430287726560312
+Summer    2009    6.554104637179215
+Summer    2010    6.851599270520128
+Winter    2006    10.873181156784284
+Winter    2007    10.515401433911585
+Winter    2008    9.009141332648413
+Winter    2009    10.523387133850411
+Winter    2010    12.480914223790101
+spring    2007    8.501559924500034
+
 Time taken: 27.314 seconds
 
 ```
