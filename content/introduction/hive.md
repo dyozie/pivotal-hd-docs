@@ -4,15 +4,13 @@ title: Hive
 
 Overview
 --------
-Hive was created to make it possible for analysts with strong SQL skills (but meager Java programming skills) to run queries on the huge volumes of data that Facebook stored in HDFS and it has the huge advantage of being very well known in the industry. What’s more,
- SQL is the lingua franca in business intelligence tools (ODBC is a common bridge, for  example), so Hive is well placed to integrate with these products.
+Business analysts use popular SQL query language for querying and analyzing data. With Hadoop, writing MapReduce programs will be time consuming and requires a very good skill in Java. Hive was created to solve this problem. Wth Hive it is possible for analysts with strong SQL skills to run queries on the huge volumes of data.
 
-Today, Hive is a successful Apache project used by many organizations as a general-purpose, scalable data processing platform.
-Of course, SQL isn’t ideal for every big data problem—it’s not a good fit for building  complex machine learning algorithms
+Hive is a successful Apache project used by many organizations as a general-purpose, scalable data processing platform.
 
-Hive is a data warehouse system for Hadoop that facilitates easy data summarization,
-ad-hoc queries, and the analysis of large datasets stored in Hadoop compatible file systems.
+Hive and Hadoop combination touted to be a next Dataware housing solution, that can store everything and anything. 
 Facebook initially developed hive and is now part of Apache.
+
 The paper describes how Hive can be used to build a PetaByte Scale warehouse using Hive
 [hive-icde2010.pdf](http://infolab.stanford.edu/~ragho/hive-icde2010.pdf)
 
@@ -24,11 +22,9 @@ An overview of Hive is shown below:
 
 ![Hive](/images/introduction/hive.png)
 
-**FIG. 1 Hive Overview**
+**Fig. 1 Hive Overview**
 
-Hive runs on your workstation and converts your SQL query into a series of MapReduce jobs for execution on a Hadoop cluster.
-Hive organizes data into tables, which provide a means for attaching structure to data stored in HDFS. Metadata— such as table schemas
-is stored in a database called the meta-store. 
+Hive runs on your workstation and converts your SQL query into a series of MapReduce jobs for execution on a Hadoop cluster. Hive organizes data into tables, which provide a means for attaching structure to data stored in HDFS. Metadata— such as table schemas is stored in a database called the meta-store. 
 
 The Hive shell is the primary way that we will interact with Hive, by issuing commands in HiveQL.
 HiveQL is Hive’s query language, a dialect of SQL.

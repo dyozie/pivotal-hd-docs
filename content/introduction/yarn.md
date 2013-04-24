@@ -6,7 +6,7 @@ Overview
 -------
 Apache Hadoop has two main components:
 
-* Distributed Storage and
+* Distributed Storage
 * Distributed computation
 
 The distributed storage is provided by the HDFS and the MapReduce provides the distributed computation. Apache MapReduce is the most popular open-source implementation of the MapReduce model.
@@ -16,10 +16,10 @@ Apache Hadoop 1.x aka MRv1 is composed of JobTracker, which is the master and pe
 ##About YARN
 YARN (Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processing framework. YARN provides generic framework for writing distributed processing frameworks and applications. It is a sub-project of Apache Hadoop in the ASF. 
 
-YARN ((Yet-Another-Resource-Negotiator)provides the following key changes compared to 1.x:
+YARN provides the following key changes compared to 1.x:
 
-* Tasks are no longer managed as Map and Reduce slots. This will help in Cluster utilization
-* The scheduling responsibility is managed by the ResourceManager and the task management is moved to the Application Master
+* Hadoop 2.x does not distinguish resources as Map and Reduce slots. 
+* The scheduling and task managedment is separated. ResourceManager and the task management is moved to the Application Master
 * Application master negotiates the resources with ResourceManager and works with NodeManager's to execute the tasks.
 Hadoop 2.x may support multiple frameworks such as MPI and Graph processing along with MapReduce.
 
@@ -29,7 +29,7 @@ A brief overview of yarn architecture is show below:
 
 ![yarn](/images/introduction/yarn.png)
 
-**FIG. 2  YARN Architecture**
+**Fig. 1  YARN Architecture**
 
 A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)
 
@@ -58,7 +58,7 @@ ApplicationMaster is framework specific library and is tasked with negotiating r
 
 ###Container
 The basic unit of allocation is now container, instead of a Map or a Reduce task in Hadoop 1.0. The container for example could be defined as one with attributes like memory, cpu, disk etc.
-This granualirty in define resources and allocating them allows the resource management to be efficient and helps meet multiple processing requirements.
+This granualarity in defining resources and allocating them allows the resource management to be efficient and helps meet multiple processing requirements.
 
 ###History Server
 History server maintains the history of all the jobs. 
@@ -69,7 +69,7 @@ A brief overview of how YARN works is shown in Fig. 2
 
 ![yarn-walkthro](/images/introduction/rmdetails.png)
 
-Fig. 2  A detailed walk-thro of component interactions in Yarn
+**Fig. 2  A detailed walk-through of component interactions in Yarn**
 
 The following are the steps to run an Application on YARN cluster.
 
@@ -79,7 +79,7 @@ The following are the steps to run an Application on YARN cluster.
 * [4] Applications Manager, upon receiving the request from client, requests the Node Manager to create a per Job Application Master
 * [5] Node Manager creates the Application Master
 * [6] Application Master up creation, creates request for allocation of resources to the Resource Manager. Application Master is responsible for the Job execution till it completes.
-* [7] The Resource Manager returns a list of containers.
+* [7] The ResourceManager returns a list of containers.
 * [8] Application Master requests the Node Manager to launch the containers for that particular job
 * [9] Node Manager creates the container. Container executes the client specific code on the container  
 * [10] Application master manages the job execution till the job is complete 
