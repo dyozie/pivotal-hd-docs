@@ -7,30 +7,31 @@ Overview
 Apache Hadoop has two main components:
 
 * Distributed Storage and
-* Distributed computatation
+* Distributed computation
 
-The distributed storage is provided by the HDFS and distributed computation is provided by the MapReduce. Apache MapReduce is the most popular open-source implementation of the MapReduce model.
+The distributed storage is provided by the HDFS and the MapReduce provides the distributed computation. Apache MapReduce is the most popular open-source implementation of the MapReduce model.
 
 Apache Hadoop 1.x aka MRv1 is composed of JobTracker, which is the master and per node slave called the Task Tracker. The JobTracker is responsible for the Job scheduling, Job distribution and resource management. The Task tracker is responsible for monitoring and executing the tasks and reporting the status back to JobTracker.
 
 ##About YARN
-YARN(Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processing framework. YARN provides generic framework for writing distributed processing frameworks and applications. It is a sub-project of Apache Hadoop in the ASF. 
+YARN (Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processing framework. YARN provides generic framework for writing distributed processing frameworks and applications. It is a sub-project of Apache Hadoop in the ASF. 
 
 YARN ((Yet-Another-Resource-Negotiator)provides the following key changes compared to 1.x:
 
 * Tasks are no longer managed as Map and Reduce slots. This will help in Cluster utilization
 * The scheduling responsibility is managed by the ResourceManager and the task management is moved to the Application Master
-* Application master negotiates the resources with ResourceManager and works with NodeManagers to execute the tasks. Moving this function to the Application Master allows Hadoop 2.x support multiple frameworks such as MapReduce, MPI and Graph processing.
+* Application master negotiates the resources with ResourceManager and works with NodeManager's to execute the tasks.
+Hadoop 2.x may support multiple frameworks such as MPI and Graph processing along with MapReduce.
 
-YARN allows applications to launch any process and, unlike existing Hadoop MapReduce in hadoop-1.x, it isn’t limited to Java applications alone. Yarn has the following main services.
+YARN allows applications to launch any process and, unlike existing Hadoop MapReduce in Hadoop-1.x, it is not limited to Java applications alone. Yarn has the following main services.
 
-A brief overview of yarn archtecture is show below:
+A brief overview of yarn architecture is show below:
 
 ![yarn](/images/introduction/yarn.png)
 
 **FIG. 2  YARN Architecture**
 
-A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)_
+A detailed view of YARN architecture is available at apache : [YARN](http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-yarn/hadoop-yarn-site/YARN.html)
 
 YARN has a central master service called ResourceManager, which manages all the resources in the cluster. It is purely a scheduler, managing the resurces among competing applications.
 
@@ -60,7 +61,7 @@ The basic unit of allocation is now container, instead of a Map or a Reduce task
 This granualirty in define resources and allocating them allows the resource management to be efficient and helps meet multiple processing requirements.
 
 ###History Server
-History server maintains the history of all the jobs. After a job is complere, application master will not longer be available for any queries. The designers chose to have an independent history server for managing the history of the jobs.
+History server maintains the history of all the jobs. 
 
 ##MapReduce with YARN 
 
@@ -74,16 +75,16 @@ The following are the steps to run an Application on YARN cluster.
 
 * [1] Client communicates with the Resource Manager (The Applications Manager part of the Resource Manager) with a new Application Request
 * [2] Resource Manger responds with Application Id
-* [3] Client constructs the Application Submission request with details on what kind of resources it is required, priority, user information etc. The Application Sumit request may have the context for the Job like the application's jar files, resource requirements (memoery etc)
+* [3] Client constructs the Application Submission request with details on what kind of resources it is required, priority, user information etc. The Application Submit request may have the context for the Job like the application's jar files, resource requirements (memory etc)
 * [4] Applications Manager, upon receiving the request from client, requests the Node Manager to create a per Job Application Master
 * [5] Node Manager creates the Application Master
 * [6] Application Master up creation, creates request for allocation of resources to the Resource Manager. Application Master is responsible for the Job execution till it completes.
 * [7] The Resource Manager returns a list of containers.
 * [8] Application Master requests the Node Manager to launch the containers for that particular job
-* [9] Node Manager creates the container. Container executes the client specific code on the cotainer  
+* [9] Node Manager creates the container. Container executes the client specific code on the container  
 * [10] Application master manages the job execution till the job is complete 
 * [11] Client asks for Application status report
 
 ###Migrating older MapReduce applications to run on YARN (Hadoop 2.0):
 
-The MapReduce API and interfaces are sames as Hadoop 1.x and hence no code changes are required to to move MapReduce applications from Hadoop 1.x to 2.x.
+The MapReduce API and interfaces are same as Hadoop 1.x. A recompilation is required to move MapReduce applications from Hadoop 1.x to 2.x.

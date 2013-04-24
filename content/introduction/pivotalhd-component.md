@@ -9,7 +9,7 @@ Introduction to Pivotal HD
 Pivotal HD Components
 --------------------
 
-Pivotal HD comes packed with lot of tools on the top of Apache Hadoop 2.0 distrobution.
+Pivotal HD comes packed with lot of tools on the top of Apache Hadoop 2.0 distribution.
 
 
 An overview of Pivotal HD components is shown in FIG. 1
@@ -33,7 +33,7 @@ An overview of Pivotal HD components is shown in FIG. 1
 
 * DataLoader - A massively parallel SQL query engine
 
-* Sqoop - A tool for importing data from Database to HDFS and viceversa 
+* Sqoop - A tool for importing data from Database to HDFS and vice versa 
 
-* Flume - A scalable data importing system to Hadoop
+* Flume - A scalable data system for importing data importing to Hadoop
 

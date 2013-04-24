@@ -12,7 +12,7 @@ Of course, SQL isn’t ideal for every big data problem—it’s not a good fit 
 
 Hive is a data warehouse system for Hadoop that facilitates easy data summarization,
 ad-hoc queries, and the analysis of large datasets stored in Hadoop compatible file systems.
-Hive is initially developed by Facebook, Hive is now part of Apache.
+Facebook initially developed hive and is now part of Apache.
 The paper describes how Hive can be used to build a PetaByte Scale warehouse using Hive
 [hive-icde2010.pdf](http://infolab.stanford.edu/~ragho/hive-icde2010.pdf)
 
@@ -28,19 +28,19 @@ An overview of Hive is shown below:
 
 Hive runs on your workstation and converts your SQL query into a series of MapReduce jobs for execution on a Hadoop cluster.
 Hive organizes data into tables, which provide a means for attaching structure to data stored in HDFS. Metadata— such as table schemas
-is stored in a database called the metastore. 
+is stored in a database called the meta-store. 
 
 The Hive shell is the primary way that we will interact with Hive, by issuing commands in HiveQL.
-HiveQL is Hive’s query language, a dialect of SQL. It is heavily influenced by MySQL, so if you are familiar with MySQL you should feel at home using Hive.
+HiveQL is Hive’s query language, a dialect of SQL.
 
-Hive parses the SQL queries into Java classes, which are then submitted as MapReduce jobs to the the Hadoop cluster.
+Hive parses the SQL queries into Java classes, which are then submitted as MapReduce jobs to the Hadoop cluster.
 
 ###Using Hive
 
 * Just like an RDBMS, Hive organizes its data into tables. We create a table to hold the weather data using the CREATE TABLE statement:
 
 ```xml
-   CREATE TABLE records (year STRING, temperature INT, quality INT)
+   CREATE TABLE records (year STRING, temperature INT)
    ROW FORMAT DELIMITED
     FIELDS TERMINATED BY '\t';
 ```
@@ -49,12 +49,12 @@ The first line declares a records table with three columns: year, temperature, a
 * Next we can populate Hive with the data. This is just a small sample, for exploratory purposes:
 
 ```xml
-   LOAD DATA LOCAL INPATH 'input/ncdc/micro-tab/sample.txt'
+   LOAD DATA LOCAL INPATH 'sample.txt'
    OVERWRITE INTO TABLE records;
 ```
 
 Running the above command tells Hive to put the specified local file in its warehouse directory. 
-This is a simple filesystem operation. 
+This is a simple Filesystem operation. 
 Tables are stored as directories under Hive’s warehouse directory, which is controlled by the hive.metastore.warehouse.dir, and defaults to /user/hive/warehouse.
 
 * Now that the data is in Hive, we can run a query against it:
@@ -63,17 +63,16 @@ Tables are stored as directories under Hive’s warehouse directory, which is co
    hive> SELECT year, MAX(temperature)
    > FROM records
    > WHERE temperature != 9999
-   > AND (quality = 0 OR quality = 1 OR quality = 4 OR quality = 5 OR quality = 9)
    > GROUP BY year;
 ```
 
 ###Configuring Hive
-Hive is configured using an XML configuration file like Hadoop’s. The file is called hive-site.xml and is located in Hive’s conf directory.  The default properties - hive-default.xml, which documents the properties that Hive exposes and their default values.
+Hive is configured using an XML configuration called hive-site.xml and is located in Hive’s conf directory. The default properties are in hive-default.xml, which documents the properties that Hive exposes with default values. 
 
-The default properties can be overriden with the configuration directory that Hive looks for in hive-site.xml by passing the --config option to the hive command: 
+The default properties can be overridden with the configuration directory that Hive looks for in hive-site.xml by passing the --config option to the hive command: 
 
 ```xml
-% hive --config /Users/tom/dev/hive-conf
+% hive --config /Users/gp/hive/config
 ```
 
 ###Hive Services
@@ -88,7 +87,7 @@ Hive organizes tables into partitions, a way of dividing a table into coarse-gra
 
 Tables or partitions may further be subdivided into buckets, to give extra structure to the data that may be used for more efficient queries. For example, bucketing by user ID means we can quickly evaluate a user-based query by running it on a randomized sample of the total set of users.  
 
-* Tables - Analogous to tables in relational DBs.  Each table has corresponding directory in HDFS
+* Tables - Analogous to tables in Relational Databases.  Each table has corresponding directory in HDFS
 For example: The following directory maps to a table table1.
 
 ```xml
