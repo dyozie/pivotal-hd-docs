@@ -4,15 +4,11 @@ title: Hive
 
 Overview
 --------
-Business analysts use popular SQL query language for querying and analyzing data. With Hadoop, writing MapReduce programs will be time consuming and requires a very good skill in Java. Hive was created to solve this problem. Wth Hive it is possible for analysts with strong SQL skills to run queries on the huge volumes of data.
+Business analysts use popular SQL query language for querying and analyzing data. With Hadoop, writing MapReduce programs will be time consuming and requires a very good skill in Java. Hive was created to solve this problem. Hive allows Business analysts with strong SQL skills to run queries and get insights from large volumes of data.
 
-Hive is a successful Apache project used by many organizations as a general-purpose, scalable data processing platform.
+Hive and Hadoop combination are touted to be a next Dataware housing solution that can store and process large volumes of data. Hive is initially developed by Facebook and is now part of Apache.
 
-Hive and Hadoop combination touted to be a next Dataware housing solution, that can store everything and anything. 
-Facebook initially developed hive and is now part of Apache.
-
-The paper describes how Hive can be used to build a PetaByte Scale warehouse using Hive
-[hive-icde2010.pdf](http://infolab.stanford.edu/~ragho/hive-icde2010.pdf)
+The paper describes how Hive can be used to build a PetaByte Scale warehouse using Hive [hive-icde2010.pdf](http://infolab.stanford.edu/~ragho/hive-icde2010.pdf)
 
 
 About Hive
@@ -24,36 +20,42 @@ An overview of Hive is shown below:
 
 **Fig. 1 Hive Overview**
 
-Hive runs on your workstation and converts your SQL query into a series of MapReduce jobs for execution on a Hadoop cluster. Hive organizes data into tables, which provide a means for attaching structure to data stored in HDFS. Metadata— such as table schemas is stored in a database called the meta-store. 
+Hive is a tool for querying and analyzing data lying in the HDFS. It is powerful in analysing web logs, provides queries and summarization and aggregation. It also provides rich data structures like Array, Map and Bag to represent nested structures in the data.
 
-The Hive shell is the primary way that we will interact with Hive, by issuing commands in HiveQL.
-HiveQL is Hive’s query language, a dialect of SQL.
+Hive essentially provides a structure to query data lying in the HDFS.
+Hive is similar to MySQL and runs on a Desktop or Workstation.
+Hive converts SQL queries into a series of java classes, which are MapReduce jobs for execution on Hadoop cluster.
 
-Hive parses the SQL queries into Java classes, which are then submitted as MapReduce jobs to the Hadoop cluster.
+Hive stores the Meta Data of the table structures in a Meta-Store. It provides JDBC and ODBC bridges for querying.
 
 ###Using Hive
 
-* Just like an RDBMS, Hive organizes its data into tables. We create a table to hold the weather data using the CREATE TABLE statement:
+* Just like an RDBMS, Hive organizes its data into tables. A simple create table statement is shown below. 
 
 ```xml
    CREATE TABLE records (year STRING, temperature INT)
    ROW FORMAT DELIMITED
-    FIELDS TERMINATED BY '\t';
+   FIELDS TERMINATED BY '\t';
 ```
-The first line declares a records table with three columns: year, temperature, and quality. The type of each column must be specified, too: here the year is a string, while the other two columns are integers.
 
-* Next we can populate Hive with the data. This is just a small sample, for exploratory purposes:
+* Hive populates the data using the LOAD DATA as shown below:
 
 ```xml
    LOAD DATA LOCAL INPATH 'sample.txt'
    OVERWRITE INTO TABLE records;
 ```
+The above command copies the data from local file system to HDFS. In HDFS, the table is mapped to a directory and the contents are stored in a file in the directory. By default the tables are stored in /user/hive/warehouse.
 
-Running the above command tells Hive to put the specified local file in its warehouse directory. 
-This is a simple Filesystem operation. 
-Tables are stored as directories under Hive’s warehouse directory, which is controlled by the hive.metastore.warehouse.dir, and defaults to /user/hive/warehouse.
+External directive can be used to crate table for an existing data in HDFS. The Location directive specifies the location of the file in the HDFS. it points to a directory in the HDFS.
 
-* Now that the data is in Hive, we can run a query against it:
+```xml
+   CREATE TABLE records (year STRING, temperature INT)
+   ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY '\t';
+   LOCATION '/users/foobar/dataset1/sample.data'
+```
+
+* The tables can be queried using the standard SQL and shown below:
 
 ```xml
    hive> SELECT year, MAX(temperature)
@@ -63,7 +65,7 @@ Tables are stored as directories under Hive’s warehouse directory, which is co
 ```
 
 ###Configuring Hive
-Hive is configured using an XML configuration called hive-site.xml and is located in Hive’s conf directory. The default properties are in hive-default.xml, which documents the properties that Hive exposes with default values. 
+Hive is configured using an XML configuration file hive-site.xml. It is located in Hive’s conf directory. The default properties are in hive-default.xml, which documents all the properties.
 
 The default properties can be overridden with the configuration directory that Hive looks for in hive-site.xml by passing the --config option to the hive command: 
 
@@ -72,16 +74,12 @@ The default properties can be overridden with the configuration directory that H
 ```
 
 ###Hive Services
-The Hive shell is only one of several services that you can run using the hive command.
-Type hive –service help to get a list of available service names; the most useful are described below.
+Hive provides the following services:
 
 * cli -  The command line interface to Hive (the shell). This is the default service.
-* hiveserver - Runs Hive as a server exposing a Thrift service, enabling access from a range of clients written in different languages. Applications using the Thrift, JDBC, and ODBC connectors need to run a Hive server to communicate with Hive. Set the HIVE_PORT environment variable to specify the port the server will listen on (defaults to 10,000).
+* hiveserver - Exposed as a service, enables Thrift, JDBC, and ODBC connectors. 
 
 ###Data Model
-Hive organizes tables into partitions, a way of dividing a table into coarse-grained parts based on the value of a partition column, such as date. Using partitions can make it faster to do queries on slices of the data.
-
-Tables or partitions may further be subdivided into buckets, to give extra structure to the data that may be used for more efficient queries. For example, bucketing by user ID means we can quickly evaluate a user-based query by running it on a randomized sample of the total set of users.  
 
 * Tables - Analogous to tables in Relational Databases.  Each table has corresponding directory in HDFS
 For example: The following directory maps to a table table1.
@@ -90,25 +88,24 @@ For example: The following directory maps to a table table1.
 /user/hive/warehouse/john/table1/sample-data.txt
 ```
 
-* Partitions - Analogous to dense indexes on partition columns. Partitions are  Nested sub-directories in HDFS for each combination of partition column values
+* Partitions - Hive supports partitions, help in querying large datasets, which can dramiatically improve the performance. 
+
+An example of a partition is shown bellow:
 
 ```xml
-For Example: Partition columns: ds, ctry will map to HDFS Directories
-HDFS subdirectory for ds = 20090801, ctry = US
 /user/hive/warehouse/john/table1/ds=20090801/ctry=US
-HDFS subdirectory for ds = 20090801, ctry = CA
 /user/hive/warehouse/john//table1/ds=20090801/ctry=CA
 ```
-* External Tables - Point to existing data directories in HDFS.  Supports creation of tables and partitions – partition columns just become annotations to external directories
-* Buckets - Split data based on hash of a column - mainly for parallelism
-One HDFS file per bucket within partition sub-directory
+The partition columns ds, ctry are mapped to HDFS Directories.
+
+* Buckets - Partitions can be further divided into buckets, which can reduce the processing time for joins drastically. 
+
+An example of a bucket is shown below:
 
 ```xml
-For Example
-Bucket column: user into 32 buckets
-HDFS file for user hash 0
 /user/hive/warehouse/john/table1/ds=20090801/ctry=US/part-00000
-HDFS file for user hash bucket 20
 /user/hive/warehouse/john/table1/ds=20090801/ctry=US/part-00020
 ```
+The buckets are part-0000 and part-00020.
 
+* Data Types -  Apart from the primitive data types, Hive support rich data structures like Array, maps, structs and union.
