@@ -39,5 +39,3 @@ Hadoop 2.0 overcomes the limitations of Hadoop version 1.0 by providing better r
 There are multiple releases of Hadoop available. Apache Hadoop 1.0.0 (0.20-eventually became 1.0.0) should be the choice for using Hadoop V1. Hadoop version 2.0 (0.23 eventually became 2.x) is in alpha.
 
 Hadoop 2.x maintains API compatibility with previous stable release (Hadoop-0.20.205). The MapReduce programs can be run after a re-compilation with the new Hadoop libraries.
-
-APA: Predictive analytics - Wikipedia, the free encyclopedia. (n.d.). Retrieved from http://en.wikipedia.org/wiki/Predictive_analytics
