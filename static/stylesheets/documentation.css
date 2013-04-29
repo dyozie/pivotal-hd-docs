@@ -104,6 +104,22 @@ p code {
 .content ul li {
   color: rgb(88, 89, 91);
 }
+
+
+/* Doc Container */
+
+h3.title-container {
+  text-align: right;
+  background-color: rgb(127, 206, 61);
+  height: 25px;
+  color: white;
+  font-size: 17px;
+  font-weight: normal;
+  padding-top: 10px;
+  padding-right: 10px;
+  margin-bottom: 30px;
+}
+
 /*------------------------------------------------------------------------------
      Pre/Code Styles
 ------------------------------------------------------------------------------*/

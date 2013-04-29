@@ -1,5 +1,6 @@
 ---
 title: Introduction to Pivotal HD
+description: Pivotal HD Installation and Administration
 ---
 
 Overview
