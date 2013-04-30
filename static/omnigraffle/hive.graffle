@@ -164,6 +164,18 @@
 						<string>0.241572</string>
 					</dict>
 				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.701961</string>
+						<key>g</key>
+						<string>0.701961</string>
+						<key>r</key>
+						<string>0.701961</string>
+					</dict>
+				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
@@ -207,6 +219,18 @@ Node -Maanager}</string>
 						<string>0.51457</string>
 						<key>r</key>
 						<string>0.250757</string>
+					</dict>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.701961</string>
+						<key>g</key>
+						<string>0.701961</string>
+						<key>r</key>
+						<string>0.701961</string>
 					</dict>
 				</dict>
 			</dict>
@@ -253,6 +277,18 @@ Node Maanager}</string>
 						<string>0.577437</string>
 						<key>r</key>
 						<string>0.230042</string>
+					</dict>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.701961</string>
+						<key>g</key>
+						<string>0.701961</string>
+						<key>r</key>
+						<string>0.701961</string>
 					</dict>
 				</dict>
 			</dict>
@@ -312,14 +348,18 @@ Node Maanager}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959964</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879166</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.657454</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -332,16 +372,14 @@ Node Maanager}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>0.974605</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.833432</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0.65165</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -396,14 +434,18 @@ Node Maanager}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -416,16 +458,14 @@ Node Maanager}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>0.974605</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.833432</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0.65165</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -529,12 +569,14 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.578314</string>
+						<string>0.901961</string>
 						<key>g</key>
-						<string>0.975886</string>
+						<string>0.901961</string>
 						<key>r</key>
-						<string>0.994997</string>
+						<string>0.901961</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -553,8 +595,6 @@ MAP REDUCE + HDFS}</string>
 						<key>r</key>
 						<string>0.879869</string>
 					</dict>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -638,7 +678,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{316, 97}, {60, 37}}</string>
+			<string>{{316, 99.000007629394531}, {60, 19.999992370605469}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -677,14 +717,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -696,17 +740,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -722,7 +766,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{248, 97}, {67, 37}}</string>
+			<string>{{243, 99.000007629394531}, {67, 19.999992370605469}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -761,14 +805,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -780,17 +828,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -806,7 +854,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{268, 134}, {108, 33}}</string>
+			<string>{{275, 125}, {101, 33}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -845,14 +893,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -864,17 +916,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -890,7 +942,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{193, 134}, {72, 33}}</string>
+			<string>{{196, 125}, {72, 33}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -929,14 +981,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -948,17 +1004,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -974,7 +1030,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{56, 134}, {134, 33}}</string>
+			<string>{{59, 125}, {134, 33}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -1013,14 +1069,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -1032,17 +1092,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -1097,14 +1157,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959958</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879236</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.653151</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -1116,17 +1180,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -1143,7 +1207,7 @@ MAP REDUCE + HDFS}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{376, 97.000005002881664}, {85, 129.19671630859375}}</string>
+			<string>{{381, 97.000005002881664}, {80, 129.19671630859375}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -1182,14 +1246,18 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
-					<key>Color</key>
+					<key>FillType</key>
+					<integer>2</integer>
+					<key>GradientAngle</key>
+					<real>90</real>
+					<key>GradientColor</key>
 					<dict>
 						<key>b</key>
-						<string>0.959947</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.879374</string>
+						<string>0.8</string>
 						<key>r</key>
-						<string>0.64457</string>
+						<string>0.4</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -1201,17 +1269,17 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.392436</string>
+						<string>1</string>
 						<key>g</key>
-						<string>0.835881</string>
+						<string>0.504252</string>
 						<key>r</key>
-						<string>0.631072</string>
+						<string>0</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -1268,12 +1336,14 @@ MAP REDUCE + HDFS}</string>
 				<dict>
 					<key>Color</key>
 					<dict>
+						<key>a</key>
+						<string>0.5</string>
 						<key>b</key>
-						<string>0.578337</string>
+						<string>0.901961</string>
 						<key>g</key>
-						<string>0.986167</string>
+						<string>0.901961</string>
 						<key>r</key>
-						<string>0.99526</string>
+						<string>0.901961</string>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -1294,8 +1364,6 @@ MAP REDUCE + HDFS}</string>
 					</dict>
 					<key>CornerRadius</key>
 					<real>9</real>
-					<key>Width</key>
-					<real>2</real>
 				</dict>
 			</dict>
 		</dict>
@@ -1312,6 +1380,8 @@ MAP REDUCE + HDFS}</string>
 			<dict>
 				<key>fill</key>
 				<dict>
+					<key>Draws</key>
+					<string>NO</string>
 					<key>FillType</key>
 					<integer>2</integer>
 					<key>GradientAngle</key>
@@ -1335,8 +1405,15 @@ MAP REDUCE + HDFS}</string>
 				</dict>
 				<key>stroke</key>
 				<dict>
-					<key>Draws</key>
-					<string>NO</string>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.4</string>
+						<key>g</key>
+						<string>0.4</string>
+						<key>r</key>
+						<string>0.4</string>
+					</dict>
 				</dict>
 			</dict>
 		</dict>
@@ -1388,7 +1465,7 @@ MAP REDUCE + HDFS}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-04-25 18:20:04 +0000</string>
+	<string>2013-04-26 07:25:12 +0000</string>
 	<key>Modifier</key>
 	<string>Reddyraja</string>
 	<key>NotesVisible</key>
