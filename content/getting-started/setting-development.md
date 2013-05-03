@@ -13,8 +13,8 @@ The development machine should have the following:
 * Eclipse with Maven plugin
 
 ##Downloads
-* Download hadoop 2.x verision [here](http://hadoop.apache.org/releases.html#Download)
-* Download maven [here](http://apache.techartifact.com/mirror/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz) and extract in the home directory
+* Download hadoop 2.x version [here](http://hadoop.apache.org/releases.html#Download)
+* Download maven from [here](http://apache.techartifact.com/mirror/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz) and extract it in the home directory
 
 ##Set the environment variables
 
@@ -35,7 +35,7 @@ Note: The variables can be set in .bashrc(Linux) or .bash_profile(MacOS)
 
 ##Verify the environment with the following steps
 
-####Create the cluster confguration file
+####Create the cluster configuration `hadoop-mycluster.xml` as shown below.
 
 ```xml
 <configuration>
@@ -50,7 +50,7 @@ Note: The variables can be set in .bashrc(Linux) or .bash_profile(MacOS)
 </configuration>
 ```
 
-Note: Make sure NAMENODE_SERVER and RESOURCE_MANAGER is replaced by host names where namenode and resourcemanager are deployed. Check greenplum documentation to get these values.
+Note: Make sure NAMENODE_SERVER and RESOURCE_MANAGER are replaced by host names where namenode and resourcemanager are deployed. Check Greenplum documentation to get these values.
 
 ####Create and upload the input to HDFS
 Create a sample file `sample.txt` with the following content:
@@ -83,9 +83,11 @@ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.0.3-alpha.jar word
 
 ####Check the output
 
-You can check that the job is submitted in the ccmaster dashboard.
+You can check that the job is submitted in the Command Center dashboard.
+Monitor the job using Command Center -> MapReduce Job Monitor 
 
-Browse the hadoop file system and check the output directory. 
+Browse the hadoop file system and check for the output directory. 
+
 The output directory should contain the part-r-0000-file.
 
 Use the following command to see the output.
@@ -94,17 +96,88 @@ Use the following command to see the output.
 hadoop fs -cat /user/foobar/output/part-r-0000
 ```
 
-###Congratulations! You have successfully set up the Development environment.
+##Using Eclipse for running MapReduce programs
 
 
-##Importing source code to Eclipse
-
-
-##Building the project from Command line
+###Clone the source from git repository
 
 ```bash
-mvn -DskipTests package
+git clone git:githubcom/pivotal.git
 ```
-The command should create the jar file in the target directory.
+
+###Importing source code to Eclipse
+
+Select File->Import and select `Existing projects into Workspace`
+
+![import](/images/gs/setup/import-maven.png)
+
+Click `Browse` to select the directory where source code is present
+
+![import](/images/gs/setup/mean-2.png)
+
+Select the directory and click `Open`
+
+![import](/images/gs/setup/mean-3.png)
+
+Click `Deselect All` and check the box for the project we are interested in and Click `Finish`
+
+![import](/images/gs/setup/mean-4.png)
+
+###Build the project
+Go to package Explorer, select the project and right click to get properties.
+Click `Run As -> Maven Install` to build the project.
+
+###Running the project
+
+From Eclipse Main Menu Explorer,  Main Menu, Click `Run->Run Configurations`
+
+![import](/images/gs/setup/run.png)
+
+Click on the `+` sign to create a new Java configuration
+Provide the Main Class, or if you have selected the Main on PackageExplorer and click 'Run As Java Application`, it will auto-populate the main class.
+
+![import](/images/gs/setup/main-class.png)
+
+Provide input and output paths as arguments and click `Run`.
+
+![import](/images/gs/setup/arguments.png)
+
+Messages on the console show that the MapReduce program is running. If there are any issues, you can see an exception thrown onto the console. Use these messages to fix the problem.
+
+![import](/images/gs/setup/console.png)
+
+The output should be available on the output folder.
 
 
+###Running Unit tests
+
+Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
+
+##Building the project using command line
+
+###Build the project
+
+Run the maven command to build the project
+
+```bash
+mvn clean install package
+```
+After the build is complete, a target directory with jar file is created.
+
+###Run the tests
+
+Run the unit tests with the following command.
+
+```bash
+mvn test
+```
+
+###Submit the job
+
+Submit the job with the following command
+
+```bash
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business. CityBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input /user/foobar/output
+```
+
+####Congratulations! You have successfully set up the Development environment.

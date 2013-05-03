@@ -43,7 +43,7 @@ The NameNode is the heart of the Hadoop distributed File System.. NameNode does 
 
 A typical HDFS cluster has many Data Nodes. DataNodes provide high aggregate bandwidth and support pipelined writing. The client while reading can directly read from the DataNodes after getting the Block Locations from NameNode. Each Data Node sends the Block report to NameNode at startup.
 
-###Namenode and Singlepoint of failure
+###Namenode and single point of failure
 
 The availability of Name is critical to the availability of HDFS. Apache Hadoop 1.0 provides mechanisms to manage the meta-data in case of Name failures, which can be quickly recovered. Apache Hadoop 2.0 comes with built-in high availability. The high availablity is provided by zookeeper with a quorum of servers. Hadoop 2.x also provides the HDFS federation required to support very large file systems as BigData becomes bigger.
 

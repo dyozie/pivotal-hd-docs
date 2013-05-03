@@ -9,7 +9,7 @@ Introduction to Pivotal HD
 Pivotal HD Components
 --------------------
 
-Pivotal HD comes packed with lot of tools on the top of Apache Hadoop 2.0 distribution.
+Pivotal HD comes packed with a lot of tools on the top of Apache Hadoop 2.0 distribution.
 
 
 An overview of Pivotal HD components is shown in FIG. 1

@@ -30,10 +30,11 @@ Hive stores the Meta Data of the table structures in a Meta-Store. It provides J
 
 ###Using Hive
 
-* Just like an RDBMS, Hive organizes its data into tables. A simple create table statement is shown below. 
+* Hive organizes data into tables just like it's RDBMS counterpart. 
+An example of `create table` statement is shown as follows:
 
 ```xml
-   CREATE TABLE records (year STRING, temperature INT)
+   CREATE TABLE weblogs (TIMESTAMP date, STRING program, String message)
    ROW FORMAT DELIMITED
    FIELDS TERMINATED BY '\t';
 ```
@@ -44,68 +45,69 @@ Hive stores the Meta Data of the table structures in a Meta-Store. It provides J
    LOAD DATA LOCAL INPATH 'sample.txt'
    OVERWRITE INTO TABLE records;
 ```
-The above command copies the data from local file system to HDFS. In HDFS, the table is mapped to a directory and the contents are stored in a file in the directory. By default the tables are stored in /user/hive/warehouse.
 
-External directive can be used to crate table for an existing data in HDFS. The Location directive specifies the location of the file in the HDFS. it points to a directory in the HDFS.
+The above command copies the data from local file system to HDFS. In HDFS, the table is mapped to a directory and the contents are stored in a file in the directory. By default, the tables are stored in /user/hive/warehouse.
+
+External clause can be used to crate table for an existing data in HDFS. The Location directive specifies the location of the file in the HDFS. it points to a directory in the HDFS.
 
 ```xml
-   CREATE TABLE records (year STRING, temperature INT)
+   CREATE TABLE weblogs (TIMESTAMP date, STRING program, STRING MESSAGE_TYPE, STRING message)
    ROW FORMAT DELIMITED
-    FIELDS TERMINATED BY '\t';
-   LOCATION '/users/foobar/dataset1/sample.data'
+   FIELDS TERMINATED BY '\t';
+   LOCATION '/users/foobar/weblogs/2008/data1.data'
 ```
 
-* The tables can be queried using the standard SQL and shown below:
+* Queries are standard SQL queries as shown below:
 
 ```xml
-   hive> SELECT year, MAX(temperature)
-   > FROM records
-   > WHERE temperature != 9999
-   > GROUP BY year;
+   hive> SELECT date,  program, message 
+   > FROM WEBLOGS 
+   > WHERE MESSAGE_TYPE == 'Error`
+   > GROUP BY program;
 ```
 
 ###Configuring Hive
-Hive is configured using an XML configuration file hive-site.xml. It is located in Hive’s conf directory. The default properties are in hive-default.xml, which documents all the properties.
-
-The default properties can be overridden with the configuration directory that Hive looks for in hive-site.xml by passing the --config option to the hive command: 
+Hive configuration file `hive-site.xml` is located in Hive's conf directory. All the default properties are in `hive-default.xml`. Hive is invoked with the `--config` option to override default properties.
 
 ```xml
-% hive --config /Users/gp/hive/config
+% hive --config /home/gp/hive/config
 ```
 
-###Hive Services
-Hive provides the following services:
+###Using Hive
+Hive has two ways of usage:
 
-* cli -  The command line interface to Hive (the shell). This is the default service.
-* hiveserver - Exposed as a service, enables Thrift, JDBC, and ODBC connectors. 
+* Using command line interface: Hive gives a shell, just like mysql shell. SQL commands can be executed on the shell.
+* Using JDBC/ODBC Drivers: Hive is exposed as a service that enables enables Thrift, JDBC, and ODBC connectors. Hive Server has to be configured for this purpose.
 
 ###Data Model
 
-* Tables - Analogous to tables in Relational Databases.  Each table has corresponding directory in HDFS
-For example: The following directory maps to a table table1.
+* Tables - Similar to Relational Databases, but mapped to a directory in HDFS. 
+For example, the following HDFS directory `weblogs` maps to a table `weblogs`.
 
 ```xml
-/user/hive/warehouse/john/table1/sample-data.txt
+/user/hive/warehouse/weblogs/sample-data.txt
 ```
 
-* Partitions - Hive supports partitions, help in querying large datasets, which can dramiatically improve the performance. 
+* Partitions - Hive supports partitions for partitioning the data and directory maps to the `where` clause. This reduces the amount of data to be processed.
 
-An example of a partition is shown bellow:
+An example of a partition is shown below:
 
 ```xml
-/user/hive/warehouse/john/table1/ds=20090801/ctry=US
-/user/hive/warehouse/john//table1/ds=20090801/ctry=CA
+/user/hive/warehouse/weblogs/ds=2009/ctry=US
+/user/hive/warehouse/weblogs/ds=2010/ctry=CA
 ```
 The partition columns ds, ctry are mapped to HDFS Directories.
 
-* Buckets - Partitions can be further divided into buckets, which can reduce the processing time for joins drastically. 
+* Buckets - Partitions can be further divided into buckets, which can reduce the processing time further. Hive uses Buckets in join queries to limit the dataset for join.
 
 An example of a bucket is shown below:
 
 ```xml
-/user/hive/warehouse/john/table1/ds=20090801/ctry=US/part-00000
-/user/hive/warehouse/john/table1/ds=20090801/ctry=US/part-00020
+/user/hive/warehouse/weblogs/ds=2009/ctry=US/part-00000/data1.data
+/user/hive/warehouse/weblogs/ds=2010/ctry=US/part-00020/data2.data
 ```
 The buckets are part-0000 and part-00020.
 
 * Data Types -  Apart from the primitive data types, Hive support rich data structures like Array, maps, structs and union.
+
+

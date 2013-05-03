@@ -4,7 +4,7 @@ title: Example Data Set
 
 Overview 
 --------
-The details of the data set is available [here] (https://www.yelp.com/academic_dataset)
+The details of the data set are available [here] (https://www.yelp.com/academic_dataset)
 
 The dataset has the following data:
 
@@ -41,7 +41,7 @@ A sample 5 records are shown below:
 
 ###Review Objects
 
-Review objects contain the review text, the star rating, and information on votes Yelp users have cast on the review. Use user_id to associate this review with others by the same user. Use business_id to associate this review with others of the same business.
+Review objects contain the review text, the star rating, and information on votes Yelp users has cast on the review. Use user_id to associate this review with others by the same user. Use business_id to associate this review with others of the same business.
 
 ```xml
 {

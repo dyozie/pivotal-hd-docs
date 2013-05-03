@@ -1,8 +1,8 @@
 ---
-title: Uninstalling Pivotal Command Centers
+title: Uninstalling Pivotal Command Center
 ---
 
-  How to uninstall Pivotal Command Center and the Pivotal HD cluster:
+How to uninstall Pivotal Command Center and the Pivotal HD cluster:
 
 1. Stop services on all your clusters (See the Pivotal HD Enterprise 1.0 Installation
   and Administrator Guide for detailed steps).

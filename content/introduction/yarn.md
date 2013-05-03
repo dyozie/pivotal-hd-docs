@@ -9,7 +9,7 @@ Apache Hadoop has two main components:
 * Distributed Storage
 * Distributed computation
 
-The distributed storage is provided by the HDFS and the MapReduce provides the distributed computation.
+The distributed storage is provided by the HDFS, and the MapReduce provides the distributed computation.
 
 ##About YARN
 
@@ -18,11 +18,11 @@ RN (Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processi
 YARN provides the following key changes compared to 1.x:
 
 * Hadoop 2.x does not distinguish resources as Map and Reduce slots. 
-* The scheduling and task managedment is separated. ResourceManager and the task management is moved to the Application Master
-* Application master negotiates the resources with ResourceManager and works with NodeManager's to execute the tasks.
+* The scheduling and task management are separated. ResourceManager and the task management are moved to the Application Master
+* Application master negotiates the resources with ResourceManager on behalf of the Job. It manages the lifecycle of the job till the job is complete.
 Hadoop 2.x may support multiple frameworks such as MPI and Graph processing along with MapReduce.
 
-A brief overview of yarn architecture is show below:
+A brief overview of yarn architecture is shown below:
 
 ![yarn](/images/introduction/yarn.png)
 
@@ -59,7 +59,7 @@ Clients submit the application requests to the ResourceManager, triggering a ser
 
 * [1] Client communicates with the Resource Manager (The Applications Manager part of the Resource Manager) with a new Application Request 
 * [2] Resource Manger responds with Application Id
-* [3] Client constructs the Application Submission request with details on what kind of resources it is required, priority, user information etc. The Application Submit request may have the context for the Job like the application's jar files, resource requirements (memory etc) 
+* [3] Client constructs the Application Submission request with details requirements like memory, cpu's, priority etc. The Application Request may have the context for the Job like the application's jar files and resource requirements.
 * [4] Applications Manager, upon receiving the request from client, requests the Node Manager to create a per Job Application Master 
 * [5] Node Manager creates the Application Master
 * [6] ApplicationMaster  creates the request for allocation of resources to the Resource Manager. Application Master is responsible for the Job execution till it completes. 
