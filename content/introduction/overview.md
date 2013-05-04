@@ -5,9 +5,9 @@ description: Pivotal HD Installation and Administration
 
 Overview
 -------
-The new era of business intelligence is here with Big data. There is a tremendous growth in the amount of Data that needs to stored and analyzed. The examples of big data sources include Web logs, elctronic health records, Weather, social mdeia, internet search, call records from operatiors,  surveillance data, astronomical observations, bio/Geo chemical, genomics, and atmospheric sciences. The volume, velocity and vareity in such data is posing a challenge in processing.  
+The new era of business intelligence is here with Big data. There is a tremendous growth in the amount of Data that needs to stored and analyzed. The examples of big data sources include Web logs, electronic health records, Weather, social media, internet search, call records from operators, surveillance data, astronomical observations, bio/Geo chemical, genomics, and atmospheric sciences. The volume, velocity and variety in such data are posing a challenge in processing.  
 
-The technologies in processing large data sers has become more important today than before. The growth in Big Data technologies and solutions is driven by frameworks, that takes the pain of storage and processing away. And instead, helps to focus on the problem at hand.  
+The technologies in processing large data sets have become more important today than before. The growth in Big Data technologies and solutions is driven by frameworks that takes the pain of storage and processing away.
  
 Enterprises and Government are the biggest consumers of BigData technologies as they figure out innovative ways to provide the same quality of service cheaper, faster and better. Big data is being generated continuously from various different sources.  
  
