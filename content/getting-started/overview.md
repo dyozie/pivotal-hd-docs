@@ -28,13 +28,14 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
 
 The  pattern is used for calculating statistical summaries like min, max, count of values in the dataset. The pattern is simple, but using the Combiner effectively is key to improving the performance. The following tutorials illustrate the summarization patterns:
 
-* **[Count of Businesses in a city](mapreduce-with-java/count-of_businesses-city.html)**
+* **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
 
 ##Filtering Patterns
 
 The Filter Pattern is used to filter the dataset with specific criteria. It does not change the values of the dataset. The pattern is generally used to get a small subset for further analysis. The examples of the pattern are top ten, bloom filter and distinct.
 
-* **[Count of Businesses in a city](mapreduce-with-java/count-of_businesses-city.html)**
+* **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
+* **[Count of five star rated businesses in a city](map-reduce-java/count-city-fivestar-businesses.html)**
 
 ##Joins
 
@@ -45,7 +46,10 @@ The Filter Pattern is used to filter the dataset with specific criteria. It does
 
 ##Spring Hadoop
 
-Spring Hadoop along with Spring Batch provides a powerful framework for running MapReduce Appplications in production.
+Spring Hadoop along with Spring Batch provides a powerful framework for running MapReduce Applications in production.
+
+* **[Basic Word Count example with Spring Hadoop](spring-data-hadoop/wordcount_with_spring_hadoop.html)**
+
 
 ##Map Reduce API
 
