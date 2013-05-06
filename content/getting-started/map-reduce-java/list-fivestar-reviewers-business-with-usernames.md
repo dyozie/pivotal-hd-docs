@@ -10,7 +10,7 @@ List of Five star reviewers(users) for a Business
 
 Use case
 --------
-The goal of the tutorial is to find out list of all users who has rated a business as five star. The use cases is same as [List of Five star reviewers for a Business](map-reduce-java/list-fivestar-reviewers-business.html), except that we display usernames instead of userid's.
+The goal of the tutorial is to find out list of all users who has rated a business as five star. The use cases is same as [List of Five star reviewers for a Business](list-fivestar-reviewers-business.html), except that we display usernames instead of userid's.
 
 Pre-requisites
 -------------
@@ -176,8 +176,6 @@ The Reducers constructs a single record out of the two data sets. The output of 
 There will be multiple values from the ReviewMapper, since there can be multiple reviews by the users.
 
 The reducers collects the output from both the mappers and joins them. The output is business_name, city, users count followed by comma separated list of user_id.
-
-Ideally, the userids should be replaced by the usernames. Take a look at the next tutorial [User names with distributed cache](usernames_with_distributed_cache.html) on how to output the user names instead of user_ids.
 
 The reducer code is shown below:
 

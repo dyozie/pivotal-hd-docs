@@ -152,7 +152,7 @@ There will be multiple values from the ReviewMapper, since there can be multiple
 
 The reducers collects the output from both the mappers and joins them. The output is business_name, city, users count followed by comma separated list of user_id.
 
-Ideally, the userids should be replaced by the usernames. Take a look at the next tutorial [User names with distributed cache](usernames_with_distributed_cache.html) on how to output the user names instead of user_ids.
+Ideally, the userids should be replaced by the usernames. Take a look at the next tutorial [User names with distributed cache](list-fivestar-reviewers-business-with-usernames.html) on how to output the user names instead of user_ids.
 
 The reducer code is shown below:
 
