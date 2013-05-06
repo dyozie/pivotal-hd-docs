@@ -17,20 +17,16 @@ The following table displays the roles that belong to HDFS service.
 
 Table 1.1 HDFS Service
 
+|---
 | Role Name | Description|
-| :-------- | :---------:|
-| NameNode  | NameNode serves as both directory namespace manager and "inode
-              table" for the Hadoop DFS. There is a single NameNode running in
-              any DFS deployment.|
-|----
-| Secondary NameNode | The secondary NameNode periodically downloads current
-NameNode image and edits log files, joins them into new image and
-uploads the new image back to the (primary and the only)
-NameNode.|
-|=====
-| DataNodes | A DataNode stores data in the [HadoopFileSystem]. A functional
-filesystem has more than one DataNode, with data replicated across
-them.|
+|:-|:-:|
+| NameNode  | NameNode serves as both directory namespace manager and "inode table" for the Hadoop DFS. There is a single NameNode running in any DFS deployment.|
+|---
+| Secondary NameNode | The secondary NameNode periodically downloads current NameNode image and edits log files, joins them into new image and uploads the new image back to the (primary and the only) NameNode.|
+|===
+| DataNodes | A DataNode stores data in the [HadoopFileSystem]. A functional filesystem has more than one DataNode, with data replicated across them.|
+|---
+
 {: rules="groups"}
 
 YARN
@@ -38,20 +34,24 @@ YARN
 The following table displays the roles that belong to YARN service.
 Table 1.2 Yarn Service Roles
 
+|---
 | Role Name | Description |
-| Resource Manager | The Resource Manager is the master that manages all the cluster
-                     resources running on the YARN system |
-|Node Manager | The NodeManager manages resources on a particular node.
-                History Server The History Server stores and serves a history of the mapreduce
-                jobs that were run on the cluster. |
+|:-|:-:|
+| Resource Manager | The Resource Manager is the master that manages all the cluster resources running on the YARN system |
+|Node Manager | The NodeManager manages resources on a particular node. History Server The History Server stores and serves a history of the mapreduce jobs that were run on the cluster. |
+|---
+
 Zookeeper
 ---------
 The following table displays the roles that belong to Zookeeper service.
 
 **Table 1.3** ZookeeperService
 
+|---
 |Role Name | Description |
+|:-|:-:|
 |Zookeeper Server | ZooKeeper Quorum Servers |
+|---
 
 **Prerequisite:** None
 GPHD Manager installs an Independent Zookeeper ensemble.
@@ -62,9 +62,12 @@ The following table displays the roles that belong to HBase service.
 
 **Table 1.4** HBase Service
 
+|---
 |Role Name | Description |
+|:-|:-:|
 |HBase Master | Storage server |
 |Hbase RegionServer | Storage server |
+|---
 
 **Prerequisite:** HDFS, YARN, Zookeeper
 Zookeeper is a prerequisite for HBase. So if you choose to install HBase and do not
@@ -81,15 +84,14 @@ HAWQ
 The following table displays the roles that belong to HAWQ service.
 
 **Table 1.5** HAWQ Service Roles
+
+|---
 | Role | Name |
-|Description |HAWQ Standby Master Standby master is activated in the event the primary
-                   master fails. Replicated logs are created that reflect the
-                  state of the master host if the it becomes unoperational. |
-|HAWQ Segments | Queries submitted to HAWQ Master are optimized,
-             broken into smaller components, then dispatched to
-            segments |
-| HAWQ Master | Database process that accepts client connections and
-           processes SQL commands |
+|:-|:-:|
+|Description | HAWQ Standby Master Standby master is activated in the event the primary master fails. Replicated logs are created that reflect the state of the master host if the it becomes unoperational. 
+| HAWQ Segments | Queries submitted to HAWQ Master are optimized, broken into smaller components, then dispatched to segments |
+| HAWQ Master | Database process that accepts client connections and processes SQL commands |
+|---
 
 **Prerequisite:** HDFS
 

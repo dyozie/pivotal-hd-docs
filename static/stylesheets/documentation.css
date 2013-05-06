@@ -120,6 +120,47 @@ h3.title-container {
   margin-bottom: 30px;
 }
 
+
+/* TABLE STYLES */
+
+.content table {
+  max-width: 100%;
+
+  background-color: transparent;
+  background-color: #ffffff;
+
+  border-collapse: separate;
+  *border-collapse: collapse;
+  border-spacing: 0;
+
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+
+  margin-bottom: 20px;
+  border: 1px solid #7088B9;
+  border-left: 1px solid #7088B9;
+}
+
+.content table th,
+.content table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #7088B9;
+}
+
+.content table th {
+  font-weight: bold;
+}
+
+.content table thead th {
+  vertical-align: bottom;
+  background-color: #c9e5b0;
+  border-bottom: 3px solid #000;
+}
+
 /*------------------------------------------------------------------------------
      Pre/Code Styles
 ------------------------------------------------------------------------------*/
