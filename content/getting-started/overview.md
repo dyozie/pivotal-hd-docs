@@ -29,6 +29,7 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
 The  pattern is used for calculating statistical summaries like min, max, count of values in the dataset. The pattern is simple, but using the Combiner effectively is key to improving the performance. The following tutorials illustrate the summarization patterns:
 
 * **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
+* **[Season and monthly count of reviews](map-reduce-java/count-businesses-reviews-season.html)**
 
 ##Filtering Patterns
 
@@ -39,9 +40,12 @@ The Filter Pattern is used to filter the dataset with specific criteria. It does
 
 ##Joins
 
-The Filter Pattern is used to filter the dataset with specific criteria. It does not change the values of the dataset. The pattern is generally used to get a small subset for further analysis. The examples of the this pattern are top ten, bloom filter and distinct.
+Joins in MapReduce are similar to SQL Joins. Since Hadoop framework breaks the processing into Map and Reduce, understanding the join patterns are important in analyzing the data effectively. The critical resource is joining are the computation and the network bandwidth. A number of optimizations are possible and choosing the right join pattern is challenging and specially depends on the dataset formats and size.
 
-* **[Join example1](mapreduce-with-java/count-of_businesses-city.html)**
+The second tutorial below uses the `Distributed Cache` feature of Hadoop to write names into the output instead of cryptic user_ids.
+
+* **[List of Five star reviewers for a Business](map-reduce-java/list-fivestar-reviewers-business.html)**
+* **[List of Five star reviewers for a Business with User Names](map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
 
 
 ##Spring Hadoop
@@ -53,10 +57,12 @@ Spring Hadoop along with Spring Batch provides a powerful framework for running 
 
 ##Map Reduce API
 
-* **[Custom Input Format](mapreduce-with-java/count-of-businesses-city.html)**
-* **[Multiple Inputs](mapreduce-with-java/count-of-businesses-city.html)**
-
+* **[Custom Input Format](map-reduce-java/count-businesses-in-city.html)**
+* **[Multiple Inputs](map-reduce-java/count-city-fivestar-businesses.html)**
+* **[Combiner](map-reduce-java/count-businesses-reviews-season.html)**
+* **[Distributed Cache](map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
+* **[Multiple Outputs](map-reduce-java/count-businesses-reviews-season.html)**
 
 ##Source code for the tutorials
-The source code for the tutorials is availble
-[here] (git@github.com:bluespace9214/pivotal-docs.git)
+The source code for the tutorials is available [here] (git@github.com:bluespace9214/pivotal-docs.git)
+
