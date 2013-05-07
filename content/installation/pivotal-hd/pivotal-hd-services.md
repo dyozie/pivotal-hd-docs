@@ -21,9 +21,7 @@ Table 1.1 HDFS Service
 | Role Name | Description|
 |:-|:-:|
 | NameNode  | NameNode serves as both directory namespace manager and "inode table" for the Hadoop DFS. There is a single NameNode running in any DFS deployment.|
-|---
 | Secondary NameNode | The secondary NameNode periodically downloads current NameNode image and edits log files, joins them into new image and uploads the new image back to the (primary and the only) NameNode.|
-|===
 | DataNodes | A DataNode stores data in the [HadoopFileSystem]. A functional filesystem has more than one DataNode, with data replicated across them.|
 |---
 
@@ -158,4 +156,3 @@ Performance Optimization for HAWQ
 ---------------------------------
 If you wish to deploy HAWQ on a large cluster you must add the patch mentioned in
 the following section.
-
