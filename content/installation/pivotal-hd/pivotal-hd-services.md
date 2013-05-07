@@ -112,8 +112,7 @@ from:
 [http://www.oracle.com/technetwork/java/javase/downloads/index.html](http://www.oracle.com/technetwork/java/javase/downloads/index.html )
 
 
-Step 1: Enable Admin node with Hadoop and HAWQ Services
--------------------------------------------------------
+###Step 1: Enable Admin node with Hadoop and HAWQ Services
 import is a utility provided to sync the **RPMs** from the specified source location into
 the **GPCC** Admin local repository. The cluster nodes, during deployment stage, access
 the **RPMs** from the Admin Nodes local yum repository. You will need to run the

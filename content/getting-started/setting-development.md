@@ -19,9 +19,9 @@ The development machine should have the following:
 ##Set the environment variables
 
 ```bash
-export MAVEN_HOME=/home/foobar/apache-maven-3.0.5
-export HADOOP_HOME=/home/foobar/hadoop-2.0.3-alpha
-HADOOP_HOME=/home/foobar/hadoop-2.0.3-alpha
+export MAVEN_HOME=/home/gpadmin/apache-maven-3.0.5
+export HADOOP_HOME=/home/gpadmin/hadoop-2.0.3-alpha
+HADOOP_HOME=/home/gpadmin/hadoop-2.0.3-alpha
 export HADOOP_COMMON_HOME=$HADOOP_HOME
 export HADOOP_HDFS_HOME=$HADOOP_HOME
 export HADOOP_YARN_HOME=$HADOOP_HOME
@@ -64,7 +64,7 @@ elephant hadoop resource node config cluster submit
 ```
 
 ```bash
-hadoop fs -put sample.txt /user/foobar/input
+hadoop fs -put sample.txt /user/gpadmin/input
 ```
 
 ####(optional)For using third-party libraries, set HADOOP_CLASSPATH 
@@ -78,7 +78,7 @@ export HADOOP_CLASSPATH=path1/jar1.jar:path2/jar2.jar
 ####Submit the job to the cluster
 
 ```bash
-hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.0.3-alpha.jar wordcount -conf hadoop-mycluster.xml  /user/foobar/input /user/foobar/output
+hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.0.3-alpha.jar wordcount -conf hadoop-mycluster.xml  /user/gpadmin/input /user/gpadmin/output
 ```
 
 ####Check the output
@@ -93,7 +93,7 @@ The output directory should contain the part-r-0000-file.
 Use the following command to see the output.
 
 ```bash
-hadoop fs -cat /user/foobar/output/part-r-0000
+hadoop fs -cat /user/gpadmin/output/part-r-0000
 ```
 
 ##Using Eclipse for running MapReduce programs
@@ -195,7 +195,7 @@ mvn test
 Submit the job with the following command
 
 ```bash
-hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business. CityBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input /user/foobar/output
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business. CityBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/gpadmin/input /user/gpadmin/output
 ```
 
 ####Check the output
