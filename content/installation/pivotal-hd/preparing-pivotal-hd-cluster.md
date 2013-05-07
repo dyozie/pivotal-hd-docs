@@ -15,8 +15,8 @@ HostFile.txt"; done
 ```
 
 
-Step 1: Create User gpadmin
----------------------------
+###Step 1: Create User gpadmin
+
 
 Pivotal Command Center requires a user called "gpadmin" on the GPHD Manager
 Admin Node. To create user "gpadmin" with sudo privileges on all cluster nodes,
@@ -38,31 +38,33 @@ show this help message and exit
 file containing a list of all cluster hosts (newline
 separated) where the user gpadmin needs to be created
 
+```
 ###Example:
 
+```xml
 [root]# icm_client add-user-gpadmin -f ./HostFile.txt
 
 ```
 
-Step 2: Prepare Cluster Nodes with Pivotal HD Prerequisites
------------------------------------------------------------
+###Step 2: Prepare Cluster Nodes with Pivotal HD Prerequisites
+
 
 The preparehosts option of the icm_client command provides the user convenient
 options to ensure all prerequisites are satisfied on cluster nodes. The prerequisites for
 cluster nodes are:
 
-1. Password-less SSH access from Admin node (as user 'gpadmin').
+1.	Password-less SSH access from Admin node (as user 'gpadmin').
 
-2. Oracle Java JDK Version 1.6 or above (You must download the binary from the
-  Oracle Java website. )
+2. 	Oracle Java JDK Version 1.6 or above (You must download the binary from the
+  	Oracle Java website. )
 
-3. SELinux Disabled.
+3. 	SELinux Disabled.
 
-4. System clocks synchronized.
+4. 	System clocks synchronized.
 
-5. Puppet version 2.7.20 installed. Puppet is supplied with the Pivotal HD tarball.
+5. 	Puppet version 2.7.20 installed. Puppet is supplied with the Pivotal HD tarball.
 
-6. Sshpass installed.
+6. 	Sshpass installed.
 
 The preparehosts command will ensure that all the above prerequisites are satisfied.
 
@@ -99,8 +101,7 @@ Example:
 
 ```
 
-Step 3: Upgrade Ruby and Facter version to match Admin node packages
---------------------------------------------------------------------
+###Step 3: Upgrade Ruby and Facter version to match Admin node packages
 
 Run the following command on the Pivotal HD Admin Node as user "gpadmin".
 
@@ -116,10 +117,11 @@ facter -y --disablerepo=* --enablerepo=gphd-admin-localrepo"
 
 ```
 
-Step 4: Prepare Cluster Nodes with HAWQ Prerequisites
------------------------------------------------------
+###Step 4: Prepare Cluster Nodes with HAWQ Prerequisites
 
-Note: Prepare the cluster nodes with HAWQ if HAWQ is available.
+
+**Note:** Prepare the cluster nodes with HAWQ if HAWQ is available.
+
 prepare-hawq-hosts option of icm_clients sets some kernel parameters which enable
 HAWQ to perform optimally. In particular, this utility modifies /etc/sysctl.conf and
 /etc/security/limits.conf. The recommended configurations are available at
@@ -127,7 +129,7 @@ HAWQ to perform optimally. In particular, this utility modifies /etc/sysctl.conf
 Important: The hostfile only needs to contain all the HAWQ nodes (HAWQ master,
 standby master and segment nodes).
 
-Important: This command edits limits.conf and sysctl.conf. We recommend you
+**Important:** This command edits limits.conf and sysctl.conf. We recommend you
 review these configurations before you run the command.
 
 ```xml
@@ -149,14 +151,14 @@ will be appended
 to /etc/sysctl.conf and
 /etc/limits.conf on slave
 nodes
-Example:
+**Example:**
 [gpadmin]# icm_client prepare-hawq-hosts -f ./HAWQ_Hosts.txt -g
 /usr/lib/gphd/gphdmgr/hawq_sys_config/
 
 ```
 
-Step 5: Verify Cluster Nodes' Prerequisites
--------------------------------------------
+###Step 5: Verify Cluster Nodes' Prerequisites
+
 
 scanhosts verifies if all cluster nodes' prerequisites have been met. This is a good
 indicator if cluster deployments will go through smoothly on the nodes. As its output,
@@ -190,18 +192,32 @@ On Cluster Nodes
 Manual Verification of Cluster Node Prerequisites
 -------------------------------------------------
 
-Note: Optional but recommended.
+**Note:** Optional but recommended.
 
-Table 1.6
+
+**Table 1.6**
+
+|---
 | Validation | Description |
+|:-|:-:|
 | gpadmin user check | Every cluster node must have the user 'gpadmin' |
+|---
 | sudo privilege for gpadmin check | Check if gpadmin has sudo access on all the cluster nodes |
+|===
 | No requirettty check for admin | Check if gpadmin can run scripts without requiring terminal |
- 
-Table 1.6
-| Validation | Description |
-| Puppet, Ruby and Facter version check | Check for the right versions of Puppet, Ruby and Facter rpms|
-| Admin node reachability | Check if admin node puppet master and rpm repo are reachable from
-                       all cluster nodes |
+|---
 
+{: rules="groups"}
+
+**Table 1.6**
+
+|---
+| Validation | Description |
+|:-|:-:|
+| Puppet, Ruby and Facter version check | Check for the right versions of Puppet, Ruby and Facter rpms|
+|---
+| Admin node reachability | Check if admin node puppet master and rpm repo are reachable from all cluster nodes |
+|---
+
+{: rules="groups"}
 

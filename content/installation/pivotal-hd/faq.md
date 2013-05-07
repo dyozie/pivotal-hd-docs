@@ -2,30 +2,30 @@
 title: FAQ
 ---
 
-“Can we deploy multiple clusters from the same admin?”
+Can we deploy multiple clusters from the same admin?
 
-“Can I modify the topology of the cluster?”
+Can I modify the topology of the cluster?
 
-“Certain services like hadoop-hdfs-namenode or hadoop-hdfs-datanode do not come
-up when I a start cluster.”
+Certain services like hadoop-hdfs-namenode or hadoop-hdfs-datanode do not come
+up when I a start cluster.
 
-“What group and users are created by GPHD 2.x ?”
+What group and users are created by GPHD 2.x ?
 
-“What is the allowable time difference amongst the cluster nodes as compared to the
-admin node?”
+What is the allowable time difference amongst the cluster nodes as compared to the
+admin node?
 
-“Does Pivotal Command Center support simultaneous deployment of multiple
-clusters?”
+Does Pivotal Command Center support simultaneous deployment of multiple
+clusters?
 
-“Does Pivotal Command Center support hostnames both in IP address and FQDN
-format?”
+Does Pivotal Command Center support hostnames both in IP address and FQDN
+format?
 
-“Can a node be shared between different clusters?”
+Can a node be shared between different clusters?
 
-“I installed puppet-2.7.20 from the puppetlabs repo but Pivotal HD Mananger doesnt
-seem to work?”
+I installed puppet-2.7.20 from the puppetlabs repo but Pivotal HD Mananger doesnt
+seem to work?
 
-“How do I clean up the nodes if a cluster deployment failed?”
+How do I clean up the nodes if a cluster deployment failed?
 
 
 ### Can we deploy multiple clusters from the same admin?

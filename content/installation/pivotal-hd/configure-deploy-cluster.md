@@ -73,26 +73,34 @@ This is the only file that the user has to fill up to deploy a simple cluster. T
 files are provided for advanced cluster configurations.
 
 ###Head section
+
 This is the metadata section that contains the following:
+
 • clusterName: Configure the name of the cluster
+
 • gphdStackVer: Pivotal HD Version. This defaults to 2.0
+
 • services: Configure the services that are required to be deployed. By default every
    service that GPHD Manager supports is listed here.
+
 **Note:** zookeeper, hdfs, and yarn are mandatory services. hbase and hawq are on an as needed
 basis.
 
 ###Topology Section <hostRoleMapping>
+
 This section associates hosts to each role that belongs to the service. Only services that
 are configured in the head section, will need to be allocated hosts. Also every role
 needs to be allocated on at least one host.
 
 ###Global Service Properties <servicesConfigGlobals>
+
 This section defines the mandatory global parameters (like Mount Points, Directories
 and Ports). The configured mount points: datanode.disk.mount.points,
 namenode.disk.mount.points, secondary.namenode.disk.mount.points are used as the
 base location for deriving paths for other properties in datanode, namenode and
 secondarynamenode respectively. (These properties can be found in the Service's
 configuration files).
+
 **Note:** The two HAWQ directory configurations are required if HAWQ services is used.
 
 Step 3: For Hadoop Service Configuration (Mandatory)
@@ -104,16 +112,21 @@ Pivotal HD Team to decide on a configuration to suit your specific cluster needs
 Any changes made to these files, like adding new configuation parameters or
 changing existing config paramters are reflected on the cluster nodes when you
 perform a deploy or reconfigure.
+
 **Important:** Please refrain from overriding properties derived from the global
 service properties (in particular properties dervied from role information).
+
 ###Example
+
 In hdfs/core-site.xml: fs.defaultFS which is set to hdfs://${namenode}:${dfs.port}
 
 Step 4: HAWQ Configuration
 --------------------------
+
 HAWQ configuration can be found in hawq/gpinitsystem_config.You can override the
 HAWQ database default port in MASTER_PORT (default is 8432). The HAWQ DFS
 path default value can be found in DFS_URL.
+
 **Important:** For performance optimization, add the hdfs configuration overrides
 mentioned in this section.
 
@@ -124,17 +137,27 @@ Currently, minimal validations are performed on the cluster configuration suppli
 the user. The user is expected to manually check the following conditions in the
 configurations before deploying/reconfiguring a cluster.
 
-Table 1.7 Cluster Configuration
 
+**Table 1.7 Cluster Configuration**
+
+|---
 | Name | Description |
+|:-|:-:|
 | Cluster Name check | Do not permit a cluster with duplicate name or an empty name. |
+|---
 | GPHD Stack version check | Ensures that the stack version cannot be empty. When additional
 stacks are supported, this value can be changed accordingly. |
 | Cluster Config XML validity check |Ensure that the xml files modified are wellformed. You can use
  "xmlwf" command to quickly check for validity. |
+|---
+
 | Empty host allocation | If you do not want an optional role, please remove the complete line
-                     from the XML file. Do not have roles with empty hostnames. |
+                    from the XML file. Do not have roles with empty hostnames. |
+|===
 | Hostname check | Ensure that you do not use hosts already allocated for other clusters |
+|---
+
+{: rules="groups"}
 
 **Table 1.7 Cluster Configuration**
 

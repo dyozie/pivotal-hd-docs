@@ -342,3 +342,70 @@ cluster.
 <value>-1</value> </property>
 ```
 
+Java HeapSpace Issues
+---------------------
+This may happen if mapreduce is not configured properly.
+
+Change the following property in `/etc/gphd/hadoop/conf/mapred-site.xml` in the resourcemanager node.
+
+from 
+```xml
+<property>
+      <name>
+             mapreduce.task.io.sort.mb
+      </name>
+      <value>
+             512
+      </value>
+</property>
+```
+to
+```xml
+<property>
+      <name>
+             mapreduce.task.io.sort.mb
+      </name>
+      <value>
+             256
+      </value>
+</property>
+```
+
+If you really need 512 MB for the buffer, you must increase the heap size for Map and Reduce tasks. Change the heapsize to 2048m for map and reduce tasks in `/etc/gphd/hadoop/conf/mapred-site.xml` 
+```xml
+<property>
+      <name>
+             mapreduce.map.java.opts
+      </name>
+      <value>
+             -Xmx2048m
+      </value>
+</property>
+
+
+<property>
+      <name>
+             mapreduce.reduce.java.opts
+      </name>
+      <value>
+             -Xmx2048m
+      </value>
+</property>
+
+```
+Ideally it is better to change at the command center ClusterConfig directory and 
+issue the following command from the command center.
+```xml
+gpadmin#icm_client reconfigure -l test -c ClusterconfigDir
+```
+
+Hbase Master not starting
+--------------------------
+Hbase Master starts and then exits with an error message saying Invalid permissions for reading the block.
+
+Change the following property in hbase-site.xml
+
+```xml
+
+```
+

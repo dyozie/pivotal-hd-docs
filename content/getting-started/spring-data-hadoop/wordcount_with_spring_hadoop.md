@@ -6,7 +6,7 @@ Run wordcount example with Spring Hadoop
 --------------------------------------
 The tutorial demonstrates running the worcount example with Spring Hadoop
 
-* Approximate time: 30 mins
+* Approximate time: 30 Mins
 * Level: Basic
 
 Use case
@@ -21,7 +21,7 @@ Pre-requisites
 
 Approach
 --------
-Every MapReduce program comes with the `Main` class, that used the MapReduce API to submit the job.
+Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
 With Spring Hadoop, the job creation is handled by Spring Hadoop. The jobs can be submitted with various configuration options without changing the code. 
 
 Designing and writing of Mapper and Reduce classes does not change with Hadoop. With Spring Batch, the job can be part of the chain of Jobs. The Spring Hadoop helps by providing a clean way of invoking MapReduce jobs without worrying about the complexity.
@@ -34,7 +34,7 @@ Working with the Tutorial
 
 ###Creating Application Context with Spring Hadoop
 
-The Application Context file is shown below.
+The Application Context file is shown below,
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -66,7 +66,7 @@ The Application Context file is shown below.
 </beans:beans>
 ```
 
-A sample hadoop.properties is shown below:
+A sample hadoop.properties are shown below:
 
 ```xml
 wordcount.input.path=/animals.txt
@@ -79,12 +79,12 @@ LIB_DIR=file:///home/gpadmin/spring-hadoop/target
 
 Spring Hadoop has the namespace, which is made default in the above xml.
 The configuration tag provides the location of HDFS and Jobtracker to submit the jobs.
-The Job is defined with xml as shown above and the JobRunner runs the Job.
+The Job is defined with xml as shown above, and the JobRunner runs the Job.
 
 
 ###Step 2: Run the example
 
-The code creates the Application Context and Spring Hadoop runs the job after initialization. 
+The code creates the Application Context and Spring Hadoop run the job after initialization. 
 
 ```java
 
@@ -108,7 +108,7 @@ git clone git@github.com:rajdeepd/pivotal-samples.git
 
 Import the tutorial into eclipse and run using the instructions [Setting Development Environment](../setting-development.html).
 
-###Step 9: Running the tutorial on command line
+###Step 9: Running the tutorial on the command line
 
 ####Building the project 
 ```bash

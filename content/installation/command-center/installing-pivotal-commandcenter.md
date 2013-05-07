@@ -17,8 +17,7 @@ This chapter includes the following sections:
    *  Uninstalling Pivotal Command Center
 
 
-Supported Platforms
---------------------
+##Supported Platforms
 
    *  RHEL 6.1, 6.2 
 
@@ -26,13 +25,11 @@ Supported Platforms
 
 
                    
-Product Downloads
------------------
+##Product Downloads
 
    *  GPCC-2.0.0.*.version_build_OS.x86_64.tar.gz
 
-Prerequisites
--------------
+##Prerequisites
 
    *  Oracle JDK 6 or higher installed on the Admin host.
   
@@ -49,8 +46,7 @@ Prerequisites
    *  SSH (Secure Shell protocol).
 	
 
-Package Accessibility
----------------------
+##Package Accessibility
 
 Pivotal Command Center and Pivotal HD Enterprise expect some prerequisite
 packages to be pre-installed on each host, depending on the software that gets
@@ -67,8 +63,7 @@ For Pivotal Command Center 2.0, here is a list of pre-requisites that need to ei
 already be installed on the Command Center admin host or on an accessible yum
 repository:
 
-PostgreSQL Database
--------------------
+##PostgreSQL Database
 
 Pivotal Command Center makes use of a PostgreSQL Database to store the following:
 
@@ -107,12 +102,11 @@ that the following two packages are installed or accessible by yum on all hosts:
 
 * postgresql-devel
 
-System Checks
--------------
+##System Checks
 
 ### Important:
 
-   Avoid using hostnames with capital letters in them because Puppet has an
+Avoid using hostnames with capital letters in them because Puppet has an
 issue generating certificates for domains with capital letters.
 
 * Ensure that SE Linux is disabled by running the following command:
@@ -137,7 +131,75 @@ iptables: Firewall is not running.
 
 ```
 
+##Installation Instructions
 
+Once you have met the prerequisites, you are ready to begin the installation. Perform
+the following installation steps as a root user.
 
-  
+1.  Copy the Command Center tar file to your host. For example:
+
+```xml
+# scp ./GPCC-2.0.0.version.build.os.x86_64.tar.gz
+host:/root/phd/
+```
+2.    Log into the Command Center admin host as root user. cd to the directory where
+the Command Center tar files are located and untar. For example
+
+```xml
+# cd /root/phd
+# tar --no-same-owner -zxvf
+GPCC-2.0.0.version.build.os.x86_64.tar.gz
+```
+3.   Still as root user, run the installation script. This installs the required packages and
+configures both Pivotal Command Center and Pivotal HD Manager, and starts services.
+
+###Important: 
+You must run the installation script from the directory where it is
+installed, for example: GPCC-2.0.0.version
+For example:
+```xml
+# ls
+GPCC-2.0.0.version
+GPCC-2.0.0.version.build.os.x86_64.tar.gz
+# cd GPCC-version
+# ./install
+```
+You will see installation progress information on the screen. Once the installation
+successfully completes, you will see the following:
+
+You have successfully installed GPCC 2.0.
+You now need to install a GPHD cluster to monitor or sync
+GPCC to monitor an existing GPHD cluster. You can view your
+cluster statuses here:
+http://node0781.ic.analyticsworkbench.com:5000/status
+
+###Starting, Stopping, and Restarting Command Center Services
+
+To stop or restart the Command Center services, run the following commands on the
+Pivotal Command Center admin host:
+
+```xml
+$ service commander stop
+$ service commander start
+$ service commander restart
+```
+
+###Launching Command Center
+
+Launch a browser and navigate to the host on which you installed Command Center.
+For example:
+
+```xml
+http://CommandCenterHost:5000
+
+```
+
+The Command Center login page is launched in your browser. The default
+username/password is gpadmin/gpadmin.
+
+###Next Steps
+
+See the [Pivotal HD 1.0 Installation and Configuration Guide](../pivotal-hd.html) for instructions for using
+the command-line interface of Pivotal Command Center to deploy and configure a HD
+cluster.
 

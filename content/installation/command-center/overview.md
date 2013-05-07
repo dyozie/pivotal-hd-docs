@@ -97,7 +97,9 @@ Pivotal Command Center makes use of a PostgreSQL Database to store the following
 Architectural Overview
 ----------------------
 
-For more details about Pivotal HD Enterprise 1.0, refer to the [Pivotal HD 1.0 Installation and Administrator Guide](installation-instructions.html)
+For more details about Pivotal HD Enterprise 1.0, refer to the [Pivotal HD 1.0 Installation and Administrator Guide](pivotal-hd.html)
+
+![Command Center Architecture](/images/cc/cc-architecture.png)
 
 
 

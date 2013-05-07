@@ -337,69 +337,11 @@ public void testCityBusinessMapperReducer() throws Exception {
 ```   
 ###Step 8: Running the exercise with Eclipse IDE
 
-Clone the source from the git repository
+Download the exercise from [here](https://github.com/rajdeepd/pivotal-samples "here") and extract into a folder. 
+This will create count_businesses_in_city folder. 
+Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
 
-```bash
-git clone git@github.com:rajdeepd/pivotal-samples.git
-```
-Import the tutorial into eclipse and run using the instructions given in the [Setting Development Environment](../setting-development.html)
-
-###Step 9: Running the tutorial in command line
-The following instructions can be used to the run the sample on the Psuedo distributed cluster.
-
-####Building the project 
-
-```bash
-mvn clean compile
-mvn -DskipTests package
-```
-
-####Upload the input
-
-```bash
-hadoop fs -put PROJECT_DIR/input/business.json /user/gpadmin/sample1/input
-```
-Note: Replace PROJECT_DIR with the project directory.
-
-####Create the configuration file
-
-```xml
-<configuration>
-    <property>
-        <name>fs.default.name</name>
-            <value>hdfs://localhost:9000</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.address</name>
-        <value>http://localhost:8032</value>
-    </property>
-</configuration>
-```
-####Submit the job
-
-This tutorial uses third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
-
-```bash
-cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
-```
-
-```bash
-hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -libjars target/json-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
-```
-
-####Check the output
-
-Verify the job in the hadoop cluster.
-
-Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
-
-See the output using
-
-```bash
-hadoop fs -cat /user/gpadmin/sample1/output
-```
-
-###Step 10: Running the tutorial on Pivotal HD Cluster
+###Step 9: Running the tutorial on Pseudo distributed mode
 
 Point namenode and resourcemanager to the hadoop cluster.
 
@@ -415,26 +357,26 @@ Point namenode and resourcemanager to the hadoop cluster.
     </property>
 </configuration>
 ```
-Replace localhost with the Namenode and resourcemanager's host name respectively.
-
-####Transfer the code to a node to the cluster. Let us assume it is historyserver.
+####Building the project 
 
 ```bash
-tar -zcvf sample1.tar.gz target/*
-scp sample1.jar history_server_host_name:/home/gpadmin/sample1.tar.gz 
+mvn clean compile
+mvn -DskipTests package
 ```
 
-####Upload the datasets to HDFS
+####Upload the input
 
 ```bash
-hadoop fs -put business.json /user/gpadmin/sample1/input
+hadoop fs -put path-to-business.json /user/gpadmin/sample1/input
 ```
-Note: Replace PROJECT_DIR with the project directory.
+
 
 ####Submit the job
 
+Dowload json-simple-1.1.jar file and point it to hadoop by using -libjars.
+
 ```bash
-hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -libjars target/json-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -libjars path-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
 ```
 
 ####Check the output

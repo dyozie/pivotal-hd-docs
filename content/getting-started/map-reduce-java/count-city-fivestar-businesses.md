@@ -133,9 +133,9 @@ job.setOutputValueClass(IntWritable.class);
 
 The `FiveStarReviewedBusinessDriver` class uses the ToolRunner. Using the ToolRunner helps in parsing the arguments.
 ```java
-public class FiveStarReviewedBusinessDriver extends Configured implements Tool {
+p.ublic class FiveStarReviewedBusinessDriver extends Configured implements Tool {
 
-    public static void main(String[] args) throws Exception {
+	    public static void main(String[] args) throws Exception {
 
         if (args.length != 2) {
             System.err.println("Usage: " + "FiveStarReviewedBusinessDriver"
@@ -155,7 +155,7 @@ public class FiveStarReviewedBusinessDriver extends Configured implements Tool {
 
 ```bash
 mvn clean compile
-mvn package
+mvn clean package
 ```
 
 ####Upload the input
@@ -182,5 +182,5 @@ See the output using
 hadoop fs -cat /user/gpadmin/sample2/output
 ```
 
-###Congratulations! You have successfully completed the tutorial.
+###You have successfully completed the tutorial.
 

@@ -15,7 +15,7 @@ HDFS
 
 The following table displays the roles that belong to HDFS service.
 
-Table 1.1 HDFS Service
+**Table 1.1** HDFS Service
 
 |---
 | Role Name | Description|
@@ -30,7 +30,7 @@ Table 1.1 HDFS Service
 YARN
 ----
 The following table displays the roles that belong to YARN service.
-Table 1.2 Yarn Service Roles
+**Table 1.2** Yarn Service Roles
 
 |---
 | Role Name | Description |
@@ -126,19 +126,16 @@ show this help message and exit
 -v VERSION, --version=VERSION
 the version of GPHD stack (1 or 2)
 ```
-Step 2. Enable Pivotal HD Services
-----------------------------------
+###Step 2. Enable Pivotal HD Services
 
 **Important:** This step is mandatory.
 [gpadmin]# icm_client import -p <PATH TO EXTRACTED GPHD TAR
 BALL> -v <VERSION_NUMBER>
 
-Example:
---------
+###Example:
 [gpadmin]# icm_client import -p GPHD-2.0.1-21/ -v 2.0
 
-Step 3. Enable HAWQ Service
----------------------------
+###Step 3. Enable HAWQ Service
 **Note:** Required only for HAWQ/GPXF
 ```xml
 [gpadmin]# icm_client import -p <PATH TO EXTRACTED GPADS TAR BALL> -v
@@ -151,8 +148,3 @@ Step 3. Enable HAWQ Service
 ```
 For more details and help with troubleshooting, refer to the log file located at:
 /var/log/gphd/gphdmgr/gphdmgr-import.log
-
-Performance Optimization for HAWQ
----------------------------------
-If you wish to deploy HAWQ on a large cluster you must add the patch mentioned in
-the following section.

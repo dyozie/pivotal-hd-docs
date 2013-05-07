@@ -201,8 +201,8 @@ fetched
 Sample Usage:
 icm_client fetch-configuration -l CLUSTERNAME -o LOCALDIR
 ```
-Listing Clusters
-----------------
+###Listing Clusters
+
 
 The list option lets the user see all the installed clusters.
 ```xml
@@ -217,8 +217,8 @@ Sample Usage:
 icm_client list
 ```
 
-Uninstalling a Cluster
-----------------------
+###Uninstalling a Cluster
+
 
 The uninstall option lets the user uninstall the cluster. Note that uninstall will not stop
 any running clusters.
@@ -240,15 +240,15 @@ Sample Usage
 icm_client uninstall -l CLUSTERNAME
 ```
 
-Role/Host Level Operation
--------------------------
+###Role/Host Level Operation
+
 
 GPHD Manager currently does not support starting/stopping individual cluster roles
 or individual roles on a particular host.
 The table below shows the service commands for each service role to start, stop, check
 status and restart.
 
-Table 1.10 Role/Host Level Operation
+**Table 1.10** Role/Host Level Operation
 
 |Role Name | Service Command |
 |Namenode | sudo service hadoop-hdfs-namenode{start\|stop\|status\|restart} |
@@ -275,16 +275,16 @@ Table 1.10 Role/Host Level Operation
 
 You have the following options based on your choice of operation:
 
-Operate Locally
----------------
+###Operate Locally
+
 You can locally manage the service role on the target host. If you wish to restart a
 datanode say node100.
 ```xml
 [gpadmin]# ssh gpadmin@node100
 [gpadmin]# sudo service hadoop-hdfs-namenode restart
 ```
-Operate from Admin Node
------------------------
+###Operate from Admin Node
+
 You can remotely manage the service role across one of more target hosts.
 If you wish to restart a datanode on say node100.
 ```xml
