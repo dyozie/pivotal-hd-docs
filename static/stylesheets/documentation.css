@@ -158,7 +158,7 @@ h3.title-container {
 .content table thead th {
   vertical-align: bottom;
   background-color: #c9e5b0;
-  border-bottom: 3px solid #000;
+  border-bottom: 1px solid #000;
 }
 
 /*------------------------------------------------------------------------------

@@ -63,5 +63,5 @@ Spring Hadoop along with Spring Batch provides a powerful framework for running 
 * **[Multiple Outputs](map-reduce-java/count-businesses-reviews-season.html)**
 
 ##Source code for the tutorials
-The source code for the tutorials is available [here](git@github.com:rajdeepd/pivotal-samples.git)
+The source code for the tutorials is available [here](https://github.com/rajdeepd/pivotal-samples.git)
 
