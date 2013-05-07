@@ -2,16 +2,27 @@
 title: Webservice API
 ---
 
-“Scanhost”
-“Listing all stacks”
-“Listing all clusters”
-“Listing a particular cluster”
-“Fetching a template”
-“Deploying a cluster”
-“Starting a cluster”
-“Stopping a Cluster”
-“Uninstalling a cluster”
-“Getting the install status”
+The following are the topics covered in the WebService API:
+
+* **Scanhost**
+
+* **Listing all stacks**
+
+* **Listing all clusters**
+
+* **Listing a particular cluster**
+
+* **Fetching a template**
+
+* **Deploying a cluster**
+
+* **Starting a cluster**
+
+* **Stopping a Cluster**
+
+* **Uninstalling a cluster**
+
+* **Getting the install status**
 
 Scanhost
 --------
@@ -398,6 +409,7 @@ Unknown errors:
 
 Deploying a cluster
 -------------------
+
 @Path("/clusters")
 Resource: POST /clusters
 Description: API to deploy the cluster. The updated template (obtained from the
@@ -455,6 +467,7 @@ Unknown errors:
 
 Starting a cluster
 ------------------
+
 Resource: POST /cluster/{clusterName}/start
 Description: API to start the cluster HTTP Request Header: Content-type:
 application/json
@@ -506,6 +519,7 @@ Unknown errors:
 
 Uninstalling a cluster
 ----------------------
+
 @Path("/cluster/{clusterName}")
 Resource: DELETE /cluster/{clusterName}
 Description: API to delete a cluster HTTP Request

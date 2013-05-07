@@ -133,7 +133,8 @@ stacks are supported, this value can be changed accordingly. |
                      from the XML file. Do not have roles with empty hostnames. |
 | Hostname check | Ensure that you do not use hosts already allocated for other clusters |
 
-Table 1.7 Cluster Configuration
+**Table 1.7 Cluster Configuration**
+
 | Name | Description |
 | Master Role node allocation check | All master roles such as namenode, gpsql-master, etc. must be
  allocated a single node.|
@@ -141,20 +142,25 @@ Table 1.7 Cluster Configuration
 |Service Name check| Do not alter the service names in the template.|
 |Role Name check| Do not alter the role names in the template|
 |Slave node collocation | HDFS Data Nodes, HAWQ Segment Nodes and YARN Node
-                      Manager Nodes should be co-located |
+                          Manager Nodes should be co-located |
 |HAWQ Master check | HAWQ Master Node should not be co-located with a HAWQ
-                 Segment Node |
+                     Segment Node |
 |HAWQ Directory check | Make sure the HAWQ Master and Segment directories are not used
-                    for any other role/property 
+                        for any other role/property |
+
 Step 6: Installing a Cluster
 ----------------------------
+
 Pivotal Command Center uses the template directory updated in Step 1 to deploy a
 cluster.
+
 **Important:** Multiple simultaneous deployments not supported. Please run only
 one deploy command at a time. Simultaneous deployments might result in
 deployment failure.
-```XML
-[gpadmin]# icm_client deploy --help
+
+```xml
+
+ icm_client deploy --help
 Usage: /usr/bin/icm_client deploy [options]
 Options:
 -h, --help
@@ -163,7 +169,9 @@ show this help message and exit
 Directory path where cluster
 configuration is stored
 ```
+
 ###Example:
+
 ```xml
 icm_client deploy -c ~/ClusterConfigDir
 ```
@@ -181,6 +189,7 @@ Step 7: Post Installation Step (For HAWQ Only)
 ----------------------------------------------
 The following steps are required to Exchange SSH Keys between HAWQ Master and
 Segment Nodes.
+
 **Important: Execute the following commands from the HAWQ Master.** The
 hostfile only needs to contain the HAWQ Segment Nodes.
 
@@ -210,6 +219,8 @@ Table 1.8 Pivotal HD Directory Layout
 |/usr/share/doc/gphd*| The documentation of the components is stored here.|
 |/usr/bin |This folder is used to store the component’s command scripts; only
           sym-links or wrapper scripts are created here.|
+
+
 **Note:** The tailing * indicates a a designated folder for each Pivotal HD component.
 
 

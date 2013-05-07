@@ -251,7 +251,7 @@ status and restart.
 Table 1.10 Role/Host Level Operation
 
 |Role Name | Service Command |
-|Namenode | sudo service hadoop-hdfs-namenode{starts|stop|status|restart} |
+|Namenode | sudo service hadoop-hdfs-namenode{start\|stop\|status\|restart} |
 |Secondary NameNode | sudo service hadoop-hdfs-secondarynamenode
                   {starts|stop|status|restart} |
 |Datanode | sudo service hadoop-hdfs-datanode

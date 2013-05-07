@@ -7,8 +7,8 @@ Pivotal HD Cluster Recommendations
 
 This section describes the following:
 
-1. ** Hardware Recommendations**
-2. ** Hadoop services Topology”**
+*  **Hardware Recommendations**
+*  **Hadoop services Topology**
 
 Effective deployment of Hadoop cluster has three important considerations to make.
 

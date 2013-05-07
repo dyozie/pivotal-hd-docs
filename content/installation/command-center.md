@@ -16,15 +16,17 @@ An overview of the functionality and architecture of Pivotal Command Center.
 Basic instructions for installing and configuring Pivotal Command Center to monitor a running instance 
 of Pivotal HD.
 
-* [Using Pivotal Command Center UI]()
+* [Using Pivotal Command Center UI](command-center/using-pivotal-commandcenter-ui.html)
 
 An overview of the functionality of the Pivotal Command Center console (user interface).
 
-* Pivotal Command Center Performance Monitor
+* [Pivotal Command Center Performance Monitor](command-center/pivotal-commandcenter-performance.html)
 
 An overview of the Pivotal Command Center performance monitor known as nmon.
 
-* Appendix A, Creating a YUM EPEL Repository
+* [Uninstalling Pivotal Command Center](command-center/uninstalling-pivotal-commandcenter.html)
+
+* [Appendix A, Creating a YUM EPEL Repository](command-center/appendix.html)
 
 Instructions how to setup a local yum repository or point your hosts to an EPEL repository.
 

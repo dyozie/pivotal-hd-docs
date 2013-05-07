@@ -87,6 +87,7 @@ The Job is defined with xml as shown above and the JobRunner runs the Job.
 The code creates the Application Context and Spring Hadoop runs the job after initialization. 
 
 ```java
+
 private static final String[] CONFIGS = new String[] { "applicationContext.xml" };
 
 public static void main(String[] args) {
@@ -95,9 +96,11 @@ public static void main(String[] args) {
 	ctx.registerShutdownHook();
 }
 
+```
+
 ###Step 8: Running the exercise with Eclipse IDE
 
-Download the tutorial from [here](git://url "here") and extract into a folder. 
+Download the tutorial from [here](https://github.com/SpringSource/spring-hadoop-samples.git) and extract into a folder. 
 Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
 
 ###Step 9: Running the tutorial on Pivotal HD cluster

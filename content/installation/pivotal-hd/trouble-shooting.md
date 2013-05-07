@@ -188,11 +188,11 @@ export no_proxy=local.domain ## this is the local domain for hadoop cluster
 ```xml
 Change from:
 
-baseurl=http://<%= scope.lookupvar("params::config::admin_host") %>/<%=
+baseurl=http://< %= scope.lookupvar("params::config::admin_host") %>/<%=
 scope.lookupvar("params::config::repopath") %>
 Change to:
 
-<replace node.full.domain.com> with the FQDN of the admin
+< replace node.full.domain.com > with the FQDN of the admin
 node baseurl=http://node.full.domain.com/<%=
 scope.lookupvar("params::config::repopath") %>
 ```
@@ -211,14 +211,14 @@ mount gpcc:/usr/lib/gphd/rpms /local_repo
 
 ```xml
 Change from:
-baseurl=http://<%= scope.lookupvar("params::config::admin_host") %>/<%=
+baseurl=http://<%= scope.lookupvar("params::config::admin_host") %>/< %=
 scope.lookupvar("params::config::repopath") %>
 
 Change to:
 
-<span style="color: blue">
+
 baseurl=file:///local_repo/
-</span>
+
 ```
 
 Capital letters in hostname
