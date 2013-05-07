@@ -102,7 +102,7 @@ hadoop fs -cat /user/foobar/output/part-r-0000
 ###Clone the source from git repository
 
 ```bash
-git clone git:githubcom/pivotal.git
+
 ```
 
 ###Importing source code to Eclipse
@@ -148,24 +148,42 @@ Messages on the console show that the MapReduce program is running. If there are
 
 The output should be available on the output folder.
 
-
 ###Running Unit tests
 
 Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
 
-##Building the project using command line
+##Running the tutorial in command line
+The following instructions can be used to the run the sample on the Psuedo distributed cluster.
 
-###Build the project
-
-Run the maven command to build the project
+####Building the project 
 
 ```bash
-mvn clean install package
+mvn clean compile
+mvn package
 ```
-After the build is complete, a target directory with jar file is created.
 
+####Upload the input
+
+```bash
+hadoop fs -put PROJECT_DIR/input/business.json /user/gpadmin/sample1/input
+```
+Note: Replace PROJECT_DIR with the project directory.
+
+####Create the configuration file
+
+```xml
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+            <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>http://localhost:8032</value>
+    </property>
+</configuration>
+```
 ###Run the tests
-
 Run the unit tests with the following command.
 
 ```bash
@@ -180,4 +198,93 @@ Submit the job with the following command
 hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business. CityBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input /user/foobar/output
 ```
 
-####Congratulations! You have successfully set up the Development environment.
+####Check the output
+See the output using the following command:
+
+```bash
+hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
+```
+
+##Running the tutorial on Pivotal HD Cluster
+
+The following instructions will apply to all the tutorials.
+Create the file with the following contents:
+
+```xml
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+            <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>http://localhost:8032</value>
+    </property>
+</configuration>
+```
+####Third-party libraries
+The tutorialis use third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+```
+####Transfer the tutorial code to a node on the cluster. Let us assume it is historyserver.
+
+```bash
+tar -zcvf sample1.tar.gz target/*
+scp sample1.jar history_server_host_name:/home/gpadmin/sample1.tar.gz 
+```
+
+####Create the cluster configuration file
+Login to one of the Pivotal HD Cluster nodes. Let us assume it is the node where history server is running.
+
+Extract the sample into home folder.
+
+```bash
+mkdir sample1
+tar -zxvf ../sample1.tar.gz 
+```
+Create the file hadoop-mycluster.xml with the following contents:
+
+```xml
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+            <value>hdfs://NAMENODE:9000</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>http://RESOURCE_MANAGER:8032</value>
+    </property>
+</configuration>
+```
+
+Replace NAMENODE and RESOURCE_MANAGER with hostnames of namenode and resourcemanager respectively.
+
+####Upload the complete data set to HDFS
+
+```bash
+hadoop fs -put business.json /user/gpadmin/sample1/input
+```
+Note: Replace PROJECT_DIR with the project directory.
+
+####Submit the job to the Pivotal HD Cluster
+
+```bash
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -conf hadoop-mycluster.xml -libjars target/json-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+```
+
+If there are more third-party libraries, add to the -libjars option separated by `,`.
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Browse the hadoop file system and check the output directory `/user/gpadmin/sample1/output` contains the part-r-0000-file.
+
+See the output using the following command:
+
+```bash
+hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
+```
+

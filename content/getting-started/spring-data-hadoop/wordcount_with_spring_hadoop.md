@@ -74,7 +74,7 @@ wordcount.output.path=/tmp/output
 
 hd.fs=hdfs://localhost:9000
 hd.jt=localhost:9001
-LIB_DIR=file:///home/foobar/spring-hadoop/target
+LIB_DIR=file:///home/gpadmin/spring-hadoop/target
 ```
 
 Spring Hadoop has the namespace, which is made default in the above xml.
@@ -100,13 +100,17 @@ public static void main(String[] args) {
 
 ###Step 8: Running the exercise with Eclipse IDE
 
-Download the tutorial from [here](https://github.com/SpringSource/spring-hadoop-samples.git) and extract into a folder. 
-Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
+Clone the source code from github.
 
-###Step 9: Running the tutorial on Pivotal HD cluster
+```bash
+git clone git@github.com:rajdeepd/pivotal-samples.git
+```
+
+Import the tutorial into eclipse and run using the instructions [Setting Development Environment](../setting-development.html).
+
+###Step 9: Running the tutorial on command line
 
 ####Building the project 
-
 ```bash
 mvn package
 ```
@@ -114,15 +118,14 @@ mvn package
 ####Upload the input
 
 ```bash
-hadoop fs -put data/business.json /user/foobar/input
+hadoop fs -put data/business.json /user/gpadmin/input
 ```
 
 ####Submit the job
 
 ```bash
-hadoop jar target/wordcount-0.0.1.jar com.pivotal.hadoop.WordCount /user/foobar/input /user/foobar/output
+hadoop jar target/wordcount-0.0.1.jar com.pivotal.hadoop.WordCount /user/gpadmin/input /user/gpadmin/output
 ```
-
 Monitor the job status in the Command Center dashboard.
 
 ####Check the output
@@ -134,8 +137,8 @@ Browse the hadoop file system and check the output directory. The output directo
 See the output using
 
 ```bash
-hadoop fs -cat /user/foobar/output
+hadoop fs -cat /user/gpadmin/output/part-r-00000
 ```
 
-###Congratulations! You have successfully SpringHadoop Tutorials.
+###You have successfully SpringHadoop Tutorials.
 

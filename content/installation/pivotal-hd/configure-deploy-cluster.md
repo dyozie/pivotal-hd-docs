@@ -31,6 +31,7 @@ Step 2: Editing Cluster Configurations (Topology and Configuration)
 
 The directory structure of the cluster configuration templates is structured as follows:
 
+```xml
 clusterConfig.xml
 hdfs
 ├── core-site.xml
@@ -64,6 +65,8 @@ zookeeper
 ├── hawq
 │
 └── gpinitsystem_config
+```
+
 The clusterConfig.xml contains a default Cluster Configuration template which
 contains mandatory configurations and topology that must be filled up by the user.
 This is the only file that the user has to fill up to deploy a simple cluster. The other

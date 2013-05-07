@@ -4,7 +4,7 @@ title: Example Data Set
 
 Overview 
 --------
-The details of the data set are available [here] (https://www.yelp.com/academic_dataset)
+The details of the data set are available [here](https://www.yelp.com/academic_dataset)
 
 The dataset has the following data:
 

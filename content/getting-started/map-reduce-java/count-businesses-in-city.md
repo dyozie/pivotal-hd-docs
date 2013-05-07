@@ -53,12 +53,23 @@ A sample record is shown below:
 }
 {
   "business_id": "G2Re2E5Jkv_UF1xrenSsDg", 
-  "full_address": "4500 E Cactus Rd\nPhoenix, AZ 85032", "open": true, "categories": ["Department Stores", "Fashion", "Shopping"], "city": "Phoenix", "review_count": 11, "name": "Macy's", "neighborhoods": [], "longitude": -111.9820907, "state": "AZ", "stars": 4.0, "latitude": 33.599323599999998, "type": "business"}
+  "full_address": "4500 E Cactus Rd\nPhoenix, AZ 85032", 
+  "open": true, "categories": ["Department Stores", "Fashion", "Shopping"],
+  "city": "Phoenix",
+  "review_count": 11, 
+  "name": "Macy's", 
+  "neighborhoods": [], 
+  "longitude": -111.9820907,
+  "state": "AZ", 
+  "stars": 4.0, 
+  "latitude": 33.599323599999998,
+  "type": "business"
+}
 ```
 
-The data is in JSON format. It is well structured for processing. However we cannot use FileInputFormat becuase, we need to strip down the braces and there could be nested JSON structure inside.
+The data is in JSON format. It is well structured for processing. However we cannot use FileInputFormat because we need to strip down the braces and there could be nested JSON structure inside.
 
-Hence it is clear, we have to write our own custom Input Format class. Fortunately, the json library comes with a parse, which we can directly use.
+Hence it is clear we have to write our own custom Input Format class. Fortunately, the json library comes with a parse, which we can directly use.
 
 ###Step 2: Designing the custom InputFormat
 
@@ -89,20 +100,21 @@ The RecordReader class is shown in below:
 
 ```java
 public class YelpDataRecordReader extends
-		RecordReader<LongWritable, MapWritable> {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(YelpDataRecordReader.class);
+        RecordReader<LongWritable, MapWritable> {
+    private static final Logger LOG = LoggerFactory
+            .getLogger(YelpDataRecordReader.class);
 
-	private LineRecordReader reader = new LineRecordReader();
+    private LineRecordReader reader = new LineRecordReader();
 
-	private final MapWritable value = new MapWritable();
-	private final JSONParser jsonParser = new JSONParser();
+    private final MapWritable value = new MapWritable();
+    private final JSONParser jsonParser = new JSONParser();
 
-	@Override
-	public void initialize(InputSplit split, TaskAttemptContext context)
-			throws IOException, InterruptedException {
-		reader.initialize(split, context);
-	}
+    @Override
+    public void initialize(InputSplit split, TaskAttemptContext context)
+            throws IOException, InterruptedException {
+        reader.initialize(split, context);
+    }
+
 
 .....
 
@@ -111,48 +123,47 @@ public class YelpDataRecordReader extends
 The framework calls `nextKeyValue()` to check for the presence of the next line and calls `getGetcurrentKey()` and getCurrentValue() to get the key and value respectively.
 
 ```java
-	public boolean nextKeyValue() throws IOException, InterruptedException {
-		while (reader.nextKeyValue()) {
-			value.clear();
-			try {
-				try {
-					if (parseLineToJSON(jsonParser, reader.getCurrentValue(),
-							value)) {
-						return true;
-					}
-				} catch (ParseException e) {
-					e.printStackTrace();
-					LOG.info("Parse Erorr", e.toString());
-				}
-			} catch (org.json.simple.parser.ParseException e) {
-				e.printStackTrace();
-				LOG.info("Parse Erorr", e.toString());
-			}
-		}
-		return false;
-	}
+     public boolean nextKeyValue() throws IOException, InterruptedException {
+        while (reader.nextKeyValue()) {
+            value.clear();
+            try {
+                try {
+                    if (parseLineToJSON(jsonParser, reader.getCurrentValue(),
+                            value)) {
+                        return true;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    LOG.info("Parse Erorr", e.toString());
+                }
+            } catch (org.json.simple.parser.ParseException e) {
+                e.printStackTrace();
+                LOG.info("Parse Erorr", e.toString());
+            }
+        }
+        return false;
+    }
 
-	public static boolean parseLineToJSON(JSONParser parser, Text line,
-			MapWritable value) throws org.json.simple.parser.ParseException,
-			ParseException {
-		try {
-			JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
-			for (Object key : jsonObj.keySet()) {
-				Text mapKey = new Text(key.toString());
-				Text mapValue = new Text();
-				if (jsonObj.get(key) != null) {
-					mapValue.set(jsonObj.get(key).toString());
-				}
+    public static boolean parseLineToJSON(JSONParser parser, Text line,
+            MapWritable value) throws org.json.simple.parser.ParseException,
+            ParseException {
+        try {
+            JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
+            for (Object key : jsonObj.keySet()) {
+                Text mapKey = new Text(key.toString());
+                Text mapValue = new Text();
+                if (jsonObj.get(key) != null) {
+                    mapValue.set(jsonObj.get(key).toString());
+                }
 
-				value.put(mapKey, mapValue);
-			}
-			return true;
-		} catch (NumberFormatException e) {
-			LOG.warn("Parsing Error in Number Field" + line, e);
-			return false;
-		}
-	}
-
+                value.put(mapKey, mapValue);
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            LOG.warn("Parsing Error in Number Field" + line, e);
+            return false;
+        }
+    }
 ```
  
 ###Step 3: Designing the Mapper
@@ -162,13 +173,17 @@ The Mapper is simpler class similar to the classic wordcount program in the exam
 #### Mapper code:
 
 ```java
-city = value.get(new Text("city"));
-businessId = value.get(new Text("business_id"));
 
-if (StringUtils.isNotEmpty(city.toString())
-		&& StringUtils.isNotEmpty(businessId.toString())) {
-	context.write((Text) city, one);
-}
+ protected void map(LongWritable key, MapWritable value, Context context)
+            throws IOException, InterruptedException {
+        city = (Text) value.get(cityKey);
+        businessId = (Text) value.get(businessKey);
+
+        if (StringUtils.isNotEmpty(city.toString())
+                && StringUtils.isNotEmpty(businessId.toString())) {
+            context.write(city, one);
+        }
+    }
 ```
 
 ###Step 4: Designing the Reducer  
@@ -176,11 +191,15 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 
 
 ```java
-int totalRecords = 0;
-for (IntWritable value : values) {
-	totalRecords++;
-}
-context.write(key, new IntWritable(totalRecords));
+ protected void reduce(Text key, Iterable<IntWritable> values,
+            Context context) throws IOException, InterruptedException {
+
+        int totalRecords = 0;
+        for (IntWritable value : values) {
+            totalRecords++;
+        }
+        context.write(key, new IntWritable(totalRecords));
+    }
 ```
 
 ###Step 4: Writing the MapReduce Driver Code
@@ -219,15 +238,15 @@ Create the mapper Driver and ReduceDriver as part of the setup.
 ```java
 @Before
 public void setUp() throws Exception {
-	CityBusinessMapper mapper = new CityBusinessMapper();
-	CityBusinessReducer reducer = new CityBusinessReducer();
-	mapDriver = MapDriver.newMapDriver(mapper);
-	reduceDriver = ReduceDriver.newReduceDriver(reducer);
-	mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
+    CityBusinessMapper mapper = new CityBusinessMapper();
+    CityBusinessReducer reducer = new CityBusinessReducer();
+    mapDriver = MapDriver.newMapDriver(mapper);
+    reduceDriver = ReduceDriver.newReduceDriver(reducer);
+    mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
 }
 ```
 
-It is done by using MapDriver class and only tests the map function .   
+It is done by using MapDriver class and only tests the map function.   
 (_Specify the key/value input and output types for the mapper being tested in this class._)   
 
 ```java     
@@ -235,36 +254,36 @@ It is done by using MapDriver class and only tests the map function .
 @Test
 public void testCityBusinessMapper() throws Exception {
 
-	final LongWritable inputKey = new LongWritable(0);
+    final LongWritable inputKey = new LongWritable(0);
 
-	final Text outputKey = new Text("Surprise");
-	final IntWritable outputValue = new IntWritable(1);
+    final Text outputKey = new Text("Surprise");
+    final IntWritable outputValue = new IntWritable(1);
 
-	final MapWritable inputValue = new MapWritable();
-	inputValue.put(new Text("business_id"), new Text(
+    final MapWritable inputValue = new MapWritable();
+    inputValue.put(new Text("business_id"), new Text(
 			"fecYnd2_OTDECk7bd6GOFw"));
-	inputValue.put(new Text("full_address"), new Text(
+    inputValue.put(new Text("full_address"), new Text(
 			"12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
-	inputValue.put(new Text("open"), new Text("true"));
-	inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
-	inputValue.put(new Text("city"), new Text("Surprise"));
-	inputValue.put(new Text("review_count"), new Text("7"));
-	inputValue.put(new Text("name"), new Text("Peter Piper Pizza"));
-	inputValue.put(new Text("neighborhoods"), new Text("[]"));
-	inputValue.put(new Text("longitude"), new Text("-112.3373424"));
-	inputValue.put(new Text("state"), new Text("AZ"));
-	inputValue.put(new Text("stars"), new Text("4.5"));
-	inputValue.put(new Text("latitude"), new Text("33.638134100000002"));
-	inputValue.put(new Text("type"), new Text("business"));
+    inputValue.put(new Text("open"), new Text("true"));
+    inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
+    inputValue.put(new Text("city"), new Text("Surprise"));
+    inputValue.put(new Text("review_count"), new Text("7"));
+    inputValue.put(new Text("name"), new Text("Peter Piper Pizza"));
+    inputValue.put(new Text("neighborhoods"), new Text("[]"));
+    inputValue.put(new Text("longitude"), new Text("-112.3373424"));
+    inputValue.put(new Text("state"), new Text("AZ"));
+    inputValue.put(new Text("stars"), new Text("4.5"));
+    inputValue.put(new Text("latitude"), new Text("33.638134100000002"));
+    inputValue.put(new Text("type"), new Text("business"));
 
-	mapDriver.withInput(inputKey, inputValue)
+    mapDriver.withInput(inputKey, inputValue)
 			.withOutput(outputKey, outputValue).runTest();
 
 }
 
 ```
-The `withInput` method is used to specify an input key/value, which will be fed to the Mapper.   
-The `withOutput` method is used to specify the output key/value, which MRUnit will compare against the output generated by the mapper    being tested  
+The `withInput` method is used to specify an input key/value , which will be fed to the Mapper.   
+The `withOutput` method is used to specify the output key/value , which MRUnit will compare against the output generated by the mapper    being tested  
 
 ###Step 6: Unit Testing Reducer
 It is done by using ReduceDriver class and only tests the reduce function .     
@@ -275,17 +294,16 @@ It is done by using ReduceDriver class and only tests the reduce function .
 @Test
 public void testCityBusinessReducer() throws Exception {
 
-	new ReduceDriver<Text, IntWritable, Text, IntWritable>()
-			.withReducer(new CityBusinessReducer())
-			.withInputKey(new Text("Surprise"))
-			.withInputValues(
-					Arrays.asList(new IntWritable(1), new IntWritable(1),
-							new IntWritable(1)))
-			.withOutput(new Text("Surprise"), new IntWritable(3)).runTest();
+    new ReduceDriver<Text, IntWritable, Text, IntWritable>()
+        .withReducer(new CityBusinessReducer())
+        .withInputKey(new Text("Surprise"))
+        .withInputValues(
+            Arrays.asList(new IntWritable(1),new IntWritable(1),new IntWritable(1)))
+        .withOutput(new Text("Surprise"), new IntWritable(3)).runTest();
 }
 ```
 
-The ___withInput___ method is used to specify an input key/value.When testing the reducer  specify a list of values that MRUnit sends to the reducer.Add the expected output for the using ___withOutput___.
+The ___withInput___ method is used to specify an input key/value. When testing the reducer  specify a list of values that MRUnit sends to the reducer. Add the expected output for the using ___withOutput___.
 
 ###Step 7: Testing Mapper and Reducer together
    
@@ -295,87 +313,140 @@ MRUnit also supports testing map and reduce functions in the same test. It is do
 
 @Test
 public void testCityBusinessMapperReducer() throws Exception {
-	final MapWritable inputValue = new MapWritable();
-	inputValue.put(new Text("business_id"), new Text(
+    final MapWritable inputValue = new MapWritable();
+    inputValue.put(new Text("business_id"), new Text(
 			"fecYnd2_OTDECk7bd6GOFw"));
-	inputValue.put(new Text("full_address"), new Text(
+    inputValue.put(new Text("full_address"), new Text(
 			"12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
-	inputValue.put(new Text("open"), new Text("true"));
-	inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
-	inputValue.put(new Text("city"), new Text("Surprise"));
-	inputValue.put(new Text("review_count"), new Text("7"));
-	inputValue.put(new Text("name"), new Text("Peter Piper Pizza"));
-	inputValue.put(new Text("neighborhoods"), new Text("[]"));
-	inputValue.put(new Text("longitude"), new Text("-112.3373424"));
-	inputValue.put(new Text("state"), new Text("AZ"));
-	inputValue.put(new Text("stars"), new Text("4.5"));
-	inputValue.put(new Text("latitude"), new Text("33.638134100000002"));
-	inputValue.put(new Text("type"), new Text("business"));
-	mapReduceDriver.withInput(new LongWritable(0), inputValue)
+    inputValue.put(new Text("open"), new Text("true"));
+    inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
+    inputValue.put(new Text("city"), new Text("Surprise"));
+    inputValue.put(new Text("review_count"), new Text("7"));
+    inputValue.put(new Text("name"), new Text("Peter Piper Pizza"));
+    inputValue.put(new Text("neighborhoods"), new Text("[]"));
+    inputValue.put(new Text("longitude"), new Text("-112.3373424"));
+    inputValue.put(new Text("state"), new Text("AZ"));
+    inputValue.put(new Text("stars"), new Text("4.5"));
+    inputValue.put(new Text("latitude"), new Text("33.638134100000002"));
+    inputValue.put(new Text("type"), new Text("business"));
+    mapReduceDriver.withInput(new LongWritable(0), inputValue)
 
-	.withOutput(new Text("Surprise"), new IntWritable(1)).runTest();
+    .withOutput(new Text("Surprise"), new IntWritable(1)).runTest();
 
 }
 ```   
 ###Step 8: Running the exercise with Eclipse IDE
 
-Download the exercise from [here](git://url "here") and extract into a folder. 
-This will create count_businesses_in_city folder. 
-Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
+Clone the source from the git repository
 
-###Step 9: Running the tutorial on Pivotal HD cluster
-
-Point namenode and resourcemanager to the Pivotal HD cluster in the `hadoop-mycluster.xml`
-
-```xml
-<configuration>
-        <property>
-                <name>fs.default.name</name>
-                <value>hdfs://NAMENODE_SERVER:9000</value>
-        </property>
-        <property>
-                <name>yarn.resourcemanager.address</name>
-                <value>RESOURCE_MANAGER:8032</value>
-        </property>
-</configuration>
+```bash
+git clone git@github.com:rajdeepd/pivotal-samples.git
 ```
+Import the tutorial into eclipse and run using the instructions given in the [Setting Development Environment](../setting-development.html)
+
+###Step 9: Running the tutorial in command line
+The following instructions can be used to the run the sample on the Psuedo distributed cluster.
+
 ####Building the project 
 
 ```bash
+mvn clean compile
 mvn -DskipTests package
 ```
 
 ####Upload the input
 
 ```bash
-hadoop fs -put data/business.json /user/foobar/input
+hadoop fs -put PROJECT_DIR/input/business.json /user/gpadmin/sample1/input
 ```
+Note: Replace PROJECT_DIR with the project directory.
 
-####Set the Hadoop Class Path for third-party libraries
+####Create the configuration file
 
-```bash
-export HADOOP_CLASSPATH=path-to-json-simple-1.1.jar
+```xml
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+            <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>http://localhost:8032</value>
+    </property>
+</configuration>
 ```
-
 ####Submit the job
 
-```bash
-hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input /user/foobar/output
+This tutorial uses third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
 
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
 ```
 
-Monitor the job status in the Command Center dashboard.
+```bash
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -libjars target/json-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+```
 
 ####Check the output
 
-Verify the job in the Pivotal Command Center Dashboard
+Verify the job in the hadoop cluster.
 
 Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
 
 See the output using
 
 ```bash
-hadoop fs -cat /user/foobar/output
+hadoop fs -cat /user/gpadmin/sample1/output
 ```
 
-###Congratulations! You have successfully completed the tutorial.
+###Step 10: Running the tutorial on Pivotal HD Cluster
+
+Point namenode and resourcemanager to the hadoop cluster.
+
+```xml
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+            <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>http://localhost:8032</value>
+    </property>
+</configuration>
+```
+Replace localhost with the Namenode and resourcemanager's host name respectively.
+
+####Transfer the code to a node to the cluster. Let us assume it is historyserver.
+
+```bash
+tar -zcvf sample1.tar.gz target/*
+scp sample1.jar history_server_host_name:/home/gpadmin/sample1.tar.gz 
+```
+
+####Upload the datasets to HDFS
+
+```bash
+hadoop fs -put business.json /user/gpadmin/sample1/input
+```
+Note: Replace PROJECT_DIR with the project directory.
+
+####Submit the job
+
+```bash
+hadoop jar target/count_businesses_incity-0.0.1.jar com.pivotal.hadoop.city.business.CityBusinessDriver -libjars target/json-to-json-simple-1.1.jar /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+```
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
+
+See the output using
+
+```bash
+hadoop fs -cat /user/gpadmin/sample1/output
+```
+
+###You have successfully completed the tutorial.

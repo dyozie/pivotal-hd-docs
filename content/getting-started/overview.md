@@ -35,7 +35,6 @@ The  pattern is used for calculating statistical summaries like min, max, count 
 
 The Filter Pattern is used to filter the dataset with specific criteria. It does not change the values of the dataset. The pattern is generally used to get a small subset for further analysis. The examples of the pattern are top ten, bloom filter and distinct.
 
-* **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
 * **[Count of five star rated businesses in a city](map-reduce-java/count-city-fivestar-businesses.html)**
 
 ##Joins
@@ -64,5 +63,5 @@ Spring Hadoop along with Spring Batch provides a powerful framework for running 
 * **[Multiple Outputs](map-reduce-java/count-businesses-reviews-season.html)**
 
 ##Source code for the tutorials
-The source code for the tutorials is available [here] (git@github.com:bluespace9214/pivotal-docs.git)
+The source code for the tutorials is available [here](git@github.com:rajdeepd/pivotal-samples.git)
 
