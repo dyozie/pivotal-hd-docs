@@ -32,7 +32,19 @@ Designing and writing of Mapper and Reduce classes does not change with Hadoop. 
 Working with the Tutorial
 ------------------------
 
-###Creating Application Context with Spring Hadoop
+###Step 1: Clone the source from the git repository
+
+```bash
+git clone https://git@github.com:rajdeepd/pivotal-samples.git
+```
+This will create pivotal-samples directory.
+
+###Step 2: Importing the project to Eclipse IDE
+
+Import the sample `spring-hadoop` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+
+
+###Step 3: Creating Application Context with Spring Hadoop
 
 The Application Context file is shown below,
 
@@ -44,7 +56,6 @@ The Application Context file is shown below,
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
-
 
 	<context:property-placeholder location="hadoop.properties" />
 
@@ -66,30 +77,16 @@ The Application Context file is shown below,
 </beans:beans>
 ```
 
-A sample hadoop.properties are shown below:
-
-```xml
-wordcount.input.path=/animals.txt
-wordcount.output.path=/tmp/output
-
-hd.fs=hdfs://localhost:9000
-hd.jt=localhost:9001
-LIB_DIR=file:///home/gpadmin/spring-hadoop/target
-```
-
 Spring Hadoop has the namespace, which is made default in the above xml.
 The configuration tag provides the location of HDFS and Jobtracker to submit the jobs.
 The Job is defined with xml as shown above, and the JobRunner runs the Job.
 
+###Step 4: Spring Hadoop Driver
 
-###Step 2: Run the example
-
-The code creates the Application Context and Spring Hadoop run the job after initialization. 
+The code for the main driver program is shown below:
 
 ```java
-
 private static final String[] CONFIGS = new String[] { "applicationContext.xml" };
-
 public static void main(String[] args) {
 	String[] res = (args != null && args.length > 0 ? args : CONFIGS);
 	AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(res);
@@ -97,48 +94,47 @@ public static void main(String[] args) {
 }
 
 ```
+The code creates the Application Context and Spring Hadoop run the job after initialization. 
 
-###Step 8: Running the exercise with Eclipse IDE
+###Step 5: Running the tutorial with Eclipse IDE
 
-Clone the source code from github.
+####Using Eclipse to Build the project
 
-```bash
-git clone git@github.com:rajdeepd/pivotal-samples.git
+Follow the instructions [Setting Development Environment](../setting-development.html)  to build the project in eclipse.
+
+This will create target directory with `spring-hadoop-0.0.1.jar` file
+
+####Customize **hadoop-properties** in `resources` directory
+
+```xml
+wordcount.input.path=/user/gpadmin/spring-hadoop/input
+wordcount.output.path=/user/gpadmin/spring-hadoop/output
+
+hd.fs=hdfs://localhost:9000
+hd.jt=localhost:9001
+LIB_DIR=file:///home/gpadmin/spring-hadoop/target
 ```
-
-Import the tutorial into eclipse and run using the instructions [Setting Development Environment](../setting-development.html).
-
-###Step 9: Running the tutorial on the command line
-
-####Building the project 
-```bash
-mvn package
-```
+Change the LIB_DIR to the direcotry where the jar is present.
 
 ####Upload the input
 
 ```bash
-hadoop fs -put data/business.json /user/gpadmin/input
+hadoop fs -mkdir -p /user/gpadmin/spring-hadoop/input
+hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop/input
 ```
 
-####Submit the job
+####Launch the Main Program from the Eclipse.
 
-```bash
-hadoop jar target/wordcount-0.0.1.jar com.pivotal.hadoop.WordCount /user/gpadmin/input /user/gpadmin/output
-```
-Monitor the job status in the Command Center dashboard.
+You will see that the MapReduce program is submitted to the cluster. The message are see in the console.
 
-####Check the output
+###Step 6: Check the output
 
-Verify the job in the Pivotal Command Center Dashboard
-
-Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
-
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 See the output using
 
 ```bash
-hadoop fs -cat /user/gpadmin/output/part-r-00000
+hadoop fs -cat /user/gpadmin/spring-hadoop/output/part-r-00000
 ```
 
-###You have successfully SpringHadoop Tutorials.
+####You have successfully SpringHadoop Tutorial.
 
