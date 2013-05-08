@@ -136,5 +136,5 @@ See the output using
 hadoop fs -cat /user/gpadmin/spring-hadoop/output/part-r-00000
 ```
 
-####You have successfully SpringHadoop Tutorial.
+####You have successfully completed the SpringHadoop Tutorial.
 
