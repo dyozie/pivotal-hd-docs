@@ -1,8 +1,9 @@
 ---
 title: Pivotal Command Center Overview
 ---
-Overview
---------
+
+##Overview
+
 This document provides an overview of Pivotal Command Center 2.0 and instructions
 for installing the product. This chapter provides an overview of Pivotal Command
 Center, then briefly describes each component.
@@ -19,8 +20,8 @@ Center, then briefly describes each component.
 
 *  Architectural Overview
 
-Pivotal Command Center Overview
---------------------------------
+##Pivotal Command Center Overview
+
 
 The Pivotal Command Center allows an administrative user to administer and monitor
 one or more Pivotal HD clusters. The Command Center has command-line tools to
@@ -31,8 +32,8 @@ monitoring of Pivotal HD Enterprise 1.0 clusters.
 Pivotal Command Center 2.0 is comprised of the following:
 
                    
-Pivotal Command Center UI
---------------------------
+##Pivotal Command Center UI
+
 The Pivotal Command Center UI provides the user with a single web-based graphical
 interface to monitor and manage one or more Pivotal HD clusters. This web
 application is hosted on a Ruby-on-Rails application which presents the status and
@@ -40,8 +41,8 @@ metrics of the clusters. This data comes from multiple sources. All of the Hadoo
 specific data comes from the GPHD Manager component. The system metrics data is
 gathered by our Performance Monitor (nmon) component.
 
-GPHD Manager
-------------
+##GPHD Manager
+
 
 GPHD Manager provides complete life cycle management for Pivotal HD Clusters. It
 performs the following two main groups of functions:
@@ -68,8 +69,8 @@ The Command Center UI also invokes the gphdmgr-webservice APIs to retrieve all
 Hadoop-specific cluster metrics and status information. This includes the Hadoop
 metrics that was previously retrieved by the polling service.
 
-Performance Monitor (nmon)
---------------------------
+##Performance Monitor (nmon)
+
 
 Pivotal Command Center comes with a Performance Monitor called nmon (for node
 monitor). This makes use of a highly scalable message passing architecture to gather
@@ -82,10 +83,11 @@ The nmon master on the admin host dumps the system metrics it receives from the
 nmon agents on the cluster nodes into a PostgreSQL DB. This is then queried by the
 Command Center UI application to display its cluster analysis graphs.
 
-PostgreSQL Database
--------------------
+##PostgreSQL Database
+
 
 Pivotal Command Center makes use of a PostgreSQL Database to store the following:
+
 * Cluster configurations
 
 * Hadoop cluster metrics
@@ -94,8 +96,8 @@ Pivotal Command Center makes use of a PostgreSQL Database to store the following
 
 * Pivotal Command Center Metadata
 
-Architectural Overview
-----------------------
+##Architectural Overview
+
 
 For more details about Pivotal HD Enterprise 1.0, refer to the [Pivotal HD 1.0 Installation and Administrator Guide](pivotal-hd.html)
 

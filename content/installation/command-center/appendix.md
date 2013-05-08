@@ -2,8 +2,8 @@
 title: Creating a YUM EPEL Repository 
 ---
 
-Creating a YUM EPEL Repository
-------------------------------
+##Creating a YUM EPEL Repository
+
 
 Pivotal Command Center and Pivotal HD Enterprise expect some prerequisite
 packages to be pre-installed on each host, depending on the software that gets

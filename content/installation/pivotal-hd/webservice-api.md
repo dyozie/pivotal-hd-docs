@@ -24,17 +24,20 @@ The following are the topics covered in the WebService API:
 
 * **Getting the install status**
 
-Scanhost
---------
+##Scanhost
 
-Resource: POST /scanhosts
-Description: API to scan the hosts for prerequisites. This step is usually done before
+
+**Resource:** POST /scanhosts
+
+**Description:** API to scan the hosts for prerequisites. This step is usually done before
 deploying a cluster to check the prerequisite status of each node.
-HTTP Request Header: Content-type: application/json
+
+**HTTP Request Header:** Content-type: application/json
 Sample URL: curl -X POST -d @inputfile
+
+```xml
 http://localhost:8080/gphdmgr/v1/scanhosts --header "Content-Type:application/json"
 Input (sample inputfile):
-```xml
 {
 "hostList": [
 "node0742",
@@ -49,11 +52,10 @@ Input (sample inputfile):
 "passphrase": ""
 }
 }
-```
+
 Success:
 200 OK
 
-```xml
 {
 "failedHostList": {},
 "okHostList": {
@@ -95,16 +97,24 @@ No results:
 Unknown errors:
 500 Internal Server Error
 
-Listing all stacks
-------------------
-Resource: GET /stacks
-Description: API to get the stacks that have been imported into Pivotal Command
-Center. For example: HD 1.2, HD 2.0 PADS HTTP Request Header: Content-type:
+##Listing all stacks
+
+**Resource:** GET /stacks
+
+**Description:** API to get the stacks that have been imported into Pivotal Command
+Center. 
+
+**For example:** HD 1.2, HD 2.0 PADS HTTP Request Header: Content-type:
 application/json
-Sample URL: curl -X GET "http://localhost:8080/gphdmgr/v1/stacks"
+
+**Sample URL:**
+
+```xml
+ curl -X GET "http://localhost:8080/gphdmgr/v1/stacks"
 Input:
 Success:
 200OK
+```
 
 ```xml
 \[
@@ -180,40 +190,46 @@ checkpoints of the hdfs metadata",
 version": "2.0"
 }
 \]
-```
 No results:
 200 OK[]
 Bad request: E.g.: Wrong version number
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid input format"
 }
-```
 Unknown errors:
 No results:
 200 OK[]
 Bad request: E.g.: Wrong version number
 400 Bad Request
-```xml
 {
 "error":"Invalid input"
 "description": "Invalid input format"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
 
-Listing all clusters
---------------------
+```
 
-Resource: GET /clusters
-Description: API to get all the installed clusters
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X GET "http://localhost:8080/gphdmgr/v1/clusters
+##Listing all clusters
+
+
+**Resource:** GET /clusters
+
+**Description:** API to get all the installed clusters
+
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:**
+
+```xml
+curl -X GET "http://localhost:8080/gphdmgr/v1/clusters
 Success:
 200 OK
+```
 ```xml
 [
 {
@@ -245,29 +261,37 @@ Success:
 "status": "installed"
 }
 ]
-```
+
 No results:
 200 OK[]
 Bad request: E.g.: Wrong version number
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid input format"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
 
-Listing a particular cluster
-----------------------------
+## Listing a particular cluster
 
-Resource: POST /clusters/{clusterId}
-Description: API to get the details of a particular cluster
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X GET "http://localhost:8080/gphdmgr/v1/clusters/1
+
+**Resource:** POST /clusters/{clusterId}
+
+**Description:** API to get the details of a particular cluster
+
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:**
+
+```xml
+ curl -X GET "http://localhost:8080/gphdmgr/v1/clusters/1
 Success:
 200 OK
+```
 
 ```xml
 [
@@ -331,30 +355,37 @@ Success:
 "status": "installed"
 }
 ]
-```
+
 No results:
 200 OK[]
 Bad request: E.g.: Wrong cluster id
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid cluster"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
 
-Fetching a template
--------------------
-Resource: GET /configurations/default/{stackVersion}
-Description: API to get the default template. This template will be updated and used
-for deploying the cluster using the deploy API.
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X GET
+##Fetching a template
+
+**Resource:** GET /configurations/default/{stackVersion}
+
+**Description:** API to get the default template. This template will be updated and used for deploying the cluster using the deploy API.
+
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:**
+
+```xml
+ curl -X GET
 "http://localhost:8080/gphdmgr/v1/configurations/default/2.0" Input:
 Success:
 200 OK
+```
 ```xml
 {
 "clusterConfigFiles": [
@@ -393,32 +424,40 @@ http://wiki.apache.org/hadoop/GangliaMetrics ...,
 }, ...
 ]
 }
-```
+
 No results:
 200 OK {}
 Bad request: E.g.: Wrong version number
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid input format"
 }
-```
 Unknown errors:
 500 Internal Server Error
+```
 
-Deploying a cluster
--------------------
+##Deploying a cluster
+
 
 @Path("/clusters")
-Resource: POST /clusters
-Description: API to deploy the cluster. The updated template (obtained from the
-template API) is sent as a POST input for this API.
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X POST -d
-@inputfile http://localhost:8080/gphdmgr/v1/clusters&nbsp;--header "Content-
-Type:application/json"Input (Sample inputfile) :
+
+**Resource:** POST /clusters
+
+**Description:** API to deploy the cluster. The updated template (obtained from the template API) is sent as a POST input for this API.
+
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:** 
+
 ```xml
+curl -X POST -d
+@inputfile http://localhost:8080/gphdmgr/v1/clusters&nbsp;--header
+```
+```xml
+ "Content-Type:application/json"Input (Sample inputfile) :
+
 {
 "services": [
 {
@@ -448,113 +487,140 @@ version=\"1.0\"?>\n<?xml-stylesheet ...,
 }, ...
 ]
 }
-```
+
 Success:
 200 OK
 No results:
 200 OK[]
 Bad request:E.g.: Wrong version number
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid input format"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
+
+##Starting a cluster
 
 
-Starting a cluster
-------------------
+**Resource:**Resource POST /cluster/{clusterName}/start
 
-Resource: POST /cluster/{clusterName}/start
-Description: API to start the cluster HTTP Request Header: Content-type:
+**Resource Description:**Resource API to start the cluster HTTP Request Header: Content-type:
 application/json
-Sample URL: curl -X GET
+
+**Sample URL:**
+```xml
+ curl -X GET
 "http://localhost:8080/gphdmgr/v1/cluster/test/start?force=1"
 Success:
 200 OK
+```
 ```xml
 Cluster Start Complete
-```
+
 No results:
 200 OK[]
 Bad request: E.g.: Wrong cluster name
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid cluster"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
 
-Stopping a cluster
-------------------
+##Stopping a cluster
 
-Resource: POST /cluster/{clusterName}/stop
-Description: API to stop the cluster
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X GET
+
+**Resource:** POST /cluster/{clusterName}/stop
+**Description:** API to stop the cluster
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:**
+
+```xml
+ curl -X GET
 "http://localhost:8080/gphdmgr/v1/cluster/test/start?force=1"
-	Success:
+
+Success:
 200 OK
+```
 ```xml
 Cluster Start Complete
-```
+
 No results:
 200 OK[]
 Bad request:E.g.: Wrong cluster name
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid cluster"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
+##Uninstalling a cluster
 
-Uninstalling a cluster
-----------------------
 
 @Path("/cluster/{clusterName}")
-Resource: DELETE /cluster/{clusterName}
-Description: API to delete a cluster HTTP Request
-Header: Content-type: application/json
-Sample URL: curl -X DELETE "http://localhost:8080/gphdmgr/v1/clusters/1" Input:
+
+**Resource:** DELETE /cluster/{clusterName}
+
+**Description:** API to delete a cluster HTTP Request
+
+**Header:** Content-type: application/json
+
+**Sample URL:** 
+
+```xml
+curl -X DELETE "http://localhost:8080/gphdmgr/v1/clusters/1" Input:
 Success:
 200 OK
+```
 ```xml
 Uninstall complete
-```
+
 No results:
 200 OK[]
 Bad request:
 E.g.: Wrong cluster name
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid cluster"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
+```
+
+##Getting the install status
 
 
-Getting the install status
---------------------------
+**Resource:** POST /clusters/{clusterId}/status
 
-Resource: POST /clusters/{clusterId}/status
-Description: API to get the install status of a cluster
-HTTP Request Header: Content-type: application/json
-Sample URL: curl -X GET
+**Description:** API to get the install status of a cluster
+
+**HTTP Request Header:** Content-type: application/json
+
+**Sample URL:**
+
+```xml
+ curl -X GET
 "http://localhost:8080/gphdmgr/v1/clusters/2/status" Input:
 Success:
 200 OK
+```
 ```xml
 [
 {
@@ -579,18 +645,18 @@ Success:
 "status": "INSTALLED"
 },
 ]
-```
+
 No results:
 200 OK[]
 Bad request:E.g.: Wrong cluster id
 400 Bad Request
-```xml
+
 {
 "error":"Invalid input"
 "description": "Invalid cluster"
 }
-```
+
 Unknown errors:
 500 Internal Server Error
-
+```
 

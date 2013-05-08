@@ -2,18 +2,21 @@
 title: Verifying Clsuter Installation
 ---
 
-Service Status Verification
---------------------------
+##Service Status Verification
 
 You can use the service status command to check the running status of a particular
 service role from its appropriate host(s).
+
 Please refer to the Role/Host Level Operation that shows the service commands for
 each Pivotal HD service role.
+
 To check the service status for all the services at once, from the admin node, run the
 following command to show an aggregate status view of all service roles from all the
 cluster nodes:
+
 # Create a newline separated file named 'hostfile' containing all the
 cluster hosts (do not include admin host here, hbase is optional) \\
+
 ```xml
 [gpadmin]\# massh hostfile verbose 'sudo service --status-all |
 egrep "hadoop | zookeeper | hbase"'
@@ -21,22 +24,22 @@ egrep "hadoop | zookeeper | hbase"'
 Below is an example to check the status of all datanodes in the cluster.
 # Create a newline separated file named 'hostfile' containing
 all the datanode belonging to the service role \\
+
 ```xml
 [gpadmin]\# massh hostfile verbose 'sudo service
 hadoop-hdfs-datanode status'
 ```
-Running Sample Programs
------------------------
+##Running Sample Programs
 
 Make sure you are logged in as user 'gpadmin' on the appropriate host before testing
 the service.
 
-Hadoop Test
------------
-**Important:** Hadoop commands can be executed from any configured hadoop
-nodes.
-**Important:** Map reduce jobs can be run from any of the datanodes/resource
-manager/historyserver. Once logged in to one of the above.
+##Hadoop Test
+
+**Important:** Hadoop commands can be executed from any configured hadoop nodes.
+
+**Important:** Map reduce jobs can be run from any of the datanodes/resource manager/historyserver. Once logged in to one of the above.
+
 ```xml
 #clear input directory, if any |
 hadoop fs -rmr /tmp/test_input
@@ -57,19 +60,24 @@ hadoop fs -cat /tmp/test_output/part*
 
 **Important:** When you run a map reduce job as any custom user outside of the
 following list of users (gpadmin, hdfs, mapred, hbase), note the following.
-* Make sure the appropriate user staging directory exists
-* Set permissions on yarn.nodemanager.remote-app-log-dir to 1777.
-   For example if it is set to the default value /yarn/apps, do the following
-```xml
- sudo -u hdfs hadoop fs -chmod 777 /yarn/apps
-```
-* Ignore the Exception trace that comes up, as this is just a warning. This is a known
-apache hadoop issue.
 
-HBase Test
-----------
+* Make sure the appropriate user staging directory exists
+
+* Set permissions on yarn.nodemanager.remote-app-log-dir to 1777.
+
+   For example if it is set to the default value /yarn/apps, do the following
+
+   ```xml
+    sudo -u hdfs hadoop fs -chmod 777 /yarn/apps
+   ```
+* Ignore the Exception trace that comes up, as this is just a warning. This is a known
+  apache hadoop issue.
+
+##HBase Test
+
 
 **Important:** Use the HBase Master node to run HBase tests.
+
 ```xml
 [gpadmin]\# ./bin/hbase shell
 hbase(main):003:0> create 'test', 'cf'
@@ -94,10 +102,11 @@ hbase(main):012:0> disable 'test'
 hbase(main):013:0> drop 'test'
 0 row(s) in 0.0770 seconds
 ```
-HAWQ Test
----------
+##HAWQ Test
+
 
 **Important:** Use the HAWQ Master node to run HAWQ tests.
+
 ```xml
 [gpadmin]\# source /usr/local/hawq/greenplum_path.sh
 [gpadmin]\# psql \-p 8432

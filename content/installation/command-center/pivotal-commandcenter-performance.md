@@ -2,14 +2,12 @@
 title: Pivotal Command Center Performance
 ---
 
-Monitor
--------
+##Monitor
 
 This section provides an overview of the Pivotal Command Center performance
 monitor known as nmon.
 
-Overview
---------
+##Overview
 
 Pivotal Command Center comes with a Performance monitor called nmon (for node
 monitor). This makes use of a highly scalable message passing architecture to gather
@@ -33,8 +31,8 @@ Center admin host. To stop or start the nmon service run the following as root:
 
 ```
 
-A.Creating a YUM EPEL Repository
---------------------------------
+##A.Creating a YUM EPEL Repository
+
 
 Pivotal Command Center and Pivotal HD Enterprise expect some prerequisite
 packages to be pre-installed on each host, depending on the software that gets
@@ -45,39 +43,42 @@ the external EPEL repositories. However, if your hosts do not have Internet acce
 you are deploying onto a large cluster), then having a local yum EPEL repo would be
 highly recommended. This will also give you some control on the package versions
 you want deployed on your cluster.
+
 Following are the steps to create a local yum repo:
-1. Mount the RHEL/CentOS DVD on a machine that will act as the local yum repo
-2. Install a webserver on that machine (e.g. httpd), making sure that HTTP traffic can
-  reach this machine
-3. Install the following packages on the machine:
+
+1.	Mount the RHEL/CentOS DVD on a machine that will act as the local yum repo
+2.	Install a webserver on that machine (e.g. httpd), making sure that HTTP traffic can
+  	reach this machine
+3.	Install the following packages on the machine:
+
+	```xml
+	yum-utils
+	createrep
+	```
+4.	Go to the directory where the DVD is mounted and run the following command:
+
+	```xml
+  	# createrepo .
+	```
+5.	Create a repo file on each host with a descriptive filename in the
+	/etc/yum.repos.d/ directory of each host (for example, CentOS-6.1.repo)
+	with the following contents:
+
+	```xml
+	[CentOS-6.1]
+	name=CentOS 6.1 local repo for OS RPMS
+	baseurl=http://172.254.51.221/centos/$releasever/os/
+	$basearch/
+	enabled=1
+	gpgcheck=1
+	gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
+	/RPM-GPG-KEY-CentOS-6
+	```
+6.	Validate that you can access the local yum repos by running the following
+	command:
 
 ```xml
-yum-utils
-createrep
-```
-4.Go to the directory where the DVD is mounted and run the following command:
-```xml
-  # createrepo .
-```
-5.Create a repo file on each host with a descriptive filename in the
-/etc/yum.repos.d/ directory of each host (for example, CentOS-6.1.repo)
-with the following contents:
 
-```xml
-[CentOS-6.1]
-name=CentOS 6.1 local repo for OS RPMS
-baseurl=http://172.254.51.221/centos/$releasever/os/
-$basearch/
-enabled=1
-gpgcheck=1
-gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
-/RPM-GPG-KEY-CentOS-6
-
-```
-6.Validate that you can access the local yum repos by running the following
-command:
-
-```xml
 Yum list
 
 ```

@@ -48,16 +48,22 @@ for the deployment of Hadoop service components.
 * Ability to Monitor the Pivotal HD Services through GPCC UI
 * Multi-cluster support
 
-Hadoop Services supported by GPHD Manager Version 1.0.0
---------------------------------------------------------
+##Hadoop Services supported by GPHD Manager Version 1.0.0
+
 
 The GPHD Manager Version 1.0.0 ICM supports installation of the following Hadoop
 Services based on Apache Hadoop.
-1. HDFS
-2. YARN
-3. Zookeeper
-4. HBase
-5. HAWQ
-Note: If you have a Apache-based 1.x Hadoop Cluster, please review your potential upgrade
+
+1.	HDFS	
+
+2. 	YARN
+
+3. 	Zookeeper
+
+4. 	HBase
+
+5. 	HAWQ
+
+**Note:** If you have a Apache-based 1.x Hadoop Cluster, please review your potential upgrade
 options to migrate your data to an Apache-based 2.x Hadoop Cluster.
 

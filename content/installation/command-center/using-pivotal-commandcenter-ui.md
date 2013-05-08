@@ -4,7 +4,7 @@ title: Using Pivotal Command Center UI
 
   This section provides an overview of the Pivotal Command Center 2.0 user interface.
 
-###Overview
+##Overview
 
 
   Pivotal Command Center UI is a browser-based application for viewing the status and
@@ -26,7 +26,7 @@ This chapter includes the following sections:
 * 	**HAWQ Query Monitor—**When HAWQ (a revolutionary MPP database on
      	Hadoop solution) is deployed on the cluster, Command C
 
-###Status indicators
+##Status indicators
 
 Note that throughout the user interface the following indicators are used to indicate the
 status of nodes:
@@ -39,7 +39,7 @@ status of nodes:
 
 * 	Red: Killed/failed
 
-###Logging In
+##Logging In
 
 The URL to access Pivotal Command Center UI from a browser is
 
@@ -52,7 +52,7 @@ To change the default port (5000), update the port settings in the following fil
 /usr/local/greenplum-cc/config/app.yml
 ```
 
-###Browser Support
+##Browser Support
 
 The following browsers are supported by Pivotal Command Center 2.0:
 
@@ -60,7 +60,7 @@ The following browsers are supported by Pivotal Command Center 2.0:
 * 	IE 8, IE 9, both with Google Chrome Frame
 * 	Chrome 25.0.1364.172
 
-###Login Screen
+##Login Screen
 
 
 The first time you launch the Command Center UI, a login screen appears showing the
@@ -68,7 +68,7 @@ hostname of the host for the Command Center.
 
 ![login ](/images/cc/login.png)
 
-###Selecting a Cluster
+##Selecting a Cluster
 
 Once you have launched Command Center, you may be presented with a list of
 clusters to monitor.
@@ -85,7 +85,7 @@ clusters to monitor.
 
 	![cluster ](/images/cc/cc.png)
 
-###Dashboard
+##Dashboard
 
   The dashboard gives you a high level view of a cluster at a glance. You are able to
 view the status of the most important cluster services, such as HDFS and YARN. It
@@ -128,7 +128,7 @@ It answers the following questions:
 
 *	Mapreduce Jobs By Status
 
-###Cluster Analysis
+##Cluster Analysis
 
 
 The Cluster Analysis screen provides detailed metrics on your Pivotal HD cluster.
@@ -212,7 +212,7 @@ for that node is displayed:
 
 ![specific node ](/images/cc/cluster-analysis3.png)
 
-###MapReduce Job Monitor
+##MapReduce Job Monitor
 
 The Job Monitor screen tracks the MapReduce jobs that are executed in the Pivotal
 HD cluster when the YARN MapReduce service is running. It provides details about
@@ -257,7 +257,7 @@ with jobID=job_1363920466130_0002
 Hovering your mouse over various locations displays even greater detail about the
 jobs.
 
-###Job Details
+##Job Details
 
 When you click on any of the jobs in the Job Monitor more details of the job are
 shown.
@@ -279,7 +279,7 @@ To see job related counters click on **View more job details** next to the job I
  ![View more job details  ](/images/cc/jobdetails.png)
 
 
-###YARN App Monitor
+##YARN App Monitor
 
 
 The YARN App Monitor screen tracks YARN applications that are executed in the
@@ -313,7 +313,7 @@ the search bar in the following format: searchKey=searchValue:
 These are substring searches. For example: **appID=1363920466130** will locate the 
 application with **appID=application_1363920466130_0002**
 
-###HAWQ Query Monitor
+##HAWQ Query Monitor
 
 The HAWQ Query monitor is only displayed when HAWQ is installed on the cluster.
 This screen displays all **active** queries running on the HAWQ cluster:
@@ -359,7 +359,7 @@ GPCC to monitor an existing GPHD cluster. You can view your
 cluster statuses here:
 http://node0781.ic.analyticsworkbench.com:5000/status
 
-###Starting, Stopping, and Restarting Command Center Services
+##Starting, Stopping, and Restarting Command Center Services
 
 
  To stop or restart the Command Center services, run the following commands on the
@@ -371,7 +371,7 @@ $ service commander start
 $ service commander restart
 ```
 
-###Launching Command Center
+##Launching Command Center
 
 
 Launch a browser and navigate to the host on which you installed Command Center.
@@ -385,7 +385,7 @@ http://CommandCenterHost:5000
 The Command Center login page is launched in your browser. The default
 username/password is gpadmin/gpadmin.
 
-###Next Steps
+##Next Steps
 
    See the Pivotal HD 1.0 Installation and Configuration Guide for instructions for 
 using the command-line interface of 

@@ -15,7 +15,7 @@ HostFile.txt"; done
 ```
 
 
-###Step 1: Create User gpadmin
+##Step 1: Create User gpadmin
 
 
 Pivotal Command Center requires a user called "gpadmin" on the GPHD Manager
@@ -39,14 +39,14 @@ file containing a list of all cluster hosts (newline
 separated) where the user gpadmin needs to be created
 
 ```
-###Example:
+##Example:
 
 ```xml
 [root]# icm_client add-user-gpadmin -f ./HostFile.txt
 
 ```
 
-###Step 2: Prepare Cluster Nodes with Pivotal HD Prerequisites
+##Step 2: Prepare Cluster Nodes with Pivotal HD Prerequisites
 
 
 The preparehosts option of the icm_client command provides the user convenient
@@ -95,29 +95,32 @@ synchronize system clocks using NTP
 network access)
 -d, --selinuxoff
 disable SELinux
-Example:
+```
+
+**Example:**
+
+```xml
 [gpadmin]# icm_client -preparehosts --hostfile=./HostFile.txt
 --ssh --java=./jdk-6u43-linux-x64-rpm.bin
 
 ```
 
-###Step 3: Upgrade Ruby and Facter version to match Admin node packages
+##Step 3: Upgrade Ruby and Facter version to match Admin node packages
 
 Run the following command on the Pivotal HD Admin Node as user "gpadmin".
 
-Note: massh is an open source parallel SSH utility that is shipped along with the PHD
+**Note:** massh is an open source parallel SSH utility that is shipped along with the PHD
 tarball. More details about massh can be found at:
-
-http://m.a.tt/er/massh/
 
 ```xml
 
+http://m.a.tt/er/massh/
 [gpadmin]# massh ./HostFile.txt verbose "sudo yum install ruby
 facter -y --disablerepo=* --enablerepo=gphd-admin-localrepo"
 
 ```
 
-###Step 4: Prepare Cluster Nodes with HAWQ Prerequisites
+##Step 4: Prepare Cluster Nodes with HAWQ Prerequisites
 
 
 **Note:** Prepare the cluster nodes with HAWQ if HAWQ is available.
@@ -157,7 +160,7 @@ nodes
 
 ```
 
-###Step 5: Verify Cluster Nodes' Prerequisites
+##Step 5: Verify Cluster Nodes' Prerequisites
 
 
 scanhosts verifies if all cluster nodes' prerequisites have been met. This is a good
@@ -189,8 +192,8 @@ On Cluster Nodes
 
 ```
 
-Manual Verification of Cluster Node Prerequisites
--------------------------------------------------
+##Manual Verification of Cluster Node Prerequisites
+
 
 **Note:** Optional but recommended.
 

@@ -2,22 +2,23 @@
 title: Pivotal HD Cluster Recommendations
 ---
 
-Pivotal HD Cluster Recommendations
-----------------------------------
+##Pivotal HD Cluster Recommendations
 
 This section describes the following:
 
-*  **Hardware Recommendations**
-*  **Hadoop services Topology**
+  **Hardware Recommendations**
+  **Hadoop services Topology**
 
 Effective deployment of Hadoop cluster has three important considerations to make.
 
 * Selecting appropriate hardware configuration for cluster & management nodes,
+
 * Mapping Hadoop services roles to cluster nodes and
+
 * Configuring them to effectively leverage underlying hardware platform.
 
-Hardware Recommendations
-------------------------
+##Hardware Recommendations
+
 Typically hardware configuration of cluster nodes depend on the analytics workload
 run on the Hadoop cluster, which can be broadly classified as I/O bound, Memory
 bound, CPU bound or Network bound. Typically, it is hard to anticipate the kind of
@@ -28,39 +29,49 @@ resources while having the ability to provision more specific resources e.g. CPU
 bandwidth and Memory, etc. as the workload evolves and demands occur.
 Typical Hardware configurations are provided below,
 
-**Note:**This is not a minimum requirement but just a guidelines to consider while designing a
-         production cluster. Contact your GPHD customer representative to seek more specific
-         	advice for your requirements.
+**Note:**This is not a minimum requirement but just a guidelines to consider while designing a production cluster. Contact your GPHD customer  representative to seek more specific advice for your requirements.
+
 **Cluster Slaves** (Nodes that run Hadoop service slaves like Datanode, NodeManager,
 RegionServer & SegmentServer),
+
 * 2 quad core CPUs - You can also have a single CPU with more (6 to 8) cores and
-   the ability to add additional CPU, if needed in future. Typically total map+reduce
+  the ability to add additional CPU, if needed in future. Typically total map+reduce
   tasks per node are ~= 1.5 times number of cores per node.
+
 * 12 to 24GB RAM per node — Typically 1 GB for each Hadoop daemon
-     (DataNode, NodeManager, Zookeeper etc.) and 1.5GB/2GB for each map/reduce
-    task respectively. Again memory per map/reduce tasks on slave nodes depends on
-   the application requirement.
+  (DataNode, NodeManager, Zookeeper etc.) and 1.5GB/2GB for each map/reduce
+  task respectively. Again memory per map/reduce tasks on slave nodes depends on
+  the application requirement.
+
 * 4 to 10, 2TB, 7.2K RPM, SATA drives (JBOD) -- More disks per node provides
   more I/O bandwidth. Although more disk capacity per node may put more
   memory requirement on HDFS Namenode, as total HDFS storage capacity grows
   with more cluster nodes while the average HDFS file size stays small.
+
 * 2 x 2TB disks, RAID 1 configured for System OS. It can also store Hadoop
-   daemon logs.
+  daemon logs.
 
 * 1GbE network connectivity within RACK
-Cluster Masters (nodes that run Hadoop service masters e.g. NameNode,
-ResourceManager, HAWQ Master)
+  Cluster Masters (nodes that run Hadoop service masters e.g. NameNode,
+  ResourceManager, HAWQ Master)
+
 * Typically cluster nodes running Hadoop masters should have more reliable
-   hardware.
+  hardware.
+
 * Compared to cluster slave nodes Memory (RAM) requirement would be higher
-   depending on the size of the cluster, number of HDFS storage/files etc.
+  depending on the size of the cluster, number of HDFS storage/files etc.
+
 * Local disk storage requirement would not be as high has cluster slave nodes, 1 to
-   2TB, SAS disks, with RAID5/6
-GPHD Manager Admin node
+  2TB, SAS disks, with RAID5/6
+  GPHD Manager Admin node
+
 * Typically should be separate from cluster nodes especially if cluster size is ~ >=
-   15/20 nodes. No special resource requirements for Admin node but typically,
+  15/20 nodes. No special resource requirements for Admin node but typically,
+
 * 1 Quad code CPU
+
 * 4 to 8GB RAM
+
 * 2x2TB SATA disks
 
 **Important:** 1GbE network connectivity
@@ -69,8 +80,8 @@ GPHD Manager Admin node
 for master nodes for high cluster availability while also choosing the hardware for
 cluster nodes to lower the overall power consumption.
 
-Hadoop services Topology
-------------------------
+##Hadoop services Topology
+
 Typically for experimentation purposes all the Hadoop services roles, e.g. HDFS
 Namenode/Datanode, YARN ResourceManager/NodeManager, HAWQ
 Master/SegmentServer etc. can be deployed on a single node. Although for a
