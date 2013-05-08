@@ -27,6 +27,7 @@ seem to work?
 
 How do I clean up the nodes if a cluster deployment failed?
 
+How to convert maven hadoop mapreduce version 1.x project to version 2.x? 
 
 ## Can we deploy multiple clusters from the same admin?
 
@@ -99,19 +100,18 @@ again.
 remove all the 1.x dependencies .
 
 ```xml
-               <dependency>
-                       <groupId>org.apache.hadoop</groupId>
-                       <artifactId>hadoop-client</artifactId>
-                       <version>2.0.4-alpha</version>
-               </dependency>
+<dependency>
+       <groupId>org.apache.hadoop</groupId>
+       <artifactId>hadoop-client</artifactId>
+       <version>2.0.4-alpha</version>
+</dependency>
 
-               <dependency>
-                       <groupId>org.apache.mrunit</groupId>
-                       <artifactId>mrunit</artifactId>
-                       <classifier>hadoop2</classifier>
-                       <version>0.9.0-incubating</version>
-               </dependency>
- 
+<dependency>
+       <groupId>org.apache.mrunit</groupId>
+       <artifactId>mrunit</artifactId>
+       <classifier>hadoop2</classifier>
+       <version>0.9.0-incubating</version>
+</dependency>
 ```
 
 

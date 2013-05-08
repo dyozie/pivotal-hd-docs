@@ -406,11 +406,21 @@ issue the following command from the command center.
 gpadmin#icm_client reconfigure -l test -c ClusterconfigDir
 ```
 
-##Hbase Master not starting
+##HBase Master is not starting
 
 Hbase Master starts and then exits with an error message saying Invalid permissions for reading the block.
 
 Change the following property in **hbase-site.xml**
 
+```xml
+<property>
+	<name>
+		dfs.datanode.data.dir.perm
+	</name>
+	<value>
+		755
+	</value>
+</property>
+```
 
 
