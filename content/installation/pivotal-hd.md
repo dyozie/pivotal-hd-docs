@@ -16,4 +16,3 @@ The document covers the following topics:
 * [FAQ](pivotal-hd/faq.html)
 * [Troubleshooting](pivotal-hd/trouble-shooting.html)
 
-![](/images/pivotal-hd/pivotal-install-main.png)
