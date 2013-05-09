@@ -1,0 +1,9 @@
+*.*~
+.*~
+*~
+.DS_Store
+tmp
+output/
+manifest.yml
+/vendor
+crash.log
