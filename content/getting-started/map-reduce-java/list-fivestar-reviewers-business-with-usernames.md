@@ -406,7 +406,7 @@ export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:json-simple-1.1.jar
 ####Submit the job
 
 ```bash
-hadoop jar target/list-fivestar-business-reviewers-with-names-0.0.1.jar com.pivotal.hadoop.review.business.UserListBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  -libjars $PATH_TO_JSON/json-simple-1.1.jar -files /user/foobar/cache/usernames.txt /user/foobar/input/business.json /user/foobar/input/review.json /user/foobar/output
+hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files output2/usernames.txt /user/reddyraja/yelp/uc4/input/business.json /user/reddyraja/yelp/uc4/input/review.json /user/reddyraja/yelp/uc4/output
 
 ```
 

@@ -18,14 +18,15 @@ Pre-requisites
 * Pivotal HD deployed
 * [Development Environment setup](../setting-development.html)
 
-Approach
---------
+
 In this tutorial, the following important concepts are demonstarted:
+
 * Reduce side Join, joined by a common key across the datasets
+
 * Multiple data sets, processed by individual mappers
 
-Following are the steps to the exercise:
-
+Approach
+--------
 *  Understand the Data formats
 *  Design the Mapper
 *  Design the Reducer
@@ -33,7 +34,19 @@ Following are the steps to the exercise:
 Working with the Tutorial
 ------------------------
 
-###Step 1: Understand the InputFormat
+
+###Step 1: Clone the source from the git repository
+
+```bash
+git clone https://@github.com:rajdeepd/pivotal-samples.git
+```
+This will create pivotal-samples directory.
+
+###Step 2: Importing the project to Eclipse IDE
+
+Import the sample `list-fivestar-business-reviewers` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+
+###Step 3: Understand the InputFormat
 
 A sample business record is shown below:
 
@@ -76,7 +89,7 @@ In this we will have two mappers `BusinessMapper` and `ReviewMapper`.
 
 The output of these two mappers will be sent to the Reducer using a common key `business_id`. We also need to tag the map output so that Reducer knows from which input data set, the output belongs to. 
 
-###Step 3: Designing the Mappers
+###Step 4: Designing the Mappers
 
 ####BusinessMapper
 
@@ -143,7 +156,7 @@ public void map(LongWritable key, MapWritable value, Context context)
 }
 ```
 
-###Step 4: Designing the Reducer  
+###Step 5: Designing the Reducer  
 All the action happens in the Reducer. Each Reducer will get the `business_id` as the key and the list of values from both the input data sets.
 
 The Reducers constructs a single record out of the two data sets. The output of BusinessMapper is unique, since there is only one record for every business in the business dataset.
@@ -194,7 +207,7 @@ protected void reduce(Text key, Iterable<Text> values, Context context)
 }
 ```
 
-###Step 4: Writing the MapReduce Driver Code
+###Step 6: Writing the MapReduce Driver Code
 
 ```java
 public int run(String[] args) throws Exception {
@@ -234,68 +247,129 @@ MultipleInputs.addInputPath(job, new Path(args[1]),
 		YelpDataInputFormat.class, ReviewMapper.class);
 ```
 
-###Step 8: Running the exercise with Eclipse IDE
-
-Download the exercise from [here](git://url "here") and extract into a folder. 
-This will create count_businesses_in_city folder. 
-Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
-
-###Step 9: Running the tutorial on Pivotal HD cluster
-
-Point namenode and resourcemanager to the Pivotal HD cluster in the `hadoop-mycluster.xml`
-
-```xml
-<configuration>
-        <property>
-                <name>fs.default.name</name>
-                <value>hdfs://NAMENODE_SERVER:9000</value>
-        </property>
-        <property>
-                <name>yarn.resourcemanager.address</name>
-                <value>RESOURCE_MANAGER:8032</value>
-        </property>
-</configuration>
-```
+###Step 7: Running the tutorial in command line
+The following instructions can be used to run the sample on the Pseudo distributed cluster.
 
 ####Building the project 
 
+Go to the project directory
+
 ```bash
-mvn clean package
+cd  pivotal-samples
+ls
+cd list-fivestar-business-reviewers
 ```
+Build the project
+
+```bash 
+mvn clean compile
+mvn -DskipTests package
+```
+####Copy Third party libraries
+
+Note: The tutorial assumes you are running Psuedo Distributed cluster.
+
+This tutorial uses third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+```
+
+At this point, one can directly run on the sample in Pivotal HD Cluster using `Step 8`.
+
+Follow the steps below to run on the local machine in Psuedo-distributed mode.
+
+####Set the environment
+
+Make sure the following environment variable are set.
+
+```bash
+ export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_MAPRED_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_COMMON_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_HDFS_HOME=$HOME/hadoop-2.0.3-alpha
+ export YARN_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_CONF_DIR=$HOME/hadoop-2.0.3-alpha/etc/hadoop
+ export JAVA_HOME=$HOME/java/jdk1.7.0_17
+ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+```
+
+Note: The step assumes that, you have set up the local machine to run hadoop in Psuedo distributed mode.
 
 ####Upload the input
 
 ```bash
-hadoop fs -put data/business.json /user/foobar/input
-hadoop fs -put data/review.json /user/foobar/input
-```
+hadoop fs -put input/business.json /user/gpadmin/sample3/input
 
-####Set the Hadoop Class Path for third-party libraries
-
-```bash
-export HADOOP_CLASSPATH=path-to-json-simple-1.1.jar
+hadoop fs -put input/review.json /user/gpadmin/sample3/input
 ```
 
 ####Submit the job
 
 ```bash
-hadoop jar target/list-fivestar-business-reviewers-0.0.1.jar com.pivotal.hadoop.review.business.UserListBusinessDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input/business.json /user/foobar/input/review.json /user/foobar/output
-
+hadoop jar target/list-fivestar-business-reviewers-0.0.1.jar com.pivotal.hadoop.review.business.UserListBusinessDriver -libjars target/json-simple-1.1.jar /user/gpadmin/sample3/input/business.json /user/gpadmin/sample3/review.json /user/gpadmin/sample3/output
 ```
-
-Monitor the job status in the Command Center dashboard.
 
 ####Check the output
 
-Verify the job in the Pivotal Command Center Dashboard
+Verify the job in the hadoop cluster.
 
-Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
 See the output using
 
 ```bash
-hadoop fs -cat /user/foobar/output/part-r-00000
+hadoop fs -cat /user/gpadmin/sample3/output/part-r-00000
+
 ```
 
-###Congratulations! You have successfully completed the tutorial.
+###Step 8: Running the tutorial on Pivotal HD Cluster
+
+####Transfer the code to a node to the cluster. Let us assume it is one of the datanodes.
+Execute the following commands on the development machine.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+tar -zcvf sample3.tar.gz target/* input/*
+scp sample3.tar.gz gpadmin@DATA_NODE:/home/gpadmin/sample3.tar.gz 
+```
+Note: Replace the DATA_NODE with the hostname where one of the datanodes is running.
+
+####Extract the Archive
+Login to datanode and extract the `sample3.tar.gz` to a directory. This will create a target folder.
+
+```bash
+cd /home/gpadmin
+mkdir list-fivestar-business-reviewers
+cd list-fivestar-business-reviewers
+tar -zxvf ../sample3.tar.gz 
+```
+####Upload the datasets to HDFS
+
+```bash
+hadoop fs -mkdir -p /user/gpadmin/sample3/input
+hadoop fs -put input/business.json /user/gpadmin/sample3/input
+hadoop fs -put input/review.json /user/gpadmin/sample3/input
+```
+
+####Submit the Job
+
+```bash
+hadoop jar target/list-fivestar-business-reviewers-0.0.1.jar com.pivotal.hadoop.review.business.UserListBusinessDriver -libjars target/json-simple-1.1.jar /user/gpadmin/sample3/input/business.json /user/gpadmin/sample3/input/review.json /user/gpadmin/sample3/output
+```
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
+
+See the output using
+
+```bash
+hadoop fs -cat /user/gpadmin/sample3/output/part-r-00000
+
+```
+
+You have successfully run the sample on Pivotal HD Cluster!.
 

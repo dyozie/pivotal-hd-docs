@@ -2,25 +2,21 @@
 title: Run wordcount example with Spring Hadoop
 ---
 
-Run wordcount example with Spring Hadoop
---------------------------------------
+##Run wordcount example with Spring Hadoop
 The tutorial demonstrates running the worcount example with Spring Hadoop
 
 * Approximate time: 30 Mins
 * Level: Basic
 
-Use case
---------
+##Use case
 Count the words in a directory or document
 
-Pre-requisites
--------------
+##Pre-requisites
 * Pivotal Command Center 2.0 deployed
 * Pivotal HD deployed
 * [Development Environment setup](../setting-development.html)
 
-Approach
---------
+##Approach
 Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
 With Spring Hadoop, the job creation is handled by Spring Hadoop. The jobs can be submitted with various configuration options without changing the code. 
 
@@ -29,13 +25,12 @@ Designing and writing of Mapper and Reduce classes does not change with Hadoop. 
 *  Creating Application Context with Spring Hadoop
 *  Run the example
 
-Working with the Tutorial
-------------------------
+##Working with the Tutorial
 
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://git@github.com:rajdeepd/pivotal-samples.git
+git clone https://github.com/rajdeepd/pivotal-docs.git
 ```
 This will create pivotal-samples directory.
 
@@ -59,18 +54,15 @@ The Application Context file is shown below,
 
 	<context:property-placeholder location="hadoop.properties" />
 
-	<configuration >
+	<configuration>
 		fs.default.name=${hd.fs}
 		mapred.job.tracker=${hd.jt}
 	</configuration>
 
-	<job id="wordcountJob" 
-		input-path="${wordcount.input.path}"
-		output-path="${wordcount.output.path}"
-		libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
-		mapper="com.pivotal.springhadoop.edu.WordCount.TokenizerMapper"
-		reducer="com.pivotal.springhadoop.edu.WordCount.IntSumReducer" 
-		/>
+	<job id="wordcountJob" input-pfath="${wordcount.input.path}"
+		output-path="${wordcount.output.path}" libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
+		mapper="com.akrantha.springhadoop.edu.WordCount.TokenizerMapper"
+		reducer="com.akrantha.springhadoop.edu.WordCount.IntSumReducer" />
 
 	<job-runner id="runner" run-at-startup="true" job-ref="wordcountJob" />
 
@@ -86,19 +78,19 @@ The Job is defined with xml as shown above, and the JobRunner runs the Job.
 The code for the main driver program is shown below:
 
 ```java
-private static final String[] CONFIGS = new String[] { "applicationContext.xml" };
 public static void main(String[] args) {
-	String[] res = (args != null && args.length > 0 ? args : CONFIGS);
-	AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(res);
-	ctx.registerShutdownHook();
+    // TODO Auto-generated method stub
+    String[] res = (args != null && args.length > 0 ? args : CONFIGS);
+    AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(res);
+    // shutdown the context along with the VM
+    ctx.registerShutdownHook();
 }
-
 ```
 The code creates the Application Context and Spring Hadoop run the job after initialization. 
 
-###Step 5: Running the tutorial with Eclipse IDE
+###Step 5: Running the tutorial
 
-####Using Eclipse to Build the project
+####Build the project
 
 Follow the instructions [Setting Development Environment](../setting-development.html)  to build the project in eclipse.
 
@@ -123,18 +115,18 @@ hadoop fs -mkdir -p /user/gpadmin/spring-hadoop/input
 hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop/input
 ```
 
-####Launch the Main Program from the Eclipse.
+####Launch the Main Program from Eclipse
 
-You will see that the MapReduce program is submitted to the cluster. The message are see in the console.
+You will see that the MapReduce program is submitted to the cluster. See the messages on the console.
 
 ###Step 6: Check the output
 
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
-See the output using
 
 ```bash
 hadoop fs -cat /user/gpadmin/spring-hadoop/output/part-r-00000
+
 ```
 
-####You have successfully completed the SpringHadoop Tutorial.
+####You have successfully completed the Basic SpringHadoop Tutorial.
 

@@ -6,7 +6,7 @@ Business reviews by Month and Season
 ----------------------------------
 The given dataset has information about the Businesses, reviews and users. It is interesting to know how the reviews are spread across the year. Does it have any relation to seasons. The tutorial summarizes the reviews by season and by month. The output of the tutorial can be used to plot a histogram.
 
-* Approximate time: 45 mins
+* Approximate time: 45 min
 * Level: Intermediate
 
 Use case
@@ -21,8 +21,6 @@ Pre-requisites
 
 Approach
 --------
-Following are the steps to the exercise:
-
 *  Understand the Data formats
 *  Design the Mapper
 *  Design the Reducer
@@ -30,7 +28,18 @@ Following are the steps to the exercise:
 Working with the Tutorial
 ------------------------
 
-###Step 1: Understand the Data formats
+###Step 1: Clone the source from the git repository
+
+```bash
+git clone https://github.com:rajdeepd/pivotal-samples.git
+```
+This will create pivotal-samples directory.
+
+###Step 2: Importing the project to Eclipse IDE
+
+Import the sample `count-businesses-reviews-season` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+
+###Step 3: Understand the Data formats
 
 A sample review record is shown below:
 
@@ -50,7 +59,7 @@ A sample review record is shown below:
 
 Since 
 
-###Step 3: Designing the Mapper
+###Step 4: Designing the Mapper
 
 ####SeasonReviewMapper
 The code for SeasonMapper is shown below:
@@ -164,68 +173,127 @@ The combiner class is set using the following line:
 job.setCombinerClass(SeasonCountReducer.class);
 ```
 
-###Step 8: Running the exercise with Eclipse IDE
-
-Download the exercise from [here](git://url "here") and extract into a folder. 
-This will count-businesses-reviews-seasona folder. 
-Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
-
-###Step 9: Running the tutorial on Pivotal HD cluster
-
-Point Namenode and Resourcemanager to the Pivotal HD cluster in the `hadoop-mycluster.xml`
-
-```xml
-<configuration>
-        <property>
-                <name>fs.default.name</name>
-                <value>hdfs://NAMENODE_SERVER:9000</value>
-        </property>
-        <property>
-                <name>yarn.resourcemanager.address</name>
-                <value>RESOURCE_MANAGER:8032</value>
-        </property>
-</configuration>
-```
+###Step 5: Running the tutorial in command line
+The following instructions can be used to run the sample on the Pseudo distributed cluster.
 
 ####Building the project 
 
+Go to the project directory
+
 ```bash
-mvn clean package
+cd  pivotal-samples
+ls
+cd count-businesses-reviews-season
 ```
+Build the project
+
+```bash 
+mvn clean compile
+mvn -DskipTests package
+```
+####Copy Third party libraries
+
+Note: The tutorial assumes you are running Psuedo Distributed cluster.
+
+This tutorial uses third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+```
+
+At this point, one can directly run on the sample in Pivotal HD Cluster using `Step 8`.
+
+Follow the steps below to run on the local machine in Psuedo-distributed mode.
+
+####Set the environment
+
+Make sure the following environment variable are set.
+
+```bash
+ export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_MAPRED_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_COMMON_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_HDFS_HOME=$HOME/hadoop-2.0.3-alpha
+ export YARN_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_CONF_DIR=$HOME/hadoop-2.0.3-alpha/etc/hadoop
+ export JAVA_HOME=$HOME/java/jdk1.7.0_17
+ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+```
+
+Note: The step assumes that, you have set up the local machine to run hadoop in Psuedo distributed mode.
 
 ####Upload the input
 
 ```bash
-hadoop fs -put data/business.json /user/foobar/input
-hadoop fs -put data/review.json /user/foobar/input
-```
+hadoop fs -put input/business.json /user/gpadmin/sample5/input
 
-####Set the Hadoop Class Path for third-party libraries
-
-```bash
-export HADOOP_CLASSPATH=path-to-json-simple-1.1.jar
+hadoop fs -put input/review.json /user/gpadmin/sample5/input
 ```
 
 ####Submit the job
 
 ```bash
-hadoop jar target/count-businesses-reviews-season-0.0.1.jar com.pivotal.hadoop.review.business.SeasonDriver -conf $HADOOP_HOME/hadoop-mycluster.xml  /user/foobar/input/review.json /user/foobar/output
-
+hadoop jar target/count-businesses-reviews-season-0.0.1.jar com.pivotal.hadoop.review.business.SeasonDriver -libjars target/json-simple-1.1.jar  /user/gpadmin/sample5/review.json /user/gpadmin/sample5/output
 ```
-
-Monitor the job status in the Command Center dashboard.
 
 ####Check the output
 
-Verify the job in the Pivotal Command Center Dashboard
+Verify the job in the hadoop cluster.
 
-Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
 See the output using
 
 ```bash
-hadoop fs -cat /user/foobar/output/part-r-00000
+hadoop fs -cat /user/gpadmin/sample5/output/part-r-00000
+
 ```
 
-###Congratulations! You have successfully completed the tutorial.
+###Step 8: Running the tutorial on Pivotal HD Cluster
+
+####Transfer the code to a node to the cluster. Let us assume it is one of the datanodes.
+Execute the following commands on the development machine.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+tar -zcvf sample5.tar.gz target/* input/*
+scp sample5.tar.gz gpadmin@DATA_NODE:/home/gpadmin/sample5.tar.gz 
+```
+Note: Replace the DATA_NODE with the hostname where one of the datanodes is running.
+
+####Extract the Archive
+Login to datanode and extract the `sample5.tar.gz` to a directory. This will create a target folder.
+
+```bash
+cd /home/gpadmin
+mkdir count-businesses-reviews-season
+cd count-businesses-reviews-season
+tar -zxvf ../sample5.tar.gz 
+```
+####Upload the datasets to HDFS
+
+```bash
+hadoop fs -mkdir -p /user/gpadmin/sample5/input
+hadoop fs -put input/review.json /user/gpadmin/sample5/input
+```
+
+####Submit the Job
+
+```bash
+hadoop jar target/count-businesses-reviews-season-0.0.1.jar com.pivotal.hadoop.review.business.SeasonDriver -libjars target/json-simple-1.1.jar  /user/gpadmin/sample5/input/review.json /user/gpadmin/sample5/output
+```
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
+
+See the output using
+
+```bash
+hadoop fs -cat /user/gpadmin/sample5/output/part-r-00000
+
+```
+You have successfully run the sample on Pivotal HD Cluster!.
 

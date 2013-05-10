@@ -31,7 +31,7 @@ Approach
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://git@github.com:rajdeepd/pivotal-samples.git
+git clone https://github.com:rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
@@ -339,11 +339,8 @@ public void testCityBusinessMapperReducer() throws Exception {
     .withOutput(new Text("Surprise"), new IntWritable(1)).runTest();
 }
 ```   
-###Step 11: Running the exercise with Eclipse IDE
 
-Import the tutorial into eclipse and run using the instructions given in the [Setting Development Environment](../setting-development.html)
-
-###Step 12: Running the tutorial in command line
+###Step 11: Running the tutorial in command line
 The following instructions can be used to run the sample on the Pseudo distributed cluster.
 
 ####Building the project 
@@ -419,7 +416,7 @@ Peoria 1
 Phonix 1
 ```
 
-###Step 13: Running the tutorial on Pivotal HD Cluster
+###Step 12: Running the tutorial on Pivotal HD Cluster
 
 ####Transfer the code to a node to the cluster. Let us assume it is one of the datanode.
 Execute the following commands on the development machine.

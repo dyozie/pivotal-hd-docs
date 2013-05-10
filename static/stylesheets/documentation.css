@@ -89,12 +89,14 @@ p code {
 }
 
 .content h2 {
+border-bottom:0.50px solid #DCDCDC;
+border-bottom: 1px #DCDCDC solid;
   font-size: 19px;
   font-weight: bold;
   min-height: 32px;
   line-height: 32px;
   margin-bottom: 10px;
-  color: rgb(75, 170, 71);
+  color: rgb(0, 86, 150);
 }
 
 .content h5 {
@@ -109,15 +111,22 @@ p code {
 /* Doc Container */
 
 h3.title-container {
-  text-align: right;
-  background-color: rgb(127, 206, 61);
+
+
+  font-weight: bold;
+  text-align: left;
+  border-bottom:0.50px solid #32CD32;
+  border-bottom: 1px #32CD32 solid;
+  padding-bottom: 3px;
   height: 25px;
-  color: white;
-  font-size: 17px;
-  font-weight: normal;
+  color:  rgb(75, 170, 71);
+  font-size: 25px;
+  font-weight: 2px;
   padding-top: 10px;
   padding-right: 10px;
   margin-bottom: 30px;
+  
+  
 }
 
 
