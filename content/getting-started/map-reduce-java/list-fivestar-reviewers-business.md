@@ -351,16 +351,11 @@ hadoop jar target/list-fivestar-business-reviewers-0.0.1.jar com.pivotal.hadoop.
 ```
 
 ####Check the output
-
-Verify the job in the hadoop cluster.
-
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
-
-See the output using
+See the output using the following command:
 
 ```bash
 hadoop fs -cat /user/gpadmin/sample3/output/part-r-00000
-
 ```
 
 You have successfully run the sample on Pivotal HD Cluster!.

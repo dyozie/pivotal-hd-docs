@@ -113,85 +113,85 @@ The following code parses the `users.json` and creates a file `usernames.txt` in
 ```java
 public class UserJSONParserUtil {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(UserJSONParserUtil.class);
+    private static final Logger LOG = LoggerFactory
+        	.getLogger(UserJSONParserUtil.class);
 
-	private final static JSONParser jsonParser = new JSONParser();
+    private final static JSONParser jsonParser = new JSONParser();
 
-	public static void main(String[] args)
-			throws org.json.simple.parser.ParseException, ParseException {
+    public static void main(String[] args)
+        	throws org.json.simple.parser.ParseException, ParseException {
 
-		if (args.length != 2) {
-			System.out
-					.println("UserJSONParserUtil <input_file>  <output_file>");
-			System.exit(-1);
-		}
+        if (args.length != 2) {
+        	System.out
+        			.println("UserJSONParserUtil <input_file>  <output_file>");
+        	System.exit(-1);
+        }
 
-		Configuration conf = new Configuration();
-		createUserListFile(args[0], args[1], conf);
-	}
+        Configuration conf = new Configuration();
+        createUserListFile(args[0], args[1], conf);
+    }
 
-	public static void createUserListFile(String inputFile, String outputFile,
-			Configuration conf) throws org.json.simple.parser.ParseException,
-			ParseException {
+    public static void createUserListFile(String inputFile, String outputFile,
+        	Configuration conf) throws org.json.simple.parser.ParseException,
+        	ParseException {
 
-		Path inputFile1 = new Path(inputFile);
-		Path bfFile = new Path(outputFile);
+        Path inputFile1 = new Path(inputFile);
+        Path bfFile = new Path(outputFile);
 
-		String line = null;
-		FileSystem fs;
+        String line = null;
+        FileSystem fs;
 
-		try {
-			fs = FileSystem.get(conf);
-			FSDataOutputStream strm = fs.create(bfFile);
+        try {
+        	fs = FileSystem.get(conf);
+        	FSDataOutputStream strm = fs.create(bfFile);
 
-			for (FileStatus status : fs.listStatus(inputFile1)) {
-				BufferedReader rdr = new BufferedReader(new InputStreamReader(
-						fs.open(status.getPath())));
-				System.out.println("Reading " + status.getPath());
-				while ((line = rdr.readLine()) != null) {
-					HashMap<String, String> value = parseLineToJSON(jsonParser,
-							line);
-					// loadJsonToMap(line);
-					System.out.println(value.get("user_id"));
-					System.out.println(value.get("name"));
-					StringBuffer output = new StringBuffer();
-					output.append(value.get("user_id"));
-					output.append("==");
-					output.append(value.get("name") + "\n");
-					strm.writeBytes(output.toString());
-				}
-				rdr.close();
-				strm.flush();
-				strm.close();
-			}
-		} catch (IOException e) {
-			LOG.warn("Error in reading file" + inputFile.toString(), e);
-			e.printStackTrace();
-		}
-	}
+        	for (FileStatus status : fs.listStatus(inputFile1)) {
+        		BufferedReader rdr = new BufferedReader(new InputStreamReader(
+        				fs.open(status.getPath())));
+        		System.out.println("Reading " + status.getPath());
+        		while ((line = rdr.readLine()) != null) {
+        			HashMap<String, String> value = parseLineToJSON(jsonParser,
+        					line);
+        			// loadJsonToMap(line);
+        			System.out.println(value.get("user_id"));
+        			System.out.println(value.get("name"));
+        			StringBuffer output = new StringBuffer();
+        			output.append(value.get("user_id"));
+        			output.append("==");
+        			output.append(value.get("name") + "\n");
+        			strm.writeBytes(output.toString());
+        		}
+        		rdr.close();
+        		strm.flush();
+        		strm.close();
+        	}
+        } catch (IOException e) {
+        	LOG.warn("Error in reading file" + inputFile.toString(), e);
+        	e.printStackTrace();
+        }
+    }
 
-	public static HashMap<String, String> parseLineToJSON(JSONParser parser,
-			String line) throws org.json.simple.parser.ParseException,
-			ParseException {
-		HashMap<String, String> value = new HashMap<String, String>();
-		try {
-			JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
+    public static HashMap<String, String> parseLineToJSON(JSONParser parser,
+        	String line) throws org.json.simple.parser.ParseException,
+        	ParseException {
+        HashMap<String, String> value = new HashMap<String, String>();
+        try {
+        	JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
 
-			for (Object key : jsonObj.keySet()) {
-				String mapKey = new String(key.toString());
-				String mapValue = null;
-				if (jsonObj.get(key) != null) {
-					mapValue = new String(jsonObj.get(key).toString());
-				}
-				value.put(mapKey, mapValue);
-			}
-			return value;
-		} catch (NumberFormatException e) {
-			LOG.warn("Parsing Error in Number Field" + line, e);
-			return value;
-		}
-	}
+        	for (Object key : jsonObj.keySet()) {
+        		String mapKey = new String(key.toString());
+        		String mapValue = null;
+        		if (jsonObj.get(key) != null) {
+        			mapValue = new String(jsonObj.get(key).toString());
+        		}
+        		value.put(mapKey, mapValue);
+        	}
+        	return value;
+        } catch (NumberFormatException e) {
+        	LOG.warn("Parsing Error in Number Field" + line, e);
+        	return value;
+        }
+    }
 }
 ```
 
@@ -221,14 +221,14 @@ The output of the mapper would be as follows:
 
 ```java
 protected void setup(Context context) throws IOException,
-			InterruptedException {
+        	InterruptedException {
 
-	URI[] files = DistributedCache.getCacheFiles(context.getConfiguration());
-	System.out.println("Reading Bloom filter from: " + files[0].getPath());
-	
-	userCache = FileUtils.readFile(
-	files[0].getPath(),
-		context.getConfiguration());
+    URI[] files = DistributedCache.getCacheFiles(context.getConfiguration());
+    System.out.println("Reading Bloom filter from: " + files[0].getPath());
+    
+    userCache = FileUtils.readFile(
+    files[0].getPath(),
+        context.getConfiguration());
 }
 ```
 
@@ -238,33 +238,33 @@ The code `FileUtils` is shown below:
 
 ```java
 public static HashMap<String, String> readFile(String fileName,
-		Configuration conf) {
-	Path inputFile = new Path(fileName);
+        Configuration conf) {
+    Path inputFile = new Path(fileName);
 
-	String line = null;
-	FileSystem fs;
+    String line = null;
+    FileSystem fs;
 
-	HashMap<String, String> userCache = new HashMap<String, String>();
-	try {
-		fs = FileSystem.get(conf);
-		for (FileStatus status : fs.listStatus(inputFile)) {
-			BufferedReader rdr = new BufferedReader(new InputStreamReader(
-					fs.open(status.getPath())));
-			System.out.println("Reading " + status.getPath());
-	
-			while ((line = rdr.readLine()) != null) {
-				String str = new String(line);
-				System.out.println("line = " + str);
-				String tokens[] = str.split("==");
-				userCache.put(tokens[0], tokens[1]);
-			}
-			rdr.close();
-		}
-	} catch (IOException e) {
-		LOG.warn("Error in reading file" + inputFile.toString(), e);
-		e.printStackTrace();
-	}
-	return userCache;
+    HashMap<String, String> userCache = new HashMap<String, String>();
+    try {
+        fs = FileSystem.get(conf);
+        for (FileStatus status : fs.listStatus(inputFile)) {
+        	BufferedReader rdr = new BufferedReader(new InputStreamReader(
+        			fs.open(status.getPath())));
+        	System.out.println("Reading " + status.getPath());
+    
+        	while ((line = rdr.readLine()) != null) {
+        		String str = new String(line);
+        		System.out.println("line = " + str);
+        		String tokens[] = str.split("==");
+        		userCache.put(tokens[0], tokens[1]);
+        	}
+        	rdr.close();
+        }
+    } catch (IOException e) {
+        LOG.warn("Error in reading file" + inputFile.toString(), e);
+        e.printStackTrace();
+    }
+    return userCache;
 }
 ```
 
@@ -273,30 +273,30 @@ In the `ReviewMapper class` we use the cache to replace `userid` with `username`
 
 ```java
 public void map(LongWritable key, MapWritable value, Context context)
-	throws IOException, InterruptedException {
+    throws IOException, InterruptedException {
 
     starKey = value.get(new Text("stars"));
-	userIdKey = value.get(new Text("user_id"));
-	businessId = (Text) value.get(new Text("business_id"));
+    userIdKey = value.get(new Text("user_id"));
+    businessId = (Text) value.get(new Text("business_id"));
 
-	if (StringUtils.isNotEmpty(userIdKey.toString())
-			&& StringUtils.isNotEmpty(businessId.toString())
-			&& checkReview(Double.parseDouble(starKey.toString()))) {
+    if (StringUtils.isNotEmpty(userIdKey.toString())
+        	&& StringUtils.isNotEmpty(businessId.toString())
+        	&& checkReview(Double.parseDouble(starKey.toString()))) {
 
-		System.out.println("Reading Bloom filter from: "
-				+ userCache.get(userIdKey.toString()));
-		String userKey = userIdKey.toString();
-		String username = userCache.get(userKey);
-		if (username != null) {
-			System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
-			userId.set(username);
-		} else {
-			userId.set(userKey);
-		}
+        System.out.println("Reading Bloom filter from: "
+        		+ userCache.get(userIdKey.toString()));
+        String userKey = userIdKey.toString();
+        String username = userCache.get(userKey);
+        if (username != null) {
+        	System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
+        	userId.set(username);
+        } else {
+        	userId.set(userKey);
+        }
 
-		outputvalue.set("R:" + userId.toString() + ":" + starKey.toString());
-		context.write(businessId, outputvalue);
-	}
+        outputvalue.set("R:" + userId.toString() + ":" + starKey.toString());
+        context.write(businessId, outputvalue);
+    }
 }
 ```
 
@@ -305,10 +305,10 @@ See that the userid is replaced by username from the cache.
 ```java
 String username = userCache.get(userKey);
 if (username != null) { 
-	System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
-	userId.set(username);
+    System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
+    userId.set(username);
 } else {
-	userId.set(userKey);
+    userId.set(userKey);
 }       
 
 ```
@@ -336,7 +336,7 @@ URI[] files = DistributedCache .getCacheFiles(context.getConfiguration());
 System.out.println("Reading Bloom filter from: " + files[0].getPath());
 
 userCache = FileUtils.readFile(files[0].getPath(),
-		context.getConfiguration());
+        context.getConfiguration());
 ```
 
 with
@@ -454,12 +454,8 @@ hadoop jar target/list-fivestar-business-reviewers-with-username-0.0.1.jar com.p
 ```
 
 ####Check the output
-
-Verify the job in the hadoop cluster.
-
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
-
-See the output using
+See the output using the following command:
 
 ```bash
 hadoop fs -cat /user/gpadmin/sample4/output/part-r-00000
@@ -467,95 +463,4 @@ hadoop fs -cat /user/gpadmin/sample4/output/part-r-00000
 ```
 
 You have successfully run the sample on Pivotal HD Cluster!.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###Step 9: Running the tutorial on Pivotal HD cluster
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-####Building the project 
-
-```bash
-mvn clean package
-```
-
-####Upload the input
-
-```bash
-hadoop fs -put data/business.json /user/foobar/input
-hadoop fs -put data/review.json /user/foobar/input
-```
-
-####Set the Hadoop Class Path for third-party libraries
-
-```bash
-export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:json-simple-1.1.jar
-```
-
-####Submit the job
-
-```bash
-hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files output2/usernames.txt /user/reddyraja/yelp/uc4/input/business.json /user/reddyraja/yelp/uc4/input/review.json /user/reddyraja/yelp/uc4/output
-
-```
-
-Do not forget to replace path to the PATH_TO_JSON_JAR with the path where json-simple-1.1.jar is present.
-
-Monitor the job status in the Command Center dashboard.
-
-####Check the output
-
-Verify the job in the Pivotal Command Center Dashboard
-
-Browse the hadoop file system and check the output directory. The output directory should contain the part-r-0000-file.
-
-See the output using
-
-```bash
-hadoop fs -cat /user/foobar/output/part-r-00000
-```
-
-###Congratulations! You have successfully completed the tutorial.
 
