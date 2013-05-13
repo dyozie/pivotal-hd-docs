@@ -1,5 +1,5 @@
 ---
-title: List of Five star reviewers for a Business
+title: List Five star reviewers for a Business with user names
 ---
 
 ##List of Five star reviewers(users with names) for a Business
@@ -8,12 +8,8 @@ title: List of Five star reviewers for a Business
 * Level: Advanced
 
 ##Use case
-The goal of the tutorial is to find out list of all users who has rated a business as five star. The use cases is same as [List of Five star reviewers for a Business](list-fivestar-reviewers-business.html), except that we display usernames instead of userid's.
-
-The tutorial uses distributed cache provide by MapReduce to cache the files required for applications. The MapReduce Framework copies the files to the slave nodes before any task is executed.  
-
-Using distributed cache is also called as Replication Join. The data set is cached and used in Mapper or Reducer. 
-
+The tutorial uses distributed cache provided by MapReduce to cache the files required for applications. The MapReduce Framework copies the files to the slave nodes before any task is executed.
+Using distributed cache is also called as Replication Join. The data set is cached and used in Mapper or Reducer.
 Generally this type if join is useful in smaller datasets and should not be used for large data sets.
 
 ##Pre-requisites
@@ -23,14 +19,15 @@ Generally this type if join is useful in smaller datasets and should not be used
 
 ##Approach
 In this tutorial, the following important concepts are demonstrated:
+
 * Reduce side Join, joined by a common key across the datasets
 * Multiple data sets, processed by individual mappers
 * Join the smaller data set using distributed cache 
 
-Following are the steps to the exercise:
+Steps:
 
 *  Understand the Data formats
-*  Preparing the user names
+*  Prepare the user names
 *  Design the ReviewMapper
 
 ##Working with the Tutorial
@@ -42,15 +39,15 @@ git clone https://github.com:rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
-###Step 2: Importing the project to Eclipse IDE
+###Step 2: Import the project to Eclipse IDE
 
-Import the sample `list-fivestar-business-reviewers-with-username` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+Import the sample `list-fivestar-business-reviewers-with-username` project into eclipse using instructions given in the [Setting Development Environment](../setting-development.html). 
 
 ###Step 3: Understand the InputFormat
 
 A sample business record is shown below:
 
-```xml
+```java
 {
  "business_id": "rncjoVoEFUJGCUoC1JgnUA", 
  "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345", 
@@ -69,7 +66,7 @@ A sample business record is shown below:
 ```
 A sample review record is show below:
 
-```xml
+```java
 {
    "votes": 
    "funny": 0, "useful": 5, "cool": 2}, 
@@ -85,7 +82,7 @@ A sample review record is show below:
 
 A sample user record is shown below:
 
-```
+```java
 {
    "votes": 
         {"funny": 0, 
@@ -100,11 +97,11 @@ A sample user record is shown below:
 }
 ```
 
-Hadoop core API provides MultipleInputs class, which can take multiple inputs. Each input can have a separate Mapper. The two data sets have the business_id as the common key. The tutorial is similar to the previous one except that, the `userid's` are replaced by `usernames`.
+Hadoop core API provides [org.apache.hadoop.mapreduce.lib.input.MultipleInputs](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/mapred/lib/MultipleInputs.html) class, which can take multiple inputs. Each input can have a separate Mapper. The two data sets have the business_id as the common key. The tutorial is similar to the previous one except that, the `userid's` are replaced by `usernames`.
 
 The output of these two mappers will be sent to the Reducer using a common key `business_id`. We also need to tag the map output so that Reducer knows from which input data set, the output belongs to. 
 
-In this tutorial we will change the review mapper to use Distributed Cache to output names instead of userid's. The Business Mapper does not change at all. We will change the review mapper to load the users from the Distributed Cache and output usernames as part of the output.
+In this tutorial we will change the review mapper to use [Distributed Cache](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/filecache/DistributedCache.html) to output names instead of userid's. The Business Mapper does not change at all. We will change the review mapper to load the users from the Distributed Cache and output usernames as part of the output.
 
 ###Step 4: Preparing the user names
 
@@ -114,17 +111,17 @@ The following code parses the `users.json` and creates a file `usernames.txt` in
 public class UserJSONParserUtil {
 
     private static final Logger LOG = LoggerFactory
-        	.getLogger(UserJSONParserUtil.class);
+            .getLogger(UserJSONParserUtil.class);
 
     private final static JSONParser jsonParser = new JSONParser();
 
     public static void main(String[] args)
-        	throws org.json.simple.parser.ParseException, ParseException {
+            throws org.json.simple.parser.ParseException, ParseException {
 
         if (args.length != 2) {
-        	System.out
-        			.println("UserJSONParserUtil <input_file>  <output_file>");
-        	System.exit(-1);
+            System.out
+                    .println("UserJSONParserUtil <input_file>  <output_file>");
+            System.exit(-1);
         }
 
         Configuration conf = new Configuration();
@@ -132,8 +129,8 @@ public class UserJSONParserUtil {
     }
 
     public static void createUserListFile(String inputFile, String outputFile,
-        	Configuration conf) throws org.json.simple.parser.ParseException,
-        	ParseException {
+            Configuration conf) throws org.json.simple.parser.ParseException,
+            ParseException {
 
         Path inputFile1 = new Path(inputFile);
         Path bfFile = new Path(outputFile);
@@ -142,54 +139,54 @@ public class UserJSONParserUtil {
         FileSystem fs;
 
         try {
-        	fs = FileSystem.get(conf);
-        	FSDataOutputStream strm = fs.create(bfFile);
+            fs = FileSystem.get(conf);
+            FSDataOutputStream strm = fs.create(bfFile);
 
-        	for (FileStatus status : fs.listStatus(inputFile1)) {
-        		BufferedReader rdr = new BufferedReader(new InputStreamReader(
-        				fs.open(status.getPath())));
-        		System.out.println("Reading " + status.getPath());
-        		while ((line = rdr.readLine()) != null) {
-        			HashMap<String, String> value = parseLineToJSON(jsonParser,
-        					line);
-        			// loadJsonToMap(line);
-        			System.out.println(value.get("user_id"));
-        			System.out.println(value.get("name"));
-        			StringBuffer output = new StringBuffer();
-        			output.append(value.get("user_id"));
-        			output.append("==");
-        			output.append(value.get("name") + "\n");
-        			strm.writeBytes(output.toString());
-        		}
-        		rdr.close();
-        		strm.flush();
-        		strm.close();
-        	}
+            for (FileStatus status : fs.listStatus(inputFile1)) {
+                BufferedReader rdr = new BufferedReader(new InputStreamReader(
+                        fs.open(status.getPath())));
+                System.out.println("Reading " + status.getPath());
+                while ((line = rdr.readLine()) != null) {
+                    HashMap<String, String> value = parseLineToJSON(jsonParser,
+                            line);
+                    // loadJsonToMap(line);
+                    System.out.println(value.get("user_id"));
+                    System.out.println(value.get("name"));
+                    StringBuffer output = new StringBuffer();
+                    output.append(value.get("user_id"));
+                    output.append("==");
+                    output.append(value.get("name") + "\n");
+                    strm.writeBytes(output.toString());
+                }
+                rdr.close();
+                strm.flush();
+                strm.close();
+            }
         } catch (IOException e) {
-        	LOG.warn("Error in reading file" + inputFile.toString(), e);
-        	e.printStackTrace();
+            LOG.warn("Error in reading file" + inputFile.toString(), e);
+            e.printStackTrace();
         }
     }
 
     public static HashMap<String, String> parseLineToJSON(JSONParser parser,
-        	String line) throws org.json.simple.parser.ParseException,
-        	ParseException {
+            String line) throws org.json.simple.parser.ParseException,
+            ParseException {
         HashMap<String, String> value = new HashMap<String, String>();
         try {
-        	JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
+            JSONObject jsonObj = (JSONObject) parser.parse(line.toString());
 
-        	for (Object key : jsonObj.keySet()) {
-        		String mapKey = new String(key.toString());
-        		String mapValue = null;
-        		if (jsonObj.get(key) != null) {
-        			mapValue = new String(jsonObj.get(key).toString());
-        		}
-        		value.put(mapKey, mapValue);
-        	}
-        	return value;
+            for (Object key : jsonObj.keySet()) {
+                String mapKey = new String(key.toString());
+                String mapValue = null;
+                if (jsonObj.get(key) != null) {
+                    mapValue = new String(jsonObj.get(key).toString());
+                }
+                value.put(mapKey, mapValue);
+            }
+            return value;
         } catch (NumberFormatException e) {
-        	LOG.warn("Parsing Error in Number Field" + line, e);
-        	return value;
+            LOG.warn("Parsing Error in Number Field" + line, e);
+            return value;
         }
     }
 }
@@ -221,7 +218,7 @@ The output of the mapper would be as follows:
 
 ```java
 protected void setup(Context context) throws IOException,
-        	InterruptedException {
+            InterruptedException {
 
     URI[] files = DistributedCache.getCacheFiles(context.getConfiguration());
     System.out.println("Reading Bloom filter from: " + files[0].getPath());
@@ -248,17 +245,17 @@ public static HashMap<String, String> readFile(String fileName,
     try {
         fs = FileSystem.get(conf);
         for (FileStatus status : fs.listStatus(inputFile)) {
-        	BufferedReader rdr = new BufferedReader(new InputStreamReader(
-        			fs.open(status.getPath())));
-        	System.out.println("Reading " + status.getPath());
+            BufferedReader rdr = new BufferedReader(new InputStreamReader(
+                    fs.open(status.getPath())));
+            System.out.println("Reading " + status.getPath());
     
-        	while ((line = rdr.readLine()) != null) {
-        		String str = new String(line);
-        		System.out.println("line = " + str);
-        		String tokens[] = str.split("==");
-        		userCache.put(tokens[0], tokens[1]);
-        	}
-        	rdr.close();
+            while ((line = rdr.readLine()) != null) {
+                String str = new String(line);
+                System.out.println("line = " + str);
+                String tokens[] = str.split("==");
+                userCache.put(tokens[0], tokens[1]);
+            }
+            rdr.close();
         }
     } catch (IOException e) {
         LOG.warn("Error in reading file" + inputFile.toString(), e);
@@ -280,18 +277,18 @@ public void map(LongWritable key, MapWritable value, Context context)
     businessId = (Text) value.get(new Text("business_id"));
 
     if (StringUtils.isNotEmpty(userIdKey.toString())
-        	&& StringUtils.isNotEmpty(businessId.toString())
-        	&& checkReview(Double.parseDouble(starKey.toString()))) {
+            && StringUtils.isNotEmpty(businessId.toString())
+            && checkReview(Double.parseDouble(starKey.toString()))) {
 
         System.out.println("Reading Bloom filter from: "
-        		+ userCache.get(userIdKey.toString()));
+                + userCache.get(userIdKey.toString()));
         String userKey = userIdKey.toString();
         String username = userCache.get(userKey);
         if (username != null) {
-        	System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
-        	userId.set(username);
+            System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
+            userId.set(username);
         } else {
-        	userId.set(userKey);
+            userId.set(userKey);
         }
 
         outputvalue.set("R:" + userId.toString() + ":" + starKey.toString());

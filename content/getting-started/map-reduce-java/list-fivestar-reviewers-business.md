@@ -50,7 +50,7 @@ Import the sample `list-fivestar-business-reviewers` project into eclipse using 
 
 A sample business record is shown below:
 
-```xml
+```java
 {
  "business_id": "rncjoVoEFUJGCUoC1JgnUA", 
  "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345", 
@@ -69,7 +69,7 @@ A sample business record is shown below:
 ```
 A sample review record is show below:
 
-```xml
+```java
 {
     "votes": 
         {"funny": 0, "useful": 5, "cool": 2}, 
