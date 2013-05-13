@@ -1,9 +1,6 @@
 ---
 title: Getting Started
 ---
-
-##Getting Started
-
 Welcome to the Pivotal HD Tutorials.
 
 ##Pre-requisites

@@ -221,7 +221,6 @@ protected void setup(Context context) throws IOException,
             InterruptedException {
 
     URI[] files = DistributedCache.getCacheFiles(context.getConfiguration());
-    System.out.println("Reading Bloom filter from: " + files[0].getPath());
     
     userCache = FileUtils.readFile(
     files[0].getPath(),
