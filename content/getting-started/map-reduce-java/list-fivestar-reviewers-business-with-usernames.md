@@ -2,24 +2,26 @@
 title: List of Five star reviewers for a Business
 ---
 
-List of Five star reviewers(users) for a Business
-----------------------------------------
+##List of Five star reviewers(users with names) for a Business
 
 * Approximate time: 1 hour 
 * Level: Advanced
 
-Use case
---------
+##Use case
 The goal of the tutorial is to find out list of all users who has rated a business as five star. The use cases is same as [List of Five star reviewers for a Business](list-fivestar-reviewers-business.html), except that we display usernames instead of userid's.
 
-Pre-requisites
--------------
+The tutorial uses distributed cache provide by MapReduce to cache the files required for applications. The MapReduce Framework copies the files to the slave nodes before any task is executed.  
+
+Using distributed cache is also called as Replication Join. The data set is cached and used in Mapper or Reducer. 
+
+Generally this type if join is useful in smaller datasets and should not be used for large data sets.
+
+##Pre-requisites
 * Pivotal Command Center 2.0 deployed
 * Pivotal HD deployed
 * [Development Environment setup](../setting-development.html)
 
-Approach
---------
+##Approach
 In this tutorial, the following important concepts are demonstrated:
 * Reduce side Join, joined by a common key across the datasets
 * Multiple data sets, processed by individual mappers
@@ -28,13 +30,23 @@ In this tutorial, the following important concepts are demonstrated:
 Following are the steps to the exercise:
 
 *  Understand the Data formats
-*  Design the Mapper
-*  Design the Reducer
+*  Preparing the user names
+*  Design the ReviewMapper
 
-Working with the Tutorial
-------------------------
+##Working with the Tutorial
 
-###Step 1: Understand the InputFormat
+###Step 1: Clone the source from the git repository
+
+```bash
+git clone https://@github.com:rajdeepd/pivotal-samples.git
+```
+This will create pivotal-samples directory.
+
+###Step 2: Importing the project to Eclipse IDE
+
+Import the sample `list-fivestar-business-reviewers-with-username` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+
+###Step 3: Understand the InputFormat
 
 A sample business record is shown below:
 
@@ -59,168 +71,44 @@ A sample review record is show below:
 
 ```xml
 {
-	"votes": 
-		{"funny": 0, "useful": 5, "cool": 2}, 
-	"user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
-	"review_id": "fWKvX83p0-ka4JS3dc6E5A", 
-	"stars": 5, 
-	"date": "2011-01-26", 
-	"text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
-	"type": "review", 
-	"business_id": "rncjoVoEFUJGCUoC1JgnUA"
+   "votes": 
+   "funny": 0, "useful": 5, "cool": 2}, 
+   "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
+   "review_id": "fWKvX83p0-ka4JS3dc6E5A", 
+   "stars": 5, 
+   "date": "2011-01-26", 
+   "text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
+   "type": "review", 
+   "business_id": "rncjoVoEFUJGCUoC1JgnUA"
 }
 ```
 
-The two data sets have the business_id as the common key. Hadoop core API provides MultipleInputs class, which can take multiple inputs. Each input can have a separate Mapper.
+A sample user record is shown below:
 
-In this we will have two mappers `BusinessMapper` and `ReviewMapper`.
+```
+{
+   "votes": 
+        {"funny": 0, 
+         "useful": 7, 
+         "cool": 0
+        }, 
+    "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
+    "name": "Jim", 
+    "average_stars": 5.0, 
+    "review_count": 6, 
+    "type": "user"}
+}
+```
+
+Hadoop core API provides MultipleInputs class, which can take multiple inputs. Each input can have a separate Mapper. The two data sets have the business_id as the common key. The tutorial is similar to the previous one except that, the `userid's` are replaced by `usernames`.
 
 The output of these two mappers will be sent to the Reducer using a common key `business_id`. We also need to tag the map output so that Reducer knows from which input data set, the output belongs to. 
 
-###Step 3: Designing the Mappers
+In this tutorial we will change the review mapper to use Distributed Cache to output names instead of userid's. The Business Mapper does not change at all. We will change the review mapper to load the users from the Distributed Cache and output usernames as part of the output.
 
-####BusinessMapper
+###Step 4: Preparing the user names
 
-The mappper process the data from input data set 1. The key will be `business_id`. 
-
-The output of the mapper would be as follows:
-
-```xml
-mapper output key=business_id
-mapper output value=B:business name: city
-```
-Note that the value will be tagged with data source. In this case, the output of mapper is tagged with the value `B`.
-
-The BusinessMapper code is shown below:
-
-```java
-public void map(LongWritable key, MapWritable value, Context context)
-			throws IOException, InterruptedException {
-
-	businessId = (Text) value.get(businessIdKey);
-	busninessName = (Text) value.get(businessNameKey);
-
-	city = (Text) value.get(cityKey);
-
-	if (StringUtils.isNotEmpty(businessId.toString())
-			&& StringUtils.isNotEmpty(busninessName.toString())) {
-		outputValue.set("B:" + busninessName.toString() + ":"
-				+ city.toString());
-		context.write(businessId, outputValue);
-	}
-
-}
-```
-####Review Mapper
-
-The mappper process the data from input data set 2. The key will be `business_id`. 
-The output of the mapper would be as follows:
-
-```xml
-mapper output key=business_id
-mapper output value=R:user_id:review_rating
-```
-Note that the output value will is tagged with data source. In this case, the output of mapper is tagged with the value `R`.
-
-The review mapper over-rides the setup to load the names from the distributed cache. The file is copied to distributed cache when the job is submitted to hadoop using the `-files` option.
-
-```java
-protected void setup(Context context) throws IOException,
-		InterruptedException {
-
-	URI[] files = DistributedCache
-			.getCacheFiles(context.getConfiguration());
-	System.out.println("Reading Bloom filter from: " + files[0].getPath());
-	
-	userCache = FileUtils.readFile(
-			files[0].getPath(),
-			context.getConfiguration());
-}
-```
-The Review Mapper, simple replace the user_id with username. The user name is looked up in the HashMap created by reading the file from the distributed cache.
-
-```java
-public void map(LongWritable key, MapWritable value, Context context)
-		throws IOException, InterruptedException {
-
-	starKey = value.get(new Text("stars"));
-	userIdKey = value.get(new Text("user_id"));
-	businessId = (Text) value.get(new Text("business_id"));
-
-	if (StringUtils.isNotEmpty(userIdKey.toString())
-			&& StringUtils.isNotEmpty(businessId.toString())
-			&& checkReview(Double.parseDouble(starKey.toString()))) {
-	
-		String userKey = userIdKey.toString();
-		String username = userCache.get(userKey);
-		
-		if (username != null) {
-			userId.set(userCache.get(userIdKey.toString()));
-		}
-
-		outputvalue.set("R:" + userIdKey.toString() + ":"
-				+ starKey.toString());
-		context.write(businessId, outputvalue);
-	}
-
-}
-```
-
-As you can see, the user_id is set to user name if it is not null, otherwise user_id is passed as it is. This is one type of join, happening on the mapper side, specially if the data set is smaller. This will not work for large data sets, since there may not enought memory to fit a large data set into a hash table. However it works like a magic for smaller data sets. 
-
-###Step 4: Designing the Reducer  
-All the action happens in the Reducer. Each Reducer will get the `business_id` as the key and the list of values from both the input data sets.
-
-The Reducers constructs a single record out of the two data sets. The output of BusinessMapper is unique, since there is only one record for every business in the business dataset.
-
-There will be multiple values from the ReviewMapper, since there can be multiple reviews by the users.
-
-The reducers collects the output from both the mappers and joins them. The output is business_name, city, users count followed by comma separated list of user_id.
-
-The reducer code is shown below:
-
-```java
-protected void reduce(Text key, Iterable<Text> values, Context context)
-			throws IOException, InterruptedException {
-
-	boolean first_time = true;
-	int count = 0;
-	StringBuffer userList = new StringBuffer();
-	for (Text value : values) {
-
-		if (StringUtils.contains(value.toString(), "B:")) {
-			StringBuffer outputKey = new StringBuffer(
-					getName(value.toString()));
-			outputKey.append(",");
-			outputKey.append(getCity(value.toString()));
-			outputKey.append(",");
-			businessName.set(outputKey.toString());
-		}
-
-		if (first_time) {
-			userList.append(",");
-			if (StringUtils.contains(value.toString(), "R:")) {
-				userList.append(getUserid(value.toString()));
-			}
-			first_time = false;
-		} else {
-			if (StringUtils.contains(value.toString(), "R:")) {
-				userList.append(getUserid(value.toString()) + ",");
-			}
-		}
-		count++;
-	}
-		userList.delete(userList.length() - 1, userList.length());
-		userList.insert(0, count);
-		outputValue.set(userList.toString());
-		context.write(businessName, outputValue);
-}
-```
-
-###Step 5: Preparing user names
-The following code extracts the userid's and names from the user data set. 
-
-###Create file with usernames and userid's
+The following code parses the `users.json` and creates a file `usernames.txt` in the `cache` folder.
 
 ```java
 public class UserJSONParserUtil {
@@ -232,18 +120,21 @@ public class UserJSONParserUtil {
 
 	public static void main(String[] args)
 			throws org.json.simple.parser.ParseException, ParseException {
-		
-		
-		 Configuration conf = new Configuration();
-		    conf.addResource(new Path("$HADOOP-HOME/conf/core-site.xml"));
-		    conf.addResource(new Path("$HADOOP_HOME/conf/hdfs-site.xml"));
-			createUserListFile(args[0], args[1], conf);
 
+		if (args.length != 2) {
+			System.out
+					.println("UserJSONParserUtil <input_file>  <output_file>");
+			System.exit(-1);
+		}
+
+		Configuration conf = new Configuration();
+		createUserListFile(args[0], args[1], conf);
 	}
 
-	public static void createUserListFile(String inputFile, String outputFile, Configuration conf)
-			throws org.json.simple.parser.ParseException, ParseException {
-		
+	public static void createUserListFile(String inputFile, String outputFile,
+			Configuration conf) throws org.json.simple.parser.ParseException,
+			ParseException {
+
 		Path inputFile1 = new Path(inputFile);
 		Path bfFile = new Path(outputFile);
 
@@ -261,11 +152,14 @@ public class UserJSONParserUtil {
 				while ((line = rdr.readLine()) != null) {
 					HashMap<String, String> value = parseLineToJSON(jsonParser,
 							line);
+					// loadJsonToMap(line);
+					System.out.println(value.get("user_id"));
+					System.out.println(value.get("name"));
 					StringBuffer output = new StringBuffer();
 					output.append(value.get("user_id"));
 					output.append("==");
 					output.append(value.get("name") + "\n");
-					strm.write(output.toString());
+					strm.writeBytes(output.toString());
 				}
 				rdr.close();
 				strm.flush();
@@ -298,91 +192,328 @@ public class UserJSONParserUtil {
 			return value;
 		}
 	}
-
 }
-
-###Run the program with the following arguments
-
-```bash
-com.pivotal.hadoop.review.business.UserJSONParserUtil hdfs_input_dir/user/jso hdfs_output_dir/usernames.txt
 ```
+
+The  `UserJSONParserUtil` class reads the `user.json` using the JSON Parser and extracts userid and username. The output is written to `usernames.txt` file.
+
+Use eclipse to run the above program by passing the following arguments.
+
+```java
+input/user.json cache/usernames.txt
 ```
-The program converts the json structure into the following format:
+
+output:
+
+```java
+rLtl8ZkDX5vH5nAx9C3q5Q==Jim
+0a2KyEL0d3Yb1V6aivbIuQ==Kelle
+0hT2KtfLiobPvh6cDC8JQg==Stephanie
+....
+```
+
+###Step 5: Designing the ReviewMapper
+
+The `ReviewMapper` uses the setup method to initialize the cache. the code is shown below:
+
+The output of the mapper would be as follows:
+
+
+```java
+protected void setup(Context context) throws IOException,
+			InterruptedException {
+
+	URI[] files = DistributedCache.getCacheFiles(context.getConfiguration());
+	System.out.println("Reading Bloom filter from: " + files[0].getPath());
+	
+	userCache = FileUtils.readFile(
+	files[0].getPath(),
+		context.getConfiguration());
+}
+```
+
+The `DistributedCache.getCacheFiles()` returns all the files in the cache. The `FileUtils class` reads the file and returns the Map with key as `userid` and value as `username`.
+
+The code `FileUtils` is shown below:
+
+```java
+public static HashMap<String, String> readFile(String fileName,
+		Configuration conf) {
+	Path inputFile = new Path(fileName);
+
+	String line = null;
+	FileSystem fs;
+
+	HashMap<String, String> userCache = new HashMap<String, String>();
+	try {
+		fs = FileSystem.get(conf);
+		for (FileStatus status : fs.listStatus(inputFile)) {
+			BufferedReader rdr = new BufferedReader(new InputStreamReader(
+					fs.open(status.getPath())));
+			System.out.println("Reading " + status.getPath());
+	
+			while ((line = rdr.readLine()) != null) {
+				String str = new String(line);
+				System.out.println("line = " + str);
+				String tokens[] = str.split("==");
+				userCache.put(tokens[0], tokens[1]);
+			}
+			rdr.close();
+		}
+	} catch (IOException e) {
+		LOG.warn("Error in reading file" + inputFile.toString(), e);
+		e.printStackTrace();
+	}
+	return userCache;
+}
+```
+
+The Review Mapper, simple replace the user_id with username. The user name is looked up in the HashMap created by reading the file from the distributed cache.
+In the `ReviewMapper class` we use the cache to replace `userid` with `username`. The Mapper code is shown below:
+
+```java
+public void map(LongWritable key, MapWritable value, Context context)
+	throws IOException, InterruptedException {
+
+    starKey = value.get(new Text("stars"));
+	userIdKey = value.get(new Text("user_id"));
+	businessId = (Text) value.get(new Text("business_id"));
+
+	if (StringUtils.isNotEmpty(userIdKey.toString())
+			&& StringUtils.isNotEmpty(businessId.toString())
+			&& checkReview(Double.parseDouble(starKey.toString()))) {
+
+		System.out.println("Reading Bloom filter from: "
+				+ userCache.get(userIdKey.toString()));
+		String userKey = userIdKey.toString();
+		String username = userCache.get(userKey);
+		if (username != null) {
+			System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
+			userId.set(username);
+		} else {
+			userId.set(userKey);
+		}
+
+		outputvalue.set("R:" + userId.toString() + ":" + starKey.toString());
+		context.write(businessId, outputvalue);
+	}
+}
+```
+
+See that the userid is replaced by username from the cache.
+
+```java
+String username = userCache.get(userKey);
+if (username != null) { 
+	System.out.println("Reading Bloom filter from: "+ userCache.get(userIdKey.toString()));
+	userId.set(username);
+} else {
+	userId.set(userKey);
+}       
+
+```
+
+####Output of ReviewMapper
 
 ```xml
-userid==username
+mapper output key=business_id
+mapper output value=R:user_name:review_rating
 ```
 
-###Copy the file from HDFS to local file system
+As you can see, the user_id is set to user name if it is not null, otherwise user_id is passed as it is. This is one type of join on the mapper side, specially if the data set is smaller. 
 
-Copy the file from HDFS to local file system using the following command:
-
-```bash
-hadoop fs -get /hdfs_dir/usernames.txt projectdir/input/usernames.txt
-```
-
-###Step 6: Writing the MapReduce Driver Code
-
-```java
-public int run(String[] args) throws Exception {
-	Job job = new Job(getConf());
-	job.setJarByClass(UserListBusinessDriver.class);
-
-	Path out = new Path(args[2]);
-	out.getFileSystem(getConf()).delete(out, true);
-
-	MultipleInputs.addInputPath(job, new Path(args[0]),
-			YelpDataInputFormat.class, BusinessMapper.class);
-	
-	MultipleInputs.addInputPath(job, new Path(args[1]),
-			YelpDataInputFormat.class, ReviewMapper.class);
-
-	job.setReducerClass(BusinessUserReducer.class);
-
-	FileOutputFormat.setOutputPath(job, new Path(args[2]));
-
-	job.setMapOutputKeyClass(Text.class);
-	job.setMapOutputValueClass(Text.class);
-
-	job.setOutputKeyClass(Text.class);
-	job.setOutputValueClass(Text.class);
-
-	job.waitForCompletion(true);
-	return 0;
-}
-```
-Note that `MultipleInputs.addInputPath` is used to set the inputdata set and the associated mapper as shown below:
-
-```java
-MultipleInputs.addInputPath(job, new Path(args[0]),
-                         YelpDataInputFormat.class, BusinessMapper.class);
-
-MultipleInputs.addInputPath(job, new Path(args[1]),
-		YelpDataInputFormat.class, ReviewMapper.class);
-```
+###Step 6: Desiging the Reducer
+The Reducer is same as that of previous tutorial [List of Five star reviewers for a Business](list-fivestar-reviewers-business.html).
 
 ###Step 7: Running the exercise with Eclipse IDE
 
-Download the exercise from [here](git://url "here") and extract into a folder. 
-This will create count_businesses_in_city folder. 
 Import the tutorial into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html)
+
+To test the code in standalone mode in eclipse, replace the following code in `setup()` method of `ReviewMapper` class.
+
+```java
+URI[] files = DistributedCache .getCacheFiles(context.getConfiguration());
+System.out.println("Reading Bloom filter from: " + files[0].getPath());
+
+userCache = FileUtils.readFile(files[0].getPath(),
+		context.getConfiguration());
+```
+
+with
+```java
+userCache = FileUtils.readFile("cache/usernames.txt",context.getConfiguration());
+```
+
+###Step 7: Running the tutorial in command line
+The following instructions can be used to run the sample on the Pseudo distributed cluster.
+
+####Building the project 
+
+Go to the project directory
+
+```bash
+cd  pivotal-samples
+ls
+cd list-fivestar-business-reviewers-with-username
+```
+Build the project
+
+```bash 
+mvn clean compile
+mvn -DskipTests package
+```
+####Copy Third party libraries
+
+Note: The tutorial assumes you are running Psuedo Distributed cluster.
+
+This tutorial uses third-party library `json-simple-1.1.jar`. Maven will download keep the library in the repository. Copy the library to the target folder.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+```
+
+At this point, one can directly run on the sample in Pivotal HD Cluster using `Step 8`.
+
+Follow the steps below to run on the local machine in Psuedo-distributed mode.
+
+####Set the environment
+
+Make sure the following environment variable are set.
+
+```bash
+ export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_MAPRED_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_COMMON_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_HDFS_HOME=$HOME/hadoop-2.0.3-alpha
+ export YARN_HOME=$HOME/hadoop-2.0.3-alpha
+ export HADOOP_CONF_DIR=$HOME/hadoop-2.0.3-alpha/etc/hadoop
+ export JAVA_HOME=$HOME/java/jdk1.7.0_17
+ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+```
+
+Note: The step assumes that, you have set up the local machine to run hadoop in Psuedo distributed mode.
+
+####Upload the input
+
+```bash
+hadoop fs -put input/business.json /user/gpadmin/sample4/input
+hadoop fs -put input/review.json /user/gpadmin/sample4/input
+```
+
+####Submit the job
+
+```bash
+hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files cache/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
+```
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
+
+See the output using
+
+```bash
+hadoop fs -cat /user/gpadmin/sample4/output/part-r-00000
+```
+
+###Step 8: Running the tutorial on Pivotal HD Cluster
+
+####Transfer the code to a node to the cluster. Let us assume it is one of the datanodes.
+Execute the following commands on the development machine.
+
+```bash
+cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
+tar -zcvf sample4.tar.gz target/* input/* cache/*
+scp sample4.tar.gz gpadmin@DATA_NODE:/home/gpadmin/sample4.tar.gz 
+```
+Note: Replace the DATA_NODE with the hostname where one of the datanodes is running.
+
+####Extract the Archive
+Login to datanode and extract the `sample3.tar.gz` to a directory. This will create a target folder.
+
+```bash
+cd /home/gpadmin
+mkdir list-fivestar-business-reviewers-with-username
+cd list-fivestar-business-reviewers-with-username
+tar -zxvf ../sample4.tar.gz 
+```
+####Upload the datasets to HDFS
+
+```bash
+hadoop fs -mkdir -p /user/gpadmin/sample4/input
+hadoop fs -put input/business.json /user/gpadmin/sample4/input
+hadoop fs -put input/review.json /user/gpadmin/sample4/input
+```
+
+####Submit the Job
+
+```bash
+hadoop jar target/list-fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver -libjars target/json-simple-1.1.jar -files cache/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
+```
+
+####Check the output
+
+Verify the job in the hadoop cluster.
+
+Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
+
+See the output using
+
+```bash
+hadoop fs -cat /user/gpadmin/sample4/output/part-r-00000
+
+```
+
+You have successfully run the sample on Pivotal HD Cluster!.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ###Step 9: Running the tutorial on Pivotal HD cluster
 
-Point namenode and resourcemanager to the Pivotal HD cluster in the `hadoop-mycluster.xml`
 
-```xml
-<configuration>
-        <property>
-                <name>fs.default.name</name>
-                <value>hdfs://NAMENODE_SERVER:9000</value>
-        </property>
-        <property>
-                <name>yarn.resourcemanager.address</name>
-                <value>RESOURCE_MANAGER:8032</value>
-        </property>
-</configuration>
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ####Building the project 
 
