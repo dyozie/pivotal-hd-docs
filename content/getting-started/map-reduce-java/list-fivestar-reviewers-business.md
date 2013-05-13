@@ -71,29 +71,29 @@ A sample review record is show below:
 
 ```xml
 {
-	"votes": 
-		{"funny": 0, "useful": 5, "cool": 2}, 
-	"user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
-	"review_id": "fWKvX83p0-ka4JS3dc6E5A", 
-	"stars": 5, 
-	"date": "2011-01-26", 
-	"text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
-	"type": "review", 
-	"business_id": "rncjoVoEFUJGCUoC1JgnUA"
+    "votes": 
+        {"funny": 0, "useful": 5, "cool": 2}, 
+    "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
+    "review_id": "fWKvX83p0-ka4JS3dc6E5A", 
+    "stars": 5, 
+    "date": "2011-01-26", 
+    "text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
+    "type": "review", 
+    "business_id": "rncjoVoEFUJGCUoC1JgnUA"
 }
 ```
 
-The two data sets have the business_id as the common key. Hadoop core API provides MultipleInputs class, which can take multiple inputs. Each input can have a separate Mapper.
+Two data sets have business_id as a common key. Hadoop core API provides `org.apache.hadoop.mapreduce.lib.input.MultipleInputs` class, which can take multiple inputs. Each input can have a separate Mapper.
 
-In this we will have two mappers `BusinessMapper` and `ReviewMapper`.
+In this tutorial we will have two mappers `BusinessMapper` and `ReviewMapper`.
 
-The output of these two mappers will be sent to the Reducer using a common key `business_id`. We also need to tag the map output so that Reducer knows from which input data set, the output belongs to. 
+The output of these two mappers will be sent to the Reducer using a common key `business_id`. We  need to tag the map output so that Reducer knows the association between the input and output.
 
 ###Step 4: Designing the Mappers
 
 ####BusinessMapper
 
-The mappper process the data from input data set 1. The key will be `business_id`. 
+The mapper processes the data from input data set `business.json`. The key will be `business_id`. 
 
 The output of the mapper would be as follows:
 
@@ -107,19 +107,19 @@ The BusinessMapper code is shown below:
 
 ```java
 public void map(LongWritable key, MapWritable value, Context context)
-			throws IOException, InterruptedException {
+            throws IOException, InterruptedException {
 
-	businessId = (Text) value.get(businessIdKey);
-	busninessName = (Text) value.get(businessNameKey);
+    businessId = (Text) value.get(businessIdKey);
+    busninessName = (Text) value.get(businessNameKey);
 
-	city = (Text) value.get(cityKey);
+    city = (Text) value.get(cityKey);
 
-	if (StringUtils.isNotEmpty(businessId.toString())
-			&& StringUtils.isNotEmpty(busninessName.toString())) {
-		outputValue.set("B:" + busninessName.toString() + ":"
-				+ city.toString());
-		context.write(businessId, outputValue);
-	}
+    if (StringUtils.isNotEmpty(businessId.toString())
+            && StringUtils.isNotEmpty(busninessName.toString())) {
+        outputValue.set("B:" + busninessName.toString() + ":"
+                + city.toString());
+        context.write(businessId, outputValue);
+    }
 
 }
 ```
@@ -138,72 +138,73 @@ The ReviewMapper code is shown below:
 
 ```java
 public void map(LongWritable key, MapWritable value, Context context)
-			throws IOException, InterruptedException {
+            throws IOException, InterruptedException {
 
-	starKey = value.get(new Text("stars"));
-	userIdKey = value.get(new Text("user_id"));
-	businessId = (Text)value.get(new Text("business_id"));
+    starKey = value.get(new Text("stars"));
+    userIdKey = value.get(new Text("user_id"));
+    businessId = (Text)value.get(new Text("business_id"));
 
-	if (StringUtils.isNotEmpty(userIdKey.toString())
-			&& StringUtils.isNotEmpty(businessId.toString())
-			&& checkReview(Double.parseDouble(starKey.toString()))) {
-		userId.set(userIdKey.toString());
-		outputvalue.set("R:" + userIdKey.toString() + ":"
-				+ starKey.toString());
-		context.write(businessId, outputvalue);
-	}
+    if (StringUtils.isNotEmpty(userIdKey.toString())
+            && StringUtils.isNotEmpty(businessId.toString())
+            && checkReview(Double.parseDouble(starKey.toString()))) {
+        userId.set(userIdKey.toString());
+        outputvalue.set("R:" + userIdKey.toString() + ":"
+                + starKey.toString());
+        context.write(businessId, outputvalue);
+    }
 
 }
 ```
 
 ###Step 5: Designing the Reducer  
+
 All the action happens in the Reducer. Each Reducer will get the `business_id` as the key and the list of values from both the input data sets.
 
-The Reducers constructs a single record out of the two data sets. The output of BusinessMapper is unique, since there is only one record for every business in the business dataset.
+The Reducer constructs a single record out of the two data sets. The output of BusinessMapper is unique since there is only one record for every business in the business dataset.
 
-There will be multiple values from the ReviewMapper, since there can be multiple reviews by the users.
+There will be multiple values from the ReviewMapper since there can be multiple reviews by the users.
 
-The reducers collects the output from both the mappers and joins them. The output is business_name, city, users count followed by comma separated list of user_id.
+The Reducer collects the output from both the mappers and joins them. The output is business_name, city, users count followed by a comma separated list of user_id.
 
-Ideally, the userids should be replaced by the usernames. Take a look at the next tutorial [User names with distributed cache](list-fivestar-reviewers-business-with-usernames.html) on how to output the user names instead of user_ids.
+Ideally, the userids should be replaced by the usernames. Take a look at the next tutorial [User names with distributed cache](list-fivestar-reviewers-business-with-usernames.html) on how to output the user names instead of userids.
 
 The reducer code is shown below:
 
 ```java
 protected void reduce(Text key, Iterable<Text> values, Context context)
-			throws IOException, InterruptedException {
+            throws IOException, InterruptedException {
 
-	boolean first_time = true;
-	int count = 0;
-	StringBuffer userList = new StringBuffer();
-	for (Text value : values) {
+    boolean first_time = true;
+    int count = 0;
+    StringBuffer userList = new StringBuffer();
+    for (Text value : values) {
 
-		if (StringUtils.contains(value.toString(), "B:")) {
-			StringBuffer outputKey = new StringBuffer(
-					getName(value.toString()));
-			outputKey.append(",");
-			outputKey.append(getCity(value.toString()));
-			outputKey.append(",");
-			businessName.set(outputKey.toString());
-		}
+        if (StringUtils.contains(value.toString(), "B:")) {
+            StringBuffer outputKey = new StringBuffer(
+                    getName(value.toString()));
+            outputKey.append(",");
+            outputKey.append(getCity(value.toString()));
+            outputKey.append(",");
+            businessName.set(outputKey.toString());
+        }
 
-		if (first_time) {
-			userList.append(",");
-			if (StringUtils.contains(value.toString(), "R:")) {
-				userList.append(getUserid(value.toString()));
-			}
-			first_time = false;
-		} else {
-			if (StringUtils.contains(value.toString(), "R:")) {
-				userList.append(getUserid(value.toString()) + ",");
-			}
-		}
-		count++;
-	}
-		userList.delete(userList.length() - 1, userList.length());
-		userList.insert(0, count);
-		outputValue.set(userList.toString());
-		context.write(businessName, outputValue);
+        if (first_time) {
+            userList.append(",");
+            if (StringUtils.contains(value.toString(), "R:")) {
+                userList.append(getUserid(value.toString()));
+            }
+            first_time = false;
+        } else {
+            if (StringUtils.contains(value.toString(), "R:")) {
+                userList.append(getUserid(value.toString()) + ",");
+            }
+        }
+        count++;
+    }
+    userList.delete(userList.length() - 1, userList.length());
+    userList.insert(0, count);
+    outputValue.set(userList.toString());
+    context.write(businessName, outputValue);
 }
 ```
 
@@ -211,30 +212,30 @@ protected void reduce(Text key, Iterable<Text> values, Context context)
 
 ```java
 public int run(String[] args) throws Exception {
-	Job job = new Job(getConf());
-	job.setJarByClass(UserListBusinessDriver.class);
+    Job job = new Job(getConf());
+    job.setJarByClass(UserListBusinessDriver.class);
 
-	Path out = new Path(args[2]);
-	out.getFileSystem(getConf()).delete(out, true);
+    Path out = new Path(args[2]);
+    out.getFileSystem(getConf()).delete(out, true);
 
-	MultipleInputs.addInputPath(job, new Path(args[0]),
-			YelpDataInputFormat.class, BusinessMapper.class);
-	
-	MultipleInputs.addInputPath(job, new Path(args[1]),
-			YelpDataInputFormat.class, ReviewMapper.class);
+    MultipleInputs.addInputPath(job, new Path(args[0]),
+            YelpDataInputFormat.class, BusinessMapper.class);
+    
+    MultipleInputs.addInputPath(job, new Path(args[1]),
+            YelpDataInputFormat.class, ReviewMapper.class);
 
-	job.setReducerClass(BusinessUserReducer.class);
+    job.setReducerClass(BusinessUserReducer.class);
 
-	FileOutputFormat.setOutputPath(job, new Path(args[2]));
+    FileOutputFormat.setOutputPath(job, new Path(args[2]));
 
-	job.setMapOutputKeyClass(Text.class);
-	job.setMapOutputValueClass(Text.class);
+    job.setMapOutputKeyClass(Text.class);
+    job.setMapOutputValueClass(Text.class);
 
-	job.setOutputKeyClass(Text.class);
-	job.setOutputValueClass(Text.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(Text.class);
 
-	job.waitForCompletion(true);
-	return 0;
+    job.waitForCompletion(true);
+    return 0;
 }
 ```
 Note that `MultipleInputs.addInputPath` is used to set the inputdata set and the associated mapper as shown below:
@@ -244,7 +245,7 @@ MultipleInputs.addInputPath(job, new Path(args[0]),
                          YelpDataInputFormat.class, BusinessMapper.class);
 
 MultipleInputs.addInputPath(job, new Path(args[1]),
-		YelpDataInputFormat.class, ReviewMapper.class);
+        YelpDataInputFormat.class, ReviewMapper.class);
 ```
 
 ###Step 7: Running the tutorial in command line
@@ -300,7 +301,6 @@ Note: The step assumes that, you have set up the local machine to run hadoop in 
 
 ```bash
 hadoop fs -put input/business.json /user/gpadmin/sample3/input
-
 hadoop fs -put input/review.json /user/gpadmin/sample3/input
 ```
 
@@ -311,21 +311,16 @@ hadoop jar target/list-fivestar-business-reviewers-0.0.1.jar com.pivotal.hadoop.
 ```
 
 ####Check the output
-
-Verify the job in the hadoop cluster.
-
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
-
-See the output using
+You can see the output using the following command:
 
 ```bash
 hadoop fs -cat /user/gpadmin/sample3/output/part-r-00000
-
 ```
 
 ###Step 8: Running the tutorial on Pivotal HD Cluster
 
-####Transfer the code to a node to the cluster. Let us assume it is one of the datanodes.
+####Copy the code to a node to the cluster. Let us assume it is one of the datanodes.
 Execute the following commands on the development machine.
 
 ```bash

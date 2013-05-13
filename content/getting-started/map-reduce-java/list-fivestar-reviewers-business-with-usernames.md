@@ -38,7 +38,7 @@ Following are the steps to the exercise:
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://@github.com:rajdeepd/pivotal-samples.git
+git clone https://github.com:rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
