@@ -38,7 +38,7 @@ Working with the Tutorial
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://@github.com:rajdeepd/pivotal-samples.git
+git clone https://github.com:rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
@@ -120,7 +120,6 @@ public void map(LongWritable key, MapWritable value, Context context)
                 + city.toString());
         context.write(businessId, outputValue);
     }
-
 }
 ```
 ####Review Mapper
@@ -173,12 +172,10 @@ The reducer code is shown below:
 ```java
 protected void reduce(Text key, Iterable<Text> values, Context context)
             throws IOException, InterruptedException {
-
     boolean first_time = true;
     int count = 0;
     StringBuffer userList = new StringBuffer();
     for (Text value : values) {
-
         if (StringUtils.contains(value.toString(), "B:")) {
             StringBuffer outputKey = new StringBuffer(
                     getName(value.toString()));
@@ -242,10 +239,10 @@ Note that `MultipleInputs.addInputPath` is used to set the inputdata set and the
 
 ```java
 MultipleInputs.addInputPath(job, new Path(args[0]),
-                         YelpDataInputFormat.class, BusinessMapper.class);
+   YelpDataInputFormat.class, BusinessMapper.class);
 
 MultipleInputs.addInputPath(job, new Path(args[1]),
-        YelpDataInputFormat.class, ReviewMapper.class);
+   YelpDataInputFormat.class, ReviewMapper.class);
 ```
 
 ###Step 7: Running the tutorial in command line
