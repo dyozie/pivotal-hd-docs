@@ -45,15 +45,15 @@ A sample review record is shown below:
 
 ```xml
 {
-	"votes": 
-		{"funny": 0, "useful": 5, "cool": 2}, 
-	"user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
-	"review_id": "fWKvX83p0-ka4JS3dc6E5A", 
-	"stars": 5, 
-	"date": "2011-01-26", 
-	"text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
-	"type": "review", 
-	"business_id": "rncjoVoEFUJGCUoC1JgnUA"
+    "votes": 
+        {"funny": 0, "useful": 5, "cool": 2}, 
+    "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q", 
+    "review_id": "fWKvX83p0-ka4JS3dc6E5A", 
+    "stars": 5, 
+    "date": "2011-01-26", 
+    "text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!", 
+    "type": "review", 
+    "business_id": "rncjoVoEFUJGCUoC1JgnUA"
 }
 ```
 
@@ -67,20 +67,20 @@ The code for SeasonMapper is shown below:
 ```java
 @Override
 protected void map(LongWritable key, MapWritable value, Context context)
-	throws IOException, InterruptedException {
+    throws IOException, InterruptedException {
 
-	reviewDate = (Text) value.get(dateKey);
-	if (reviewDate == null) {
-		return;
-	}
+    reviewDate = (Text) value.get(dateKey);
+    if (reviewDate == null) {
+        return;
+    }
 
-	if (StringUtils.isNotEmpty(reviewDate.toString())) {
-		// date is in this format 2011-07-27
-		String tokens[] = StringUtils.split(reviewDate.toString(), "-");
-		String month = tokens[1];
-		writeToSeason(month, context);
-		writeToMonth(month, context);
-	}
+    if (StringUtils.isNotEmpty(reviewDate.toString())) {
+        // date is in this format 2011-07-27
+        String tokens[] = StringUtils.split(reviewDate.toString(), "-");
+        String month = tokens[1];
+        writeToSeason(month, context);
+        writeToMonth(month, context);
+    }
 }
 ```
 
@@ -89,18 +89,18 @@ Mapper outputs the months and its count. The code is show below:
 ```java
 public void writeToMonth(String month, Context context) {
 
-	String[] months = new String[] { "dummy", "Jan", "Feb", "Mar", "Apr",
-			"May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
-	int monthNumber;
-	monthNumber = Integer.parseInt(month);
-	try {
-		monthly.set(months[monthNumber]);
-		context.write(monthly, one);
-	} catch (IOException e) {
-		e.printStackTrace();
-	} catch (InterruptedException e) {
-		e.printStackTrace();
-	}
+    String[] months = new String[] { "dummy", "Jan", "Feb", "Mar", "Apr",
+            "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    int monthNumber;
+    monthNumber = Integer.parseInt(month);
+    try {
+        monthly.set(months[monthNumber]);
+        context.write(monthly, one);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
 }
 ```
 
@@ -110,12 +110,12 @@ In both the cases one can use the combiner to make the MapReduce more efficient.
 The output of the mapper is shown below:
 
 ```xml
-Jan	3
-Jul	2
-Jun	2
-May	2
-Spring	6
-Winter	3
+Jan    3
+Jul    2
+Jun    2
+May    2
+Spring    6
+Winter    3
 ```
 
 ###Step 4: Designing the Reducer  
@@ -126,13 +126,13 @@ The Reducer code is shown below:
 ```java
 @Override
 protected void reduce(Text key, Iterable<IntWritable> values,
-		Context context) throws IOException, InterruptedException {
-	int count = 0;
-	for (IntWritable x : values) {
-		count += 1;
-	}
-	seasonCount.set(count);
-	context.write(key, seasonCount);
+        Context context) throws IOException, InterruptedException {
+    int count = 0;
+    for (IntWritable x : values) {
+        count += 1;
+    }
+    seasonCount.set(count);
+    context.write(key, seasonCount);
 }
 ```
 
@@ -141,29 +141,29 @@ protected void reduce(Text key, Iterable<IntWritable> values,
 ```java
 public int run(String[] args) throws Exception {
 
-	Job job = new Job(getConf());
-	job.setJarByClass(SeasonDriver.class);
+    Job job = new Job(getConf());
+    job.setJarByClass(SeasonDriver.class);
 
-	FileInputFormat.setInputPaths(job, new Path(args[0]));
-	Path outputPath = new Path(args[1]);
-	outputPath.getFileSystem(job.getConfiguration()).delete(outputPath,
-			true);
+    FileInputFormat.setInputPaths(job, new Path(args[0]));
+    Path outputPath = new Path(args[1]);
+    outputPath.getFileSystem(job.getConfiguration()).delete(outputPath,
+            true);
 
-	job.setMapperClass(SeasonReviewMapper.class);
-	job.setReducerClass(SeasonCountReducer.class);
-	job.setCombinerClass(SeasonCountReducer.class);
+    job.setMapperClass(SeasonReviewMapper.class);
+    job.setReducerClass(SeasonCountReducer.class);
+    job.setCombinerClass(SeasonCountReducer.class);
 
-	job.setInputFormatClass(YelpDataInputFormat.class);
-	FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    job.setInputFormatClass(YelpDataInputFormat.class);
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-	job.setMapOutputKeyClass(Text.class);
-	job.setMapOutputValueClass(IntWritable.class);
+    job.setMapOutputKeyClass(Text.class);
+    job.setMapOutputValueClass(IntWritable.class);
 
-	job.setOutputKeyClass(Text.class);
-	job.setOutputValueClass(IntWritable.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
 
-	job.waitForCompletion(true);
-	return 0;
+    job.waitForCompletion(true);
+    return 0;
 }
 ```
 

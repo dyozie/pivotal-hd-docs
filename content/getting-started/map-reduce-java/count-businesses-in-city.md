@@ -43,7 +43,7 @@ Import the sample `count-businesses-incity` project into eclipse using the instr
 
 A sample record is shown below:
 
-```xml
+```json
 {
  "business_id": "rncjoVoEFUJGCUoC1JgnUA", 
  "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345", 
@@ -90,16 +90,16 @@ The Custom InputFormat class `YelpDataInputFormat`  constructs the RecordReader 
 ```java
 
 public class YelpDataInputFormat extends
-		FileInputFormat<LongWritable, MapWritable> {
+        FileInputFormat<LongWritable, MapWritable> {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(YelpDataInputFormat.class);
+    private static final Logger log = LoggerFactory
+            .getLogger(YelpDataInputFormat.class);
 
-	@Override
-	public RecordReader<LongWritable, MapWritable> createRecordReader(
-			InputSplit split, TaskAttemptContext context) {
-		return new YelpDataRecordReader();
-	}
+    @Override
+    public RecordReader<LongWritable, MapWritable> createRecordReader(
+            InputSplit split, TaskAttemptContext context) {
+        return new YelpDataRecordReader();
+    }
 }
 
 ```
@@ -268,9 +268,9 @@ public void testCityBusinessMapper() throws Exception {
 
     final MapWritable inputValue = new MapWritable();
     inputValue.put(new Text("business_id"), new Text(
-			"fecYnd2_OTDECk7bd6GOFw"));
+            "fecYnd2_OTDECk7bd6GOFw"));
     inputValue.put(new Text("full_address"), new Text(
-			"12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
+            "12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
     inputValue.put(new Text("open"), new Text("true"));
     inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
     inputValue.put(new Text("city"), new Text("Surprise"));
@@ -284,7 +284,7 @@ public void testCityBusinessMapper() throws Exception {
     inputValue.put(new Text("type"), new Text("business"));
 
     mapDriver.withInput(inputKey, inputValue)
-			.withOutput(outputKey, outputValue).runTest();
+            .withOutput(outputKey, outputValue).runTest();
 
 }
 
@@ -321,9 +321,9 @@ MRUnit also supports testing map and reduce functions in the same test. It is do
 public void testCityBusinessMapperReducer() throws Exception {
     final MapWritable inputValue = new MapWritable();
     inputValue.put(new Text("business_id"), new Text(
-			"fecYnd2_OTDECk7bd6GOFw"));
+            "fecYnd2_OTDECk7bd6GOFw"));
     inputValue.put(new Text("full_address"), new Text(
-			"12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
+            "12851 W Bell Rd\nSte 20\nSurprise, AZ 85374"));
     inputValue.put(new Text("open"), new Text("true"));
     inputValue.put(new Text("categories"), new Text("Pizza, Restaurants"));
     inputValue.put(new Text("city"), new Text("Surprise"));
