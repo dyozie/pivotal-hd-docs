@@ -24,16 +24,16 @@ The MapReduce Framework copies the files to the slave nodes before any task is e
 
 The following are the steps to use Distributed Cache:
 
-* Understand the data set that is required to be copied. Generally this is smallest of the datasets. It is also good if the data set can be filtered to reduce further.
-* Copy the files to Distributed Cache using `-files` option
-* Get the files from the Distributed Cache in the map or reduce tasks
-* Read the cached file into memory for use in the Mapper
+* Understand the data set that that will be placed in Distributed Cache. Generally this is smallest of the datasets. It is also good idea if the data set can be filtered to reduce its size further.
+* Use the `-files` option while submitting the job using hadoop jar` command. The framework will copy the files to Distributed Cache
+* Once copied, the information about the files can be obtained from the Distributed Cache API
+* Read the cached file into memory for use in the Mapper using FileSystem API
 
 The following important concepts are demonstrated:
 
 * Reduce side Join, joined by a common key across the datasets
 * Multiple data sets, processed by individual mappers
-* Join the smaller data set using distributed cache 
+* Join the smaller data set using Distributed cache 
 
 Steps:
 
@@ -466,7 +466,6 @@ See the output using the following command:
 
 ```bash
 hadoop fs -cat /user/gpadmin/sample4/output/part-r-00000
-
 ```
 
 You have successfully run the sample on Pivotal HD Cluster!.

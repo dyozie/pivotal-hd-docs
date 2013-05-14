@@ -14,9 +14,7 @@ title: Uninstalling Pivotal Command Center
   	uninstall script:
 
 ```bash
-
-	# cd /root/phd/GPCC-2.0.0.version/
-	# ./uninstall
-
+# cd /root/phd/GPCC-2.0.0.version/
+# ./uninstall
 ```
 

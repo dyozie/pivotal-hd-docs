@@ -281,7 +281,6 @@ To see job related counters click on **View more job details** next to the job I
 
 ##YARN App Monitor
 
-
 The YARN App Monitor screen tracks YARN applications that are executed in the
 Pivotal HD Cluster.
 
@@ -324,72 +323,9 @@ In this release, this screen only displays **active** queries as can be seen whe
 
 ```bash
 SELECT * FROM pg_stat_activity;
-
 ```
 on the HAWQ cluster.
 Click on a Query ID to get the syntax of that query:
 
 ![syntax of that query  ](/images/cc/hawq2.png)
-
-
-# cd /root/phd
-# tar --no-same-owner -zxvf
-GPCC-2.0.0.version.build.os.x86_64.tar.gz
-```
-3.Still as root user, run the installation script. This installs the required packages and
-configures both Pivotal Command Center and Pivotal HD Manager, and starts services.
-
-**Important:**
-You must run the installation script from the directory where it is
-installed, for example: GPCC-2.0.0.version
-For example:
-```bash
-# ls
-GPCC-2.0.0.version
-GPCC-2.0.0.version.build.os.x86_64.tar.gz
-# cd GPCC-version
-# ./install
-```
-You will see installation progress information on the screen. Once the installation
-successfully completes, you will see the following:
-
-You have successfully installed GPCC 2.0.
-You now need to install a GPHD cluster to monitor or sync
-GPCC to monitor an existing GPHD cluster. You can view your
-cluster statuses here:
-http://node0781.ic.analyticsworkbench.com:5000/status
-
-##Starting, Stopping, and Restarting Command Center Services
-
-
- To stop or restart the Command Center services, run the following commands on the
-Pivotal Command Center admin host:
-
-```bash
-$ service commander stop
-$ service commander start
-$ service commander restart
-```
-
-##Launching Command Center
-
-
-Launch a browser and navigate to the host on which you installed Command Center.
-For example:
-
-```bash
-http://CommandCenterHost:5000
-
-```
-
-The Command Center login page is launched in your browser. The default
-username/password is gpadmin/gpadmin.
-
-##Next Steps
-
-   See the Pivotal HD 1.0 Installation and Configuration Guide for instructions for 
-using the command-line interface of 
-[Pivotal Command Center to deploy and configure a HD cluster.](../pivotal-hd/configure-deploy-cluster.html)
-
-
 

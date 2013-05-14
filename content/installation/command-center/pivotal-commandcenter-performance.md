@@ -81,6 +81,5 @@ Following are the steps to create a local yum repo:
 
 ```bash
 	Yum list
-
 ```
 

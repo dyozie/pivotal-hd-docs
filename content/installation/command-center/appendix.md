@@ -38,8 +38,7 @@ Following are the steps to create a local yum repo:
   /etc/yum.repos.d/ directory of each host (for example, CentOS-6.1.repo)
   with the following contents:
 
-```bash
-
+```xml
   [CentOS-6.1]
   name=CentOS 6.1 local repo for OS RPMS
   baseurl=http://172.254.51.221/centos/$releasever/os/
@@ -48,14 +47,10 @@ Following are the steps to create a local yum repo:
   gpgcheck=1
   gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
   /RPM-GPG-KEY-CentOS-6
-
 ```
 * Validate that you can access the local yum repos by running the following
       command:
 
 ```bash
-
    Yum list
-   Creating a YUM EPEL Repository
-
 ```

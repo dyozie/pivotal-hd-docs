@@ -40,13 +40,12 @@ show this help message and exit
 -f HOSTFILE, --hostfile=HOSTFILE
 file containing a list of all cluster hosts (newline
 separated) where the user gpadmin needs to be created
-
 ```
+
 ##Example:
 
 ```bash
 [root]# icm_client add-user-gpadmin -f ./HostFile.txt
-
 ```
 
 ##Step 2: Prepare Cluster Nodes with Pivotal HD Prerequisites
@@ -105,7 +104,6 @@ disable SELinux
 ```bash
 [gpadmin]# icm_client -preparehosts --hostfile=./HostFile.txt
 --ssh --java=./jdk-6u43-linux-x64-rpm.bin
-
 ```
 
 ##Step 3: Upgrade Ruby and Facter version to match Admin node packages
@@ -116,10 +114,8 @@ Run the following command on the Pivotal HD Admin Node as user "gpadmin".
 tarball. More details about massh can be found at: [http://m.a.tt/er/massh/](http://m.a.tt/er/massh/)
 
 ```bash
-
 [gpadmin]# massh ./HostFile.txt verbose "sudo yum install ruby
 facter -y --disablerepo=* --enablerepo=gphd-admin-localrepo"
-
 ```
 
 ##Step 4: Prepare Cluster Nodes with HAWQ Prerequisites
@@ -156,14 +152,15 @@ will be appended
 to /etc/sysctl.conf and
 /etc/limits.conf on slave
 nodes
+```
 **Example:**
+
+```bash
 [gpadmin]# icm_client prepare-hawq-hosts -f ./HAWQ_Hosts.txt -g
 /usr/lib/gphd/gphdmgr/hawq_sys_config/
-
 ```
 
 ##Step 5: Verify Cluster Nodes' Prerequisites
-
 
 scanhosts verifies if all cluster nodes' prerequisites have been met. This is a good
 indicator if cluster deployments will go through smoothly on the nodes. As its output,
@@ -182,23 +179,23 @@ increase output verbosity
 file containing new-line separated list of
 hosts to be
 scanned
-Example:
+```
+
+**Example:**
+
+```bash
 [gpadmin]# icm_client scanhosts -f ./HostFile.txt
 ```
+
 The following log files can be inspected for troubleshooting:
-```bash
 On Admin
 /var/log/gphd/gphdmgr/ScanCluster.log
 On Cluster Nodes
 /tmp/ScanHost.XXX.log
 
-```
-
 ##Manual Verification of Cluster Node Prerequisites
 
-
 **Note:** Optional but recommended.
-
 
 **Table 1.6**
 

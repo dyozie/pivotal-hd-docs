@@ -2,7 +2,6 @@
 title: command-center 
 ---
 
-
 ##About this Guide
 
 
