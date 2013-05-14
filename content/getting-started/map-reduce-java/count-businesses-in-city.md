@@ -43,7 +43,7 @@ Import the sample `count-businesses-incity` project into eclipse using the instr
 
 A sample record is shown below:
 
-```json
+```xml
 {
  "business_id": "rncjoVoEFUJGCUoC1JgnUA", 
  "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345", 

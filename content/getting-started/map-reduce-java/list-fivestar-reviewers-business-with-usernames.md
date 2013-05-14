@@ -16,16 +16,16 @@ The goal of the tutorial is to find out list of all users with their names who h
 * [Development Environment setup](../setting-development.html)
 
 ##Approach
-In the [previous](list-fivestar-reviewers-business.html) tutorial, we have joined business and reviews data set to find out the list of reviwers(users) for a business. The user list has the userid's rather than user names. It will be good to see the user name list rather the 
+In the [previous](list-fivestar-reviewers-business.html) tutorial, we have joined the business and reviews data set to find out the list of reviewers(users) for a business. The user list has the userid's rather than user names. It will be good to see the user name list rather the 
 userid's. Inorder to get the usernames, we have to process the other data set `users.json` which has both the userid and username.
 
 The tutorial uses [Distributed Cache](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/filecache/DistributedCache.html) provided by MapReduce. The simplest way to use Distributed Cache is to pass the list of files as an argument to hadoop using `-files` option.
-The MapReduce Framework copies the files to the slave nodes before any task is executed. The cached files can be read in map or reduce tasks based on requirement. 
+The MapReduce Framework copies the files to the slave nodes before any task is executed. The cached files can be read in the map or reduce tasks based on the requirement. 
 
 The following are the steps to use Distributed Cache:
 
-* Understand the data set that that will be placed in Distributed Cache. Generally this is smallest of the datasets. It is also good idea if the data set can be filtered to reduce its size further.
-* Use the `-files` option while submitting the job using hadoop jar` command. The framework will copy the files to Distributed Cache
+* Understand the data set that will be placed in Distributed Cache. Generally this is smaller of the datasets. It is also good idea if the data set can be filtered to reduce its size further.
+* Use the `-files` option while submitting the job using `hadoop jar` command. The MapReduce framework will copy the files to Distributed Cache
 * Once copied, the information about the files can be obtained from the Distributed Cache API
 * Read the cached file into memory for use in the Mapper using FileSystem API
 
@@ -110,7 +110,7 @@ A sample user record is shown below:
 
 Hadoop core API provides [org.apache.hadoop.mapreduce.lib.input.MultipleInputs](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/mapred/lib/MultipleInputs.html) class, which can take multiple inputs. Each input can have a separate Mapper. The two data sets have the business_id as the common key. The tutorial is similar to the previous one except that, the `userid's` are replaced by `usernames`.
 
-The output of these two mappers will be sent to the Reducer using a common key `business_id`. We also need to tag the map output so that Reducer knows from which input data set, the output belongs to. 
+The output of these two mappers will be sent to the Reducer using a common key `business_id`. The mapper output is tagged with the source of the dataset. The BusinessMapper output is tagged with `B` and ReviewMapper is tagged with `R`.
 
 In this tutorial we will change the review mapper to use [Distributed Cache](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/filecache/DistributedCache.html) to output names instead of userid's. The Business Mapper does not change at all. We will change the review mapper to load the users from the Distributed Cache and output usernames as part of the output.
 
@@ -410,7 +410,7 @@ hadoop fs -put input/review.json /user/gpadmin/sample4/input
 ####Submit the job
 
 ```bash
-hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files files/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
+hadoop jar target/list-fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files files/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
 ```
 
 ####Check the output
