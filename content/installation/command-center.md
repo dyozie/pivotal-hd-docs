@@ -11,7 +11,7 @@ The guide covers the following topics:
 
   An overview of the functionality and architecture of Pivotal Command Center.
 
-* [Installing Pivotal Command Center 2.0](command-center/installation-instructions.html)
+* [Installing Pivotal Command Center 2.0](command-center/pivotal-commandcenter-performance.html)
 
   Basic instructions for installing and configuring Pivotal Command Center to monitor a running instance 
   of Pivotal HD.
