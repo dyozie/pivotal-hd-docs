@@ -44,7 +44,7 @@ Pivotal HD mandates using Hive Metastore backed by a DB Server.
 
 **Parameters overridden by GPHD**
 
-```xml
+```bash
 hive.metastore.warehouse.dir = /hive/gphd/warehouse
 
 hive.metastore.local = false
@@ -76,71 +76,72 @@ To set up the HIVE_METASTORE
 
 2. Login to the host as root.
 
-```xml
-$> yum install mysql
+```bash
+	$> yum install mysql
 ```
-3.Download the mysql connector, untar, and copy the mysql-connector-java-*
-directory to the desired location.
+3. Download the mysql connector, untar, and copy the mysql-connector-java-*
+   directory to the desired location.
 
-The path of the mysql-connector-java*.jar file is required during Hive installation.
+   The path of the mysql-connector-java*.jar file is required during Hive installation.
 
-```xml
-$> curl -L
-'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connect
-or-java-5.1.22.tar.gz/from/http://cdn.mysql.com' | tar zx
+```bash
+	$> curl -L
+	'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connect
+	or-java-5.1.22.tar.gz/from/http://cdn.mysql.com' | tar zx
 ```
 
 ##To set up MySQL Server
 
-1. Choose the mysql server node for the Hive metadata database.
+**1.** Choose the mysql server node for the Hive metadata database.
 
-2. Login as root to the node to install mysql DBMS.
+**2.** Login as root to the node to install mysql DBMS.
 
-```xml
-$> yum install mysql
-$> yum install mysql-server
+```bash
+	$> yum install mysql
+	$> yum install mysql-server
 
 ```
-3. Go to the mysql command prompt.
+**3.** Go to the mysql command prompt.
 
-4. Press **Enter** after the following command if you do not want to set a password.
+**4.** Press **Enter** after the following command if you do not want to set a password.
 
-```xml
-$> mysql -p
+```bash
+	$> mysql -p
 
 ```
 In the mysql prompt, run the following commands.
 Run the hostname command on the host to find the fully
 qualified hostname (FQDN) for the host.
 
-```xml
-MySql> CREATE USER 'hive'@'<Enter current hostname here>'
-IDENTIFIED BY 'hive';
-MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY
-'hive';
-MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'<Enter Hive
-Metastore hostname here>' IDENTIFIED BY 'hive';
+```bash
+	MySql> CREATE USER 'hive'@'<Enter current hostname here>'
+	IDENTIFIED BY 'hive';
+	MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY
+	'hive';
+	MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'<Enter Hive
+	Metastore hostname here>' IDENTIFIED BY 'hive';
 
 ```
 
 ##To complete Hive post-installation
 
-1. Login to one of the cluster nodes as root.
+**1.** Login to one of the cluster nodes as root.
 
-2. Create hive.warehouse.dir
-```xml
-$> sudo -u hdfs hadoop fs -mkdir /hive/gphd/warehouse
+**2.** Create hive.warehouse.dir
+```bash
+	$> sudo -u hdfs hadoop fs -mkdir /hive/gphd/warehouse
 ```
-3.Set permissions for hive.warehouse.dir.
-```xml
-$> sudo -u hdfs hadoop fs -chmod 775 /hive/gphd/warehouse
+**3.** Set permissions for hive.warehouse.dir.
+
+```bash
+	$> sudo -u hdfs hadoop fs -chmod 775 /hive/gphd/warehouse
 
 ```
-4.Set the ownership for hive.warehouse.dir
+**4.** Set the ownership for hive.warehouse.dir
 
-```xml
-$> sudo -u hdfs hadoop fs -chown hadoop:hadoop
-/hive/gphd/warehouse
+```bash
+	$> sudo -u hdfs hadoop fs -chown hadoop:hadoop
+	/hive/gphd/warehouse
 
 ```
 
@@ -160,7 +161,7 @@ hive-site.xml (if you are user).
 
 **For example:**
 
-```xml
+```bash
 <property>
 <name>hive.metastore.sasl.enabled</name>
 <value>true</value>
@@ -196,7 +197,7 @@ more information, please refer to the Spring Data official page:
 Download and copy GPHD Tools Tarball to /home/gpadmin/. Make sure the tarball
 has read permission for user 'gpadmin'. To extract the GPHDTools tarball:
 
-```xml
+```bash
 
 [root@hdp2-w17 gpadmin]# chown gpadmin:gpadmin
 GPHDTools-1.0.0-31.tar.gz
@@ -226,7 +227,7 @@ spring-data-hadoop-1.0.1.RC1-3.noarch.rpm.md5
 
 To install Spring Data Hadoop through RPM:
 
-```xml
+```bash
 [gpadmin@hdp2-w17 rpm]$ pwd
 /home/gpadmin/GPHDTools-1.0.0-31/spring-data-hadoop/rpm
 [gpadmin@hdp2-w17 rpm]$ sudo rpm -ivh
@@ -293,7 +294,7 @@ hive-default.xml configuration file to true, as shown in the example below.
 Add the Kerberos principals and their locations to the hive-default.xml or
 hive-site.xml (if you are user). For example:
 
-```xml
+```bash
 <property>
 <name>hive.metastore.sasl.enabled</name>
 <value>true</value>
@@ -322,81 +323,84 @@ automatically with the correct host name.</description>
 
 Follow the steps below to install the Kerberos KDC Master:
 
-1.	Use NTP to synchronize the time across all nodes.
+**1** Use NTP to synchronize the time across all nodes.
 	It is important to synchronize the time of the Kerberos server across all clients. If the
 	time difference between the Kerberos server and a client is big enough (configurable,
 	5 minutes is the default), authentication fails.
-2. 	Download the krb5-libs, krb5-server, and krb5-workstation packages from
+
+**2.**  	Download the krb5-libs, krb5-server, and krb5-workstation packages from
   	Kerberos.
-3. 	Install the packages on the Kerberos Master server in CentOS/RHEL
+
+**3.**  	Install the packages on the Kerberos Master server in CentOS/RHEL
   	environments.
-4. 	Run the following command:
 
-	```xml
+**4.** 	Run the following command:
+
+```bash
 	yum install <package>
-	```
+```
 
-5. 	Edit the */etc/krb5.conf* and */var/kerberos/krb5kdc/kdc.conf*
+**5.** 	Edit the */etc/krb5.conf* and */var/kerberos/krb5kdc/kdc.conf*
 	configuration files to reflect the realm name and domain-to-realm mappings.
 
 **Sample /etc/krb5.conf**
 
-```xml
-[logging]
-default = FILE:/var/log/krb5libs.log
-kdc = FILE:/var/log/krb5kdc.log
-admin_server = FILE:/var/log/kadmind.log
-[libdefaults]
-default_realm = HD.GREENPLUM.COM
-dns_lookup_realm = false
-dns_lookup_kdc = false
-ticket_lifetime = 24h
-forwardable = yes
-udp_preference_limit = 1
-default_tgs_enctypes = des3-hmac-sha1
-default_tkt_enctypes = des3-hmac-sha1
-permitted_enctypes = des3-hmac-sha1
-[realms]
-HD.GREENPLUM.COM = {
-kdc = myhost.mydomain:88
-admin_server = myhost.mydomain:749
-default_domain = mydomain }
-[domain_realm]
-.mydomain = HD.MYCOMPANY.COM
-mydomain = HD.MYCOMPANY.COM
-[appdefaults]
-pam = {
-debug = false
-ticket_lifetime = 36000
-renew_lifetime = 36000
-forwardable = true
-krb4_convert = false
-}	
+```bash
+	[logging]
+	default = FILE:/var/log/krb5libs.log
+	kdc = FILE:/var/log/krb5kdc.log
+	admin_server = FILE:/var/log/kadmind.log
+	[libdefaults]
+	default_realm = HD.GREENPLUM.COM
+	dns_lookup_realm = false
+	dns_lookup_kdc = false
+	ticket_lifetime = 24h
+	forwardable = yes
+	udp_preference_limit = 1
+	default_tgs_enctypes = des3-hmac-sha1
+	default_tkt_enctypes = des3-hmac-sha1
+		permitted_enctypes = des3-hmac-sha1
+	[realms]
+	HD.GREENPLUM.COM = {
+	kdc = myhost.mydomain:88
+	admin_server = myhost.mydomain:749
+	default_domain = mydomain }
+	[domain_realm]
+	.mydomain = HD.MYCOMPANY.COM
+	mydomain = HD.MYCOMPANY.COM
+	[appdefaults]
+	pam = {
+	debug = false
+	ticket_lifetime = 36000
+	renew_lifetime = 36000
+	forwardable = true
+	krb4_convert = false
+	}	
 ```
 **Sample /var/kerberos/krb5kdc/kdc.conf**
 
-```xml
-[kdcdefaults]
-v4_mode = nopreauth
-kdc_tcp_ports = 88
-[realms]
-HD.GREENPLUM.COM = {
-master_key_type = des3-hmac-sha1
-acl_file = /var/kerberos/krb5kdc/kadm5.acl
-dict_file = /usr/share/dict/words
-admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
-supported_enctypes =
-aes256-cts:normal aes128cts:normal
-des3-hmac-sha1:normal arcfour-hmac:normal
-des-hmac-sha1:normal des-cbc-md5:normal
-des-cbc-crc:normal des-cbc-crc:v4
-des-cbc-crc:afs3 }
+```bash
+	[kdcdefaults]
+	v4_mode = nopreauth
+	kdc_tcp_ports = 88
+	[realms]
+	HD.GREENPLUM.COM = {
+	master_key_type = des3-hmac-sha1
+	acl_file = /var/kerberos/krb5kdc/kadm5.acl
+	dict_file = /usr/share/dict/words
+	admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+	supported_enctypes =
+	aes256-cts:normal aes128cts:normal
+	des3-hmac-sha1:normal arcfour-hmac:normal
+	des-hmac-sha1:normal des-cbc-md5:normal
+	des-cbc-crc:normal des-cbc-crc:v4
+	des-cbc-crc:afs3 }
 ```
 
 **6.** 	Use the command line kdb5 utility to create the KDC database, as follows:
 
-```xml
-/user/kerberos/sbin/kdb5_util create \-s
+```bash
+	/user/kerberos/sbin/kdb5_util create \-s
 ```
 
 The create command creates the database to store keys for the Kerberos realm that is
@@ -409,8 +413,8 @@ every time the KDC server starts it asks for a password.
 
 **For example:**
 
-```xml
-kdcadmin/admin@HD.MYCOMPANY.COM
+```bash
+	kdcadmin/admin@HD.MYCOMPANY.COM
 ```
 
 	**Note:**Most users do not need administrative access to the KDC server. They can use
@@ -423,42 +427,43 @@ kdcadmin/admin@HD.MYCOMPANY.COM
 	authentication. To add the administrative user to the KDC database, run the following
 	command.
 
-	```xml
+	```bash
 	/usr/kerberos/sbin/kadmin.local \-q "addprinc
 	adminusername/admin"
 	```
 **8.** 	Start the Kerberos daemons using following commands:
 
-```xml
-/sbin/service krb5kdc start
-/sbin/service kadmin start
-/sbin/service krb524 start
-If you want to start Kerberos automatically upon restart, run the following commands:
-/sbin/chkconfig krb5kdc on
-/sbin/chkconfig kadmin on
-/sbin/chkconfig krb524 on
+```bash
+	/sbin/service krb5kdc start
+	/sbin/service kadmin start
+	/sbin/service krb524 start
+	If you want to start Kerberos automatically upon restart, run the following commands:
+	/sbin/chkconfig krb5kdc on
+	/sbin/chkconfig kadmin on
+	/sbin/chkconfig krb524 on
 ```
 **9.** 	Verify that your Kerberos installation is running correctly:
 
 **a.**  Run the kinit command to obtain a ticket and store it in the cache:
 
-```xml
-[hadoop@myhost ~]$ kinit
-Password for hadoop@HD.MYCOMPANY.COM
+```bash
+	[hadoop@myhost ~]$ kinit
+	Password for hadoop@HD.MYCOMPANY.COM
 
 ```
 **b.**Run the klist command to check the token issued:
-```xml
-[hadoop@myhost ~]$ klist
-Ticket cache: FILE:/tmp/krb5cc_500
-Default principal: hadoop@HD.MYCOMPANY.COM
-Valid starting
-Expires
-Service principal
-10/16/11 22:43:34 10/17/11 22:43:34
-krbtgt/HD.MYCOMPANY.COM@HD.MYCOMPANY.COM
-Kerberos 4 ticket cache: /tmp/tkt500
-klist: You have no tickets cached
+
+```bash
+	[hadoop@myhost ~]$ klist
+	Ticket cache: FILE:/tmp/krb5cc_500
+	Default principal: hadoop@HD.MYCOMPANY.COM
+	Valid starting
+	Expires
+	Service principal
+	10/16/11 22:43:34 10/17/11 22:43:34
+	krbtgt/HD.MYCOMPANY.COM@HD.MYCOMPANY.COM
+	Kerberos 4 ticket cache: /tmp/tkt500
+	klist: You have no tickets cached
 
 ```
 ##Vaidya
@@ -516,7 +521,7 @@ corresponding java class itself, but you can override it by specifying it in the
 description.
 
 ##Diagnostic Rule Test
-```xml
+```bash
 
 <DiagnosticTest>
 <Title>Balanaced Reduce Partitioning</Title>
@@ -542,7 +547,7 @@ tasks is balanced
 * Use the appropriate partitioning function
 
 * For streaming job consider following partitioner and
-hadoop config parameters
+  hadoop config parameters
 
 * org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
 
@@ -562,7 +567,7 @@ importance.
 
 ##Test Report Element in the diagnostic report
 
-```xml
+```bash
 <TestReportElement>
 <TestTitle>Balanaced Reduce Partitioning</TestTitle>
 <TestDescription>
@@ -574,8 +579,10 @@ is balanced
 <TestSeverity>0.69</TestSeverity>
 <ReferenceDetails>
 * TotalReduceTasks: 4096
+
 * BusyReduceTasks processing 0.85% of total records:
 3373
+
 * Impact: 0.70
 ```
 

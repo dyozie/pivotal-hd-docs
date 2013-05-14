@@ -6,13 +6,16 @@ The following steps explain the workflow to set up all necessary prerequisites o
 Pivotal HD cluster nodes using GPHD Manager.
 
 **TIP:** It is handy to have a hostfile with newline separated hostnames ready. This will
-         be used as input in many GPHD Manager commands. For a large number of hosts, a
-         simple script like the one shown below can be used:
+be used as input in many GPHD Manager commands. For a large number of hosts, a
+simple script like the one shown below can be used:
 
-```xml
-for i in `seq \-w 0100 0800`; do sudo sh \-c "echo \"node$i\" >>
-HostFile.txt"; done
-```
+
+<pre>
+for i in `seq \-w 0100 0800\`
+do 
+   sudo sh \-c "echo \"node$i\" >> HostFile.txt"
+done
+</pre>
 
 
 ##Step 1: Create User gpadmin
@@ -27,7 +30,7 @@ user "gpadmin", please enter a non-empty password.
 
 **Important:** Do not include the Admin node in the hostfile.
 
-```xml
+```bash
 
 [root]# icm_client ad-user-gpadmin --help
 Usage: icm_client [options]
@@ -41,7 +44,7 @@ separated) where the user gpadmin needs to be created
 ```
 ##Example:
 
-```xml
+```bash
 [root]# icm_client add-user-gpadmin -f ./HostFile.txt
 
 ```
@@ -70,7 +73,7 @@ The preparehosts command will ensure that all the above prerequisites are satisf
 
 **Important:** Do not include the Admin node in the hostfile.
 
-```xml
+```bash
 
 [gpadmin]# icm_client preparehosts --help
 Usage: icm_client [options]
@@ -99,7 +102,7 @@ disable SELinux
 
 **Example:**
 
-```xml
+```bash
 [gpadmin]# icm_client -preparehosts --hostfile=./HostFile.txt
 --ssh --java=./jdk-6u43-linux-x64-rpm.bin
 
@@ -112,7 +115,7 @@ Run the following command on the Pivotal HD Admin Node as user "gpadmin".
 **Note:** massh is an open source parallel SSH utility that is shipped along with the PHD
 tarball. More details about massh can be found at:
 
-```xml
+```bash
 
 http://m.a.tt/er/massh/
 [gpadmin]# massh ./HostFile.txt verbose "sudo yum install ruby
@@ -135,7 +138,7 @@ standby master and segment nodes).
 **Important:** This command edits limits.conf and sysctl.conf. We recommend you
 review these configurations before you run the command.
 
-```xml
+```bash
 [gpadmin]# icm_client prepare-hawq-hosts
 -h
 Usage: icm_client [options]
@@ -167,7 +170,7 @@ scanhosts verifies if all cluster nodes' prerequisites have been met. This is a 
 indicator if cluster deployments will go through smoothly on the nodes. As its output,
 it provides a detailed report of missing prerequisites.
 
-```xml
+```bash
 
 [gpadmin]# icm_client scanhosts --help
 Usage: /usr/bin/icm_client scanhosts [options]
@@ -184,7 +187,7 @@ Example:
 [gpadmin]# icm_client scanhosts -f ./HostFile.txt
 ```
 The following log files can be inspected for troubleshooting:
-```xml
+```bash
 On Admin
 /var/log/gphd/gphdmgr/ScanCluster.log
 On Cluster Nodes

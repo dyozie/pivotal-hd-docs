@@ -99,7 +99,7 @@ again.
  To convert maven hadoop mapreduce version 1.x project to version 2.x then add the following dependencies to your pom.xml and 
 remove all the 1.x dependencies .
 
-```xml
+```bash
 <dependency>
        <groupId>org.apache.hadoop</groupId>
        <artifactId>hadoop-client</artifactId>

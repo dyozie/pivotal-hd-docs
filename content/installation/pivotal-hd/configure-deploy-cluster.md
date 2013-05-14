@@ -12,7 +12,7 @@ certain default parameters and some placeholders which need to be filled up. Thi
 directory contains files which describe the topology of the cluster along with
 configurations for various services that will be installed on the cluster.
 
-```xml
+```bash
 [gpadmin]# icm_client fetch-template --help
 Usage: /usr/bin/icm_client fetch-template [options]
 Options:
@@ -26,7 +26,7 @@ template files
 
 ##Example:
 
-```xml
+```bash
 [gpadmin]# icm_client fetch-template -o ~/ClusterConfigDir
 
 ```
@@ -36,7 +36,7 @@ template files
 
 The directory structure of the cluster configuration templates is structured as follows:
 
-```xml
+```bash
 clusterConfig.xml
 hdfs
 ├── core-site.xml
@@ -182,7 +182,7 @@ cluster.
 one deploy command at a time. Simultaneous deployments might result in
 deployment failure.
 
-```xml
+```bash
 
  icm_client deploy --help
 Usage: /usr/bin/icm_client deploy [options]
@@ -196,7 +196,7 @@ configuration is stored
 
 **Example:**
 
-```xml
+```bash
 icm_client deploy -c ~/ClusterConfigDir
 ```
 **On Admin**
@@ -222,7 +222,7 @@ Segment Nodes.
 
 **Important: Execute the following commands from the HAWQ Master.** The hostfile only needs to contain the HAWQ Segment Nodes.
 
-```xml
+```bash
 [gpadmin]# source /usr/local/hawq/greenplum_path.sh
 [gpadmin]# /usr/local/hawq/bin/gpssh-exkeys -f ./HAWQ_Hosts.txt
 ```

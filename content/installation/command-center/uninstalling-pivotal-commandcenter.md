@@ -13,10 +13,10 @@ title: Uninstalling Pivotal Command Center
 3.	From the directory where you untarred the Pivotal Command Center, run the
   	uninstall script:
 
-```xml
+```bash
 
-# cd /root/phd/GPCC-2.0.0.version/
-# ./uninstall
+	# cd /root/phd/GPCC-2.0.0.version/
+	# ./uninstall
 
 ```
 

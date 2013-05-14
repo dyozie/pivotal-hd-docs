@@ -40,12 +40,18 @@ for the deployment of Hadoop service components.
 ##Features supported by GPHD Manager Version 2.0.0
 
 * Ability to scan the cluster nodes to check the pre-requisites for the cluster nodes
+
 * Helper commands to prepare the cluster nodes with required configuration before
    cluster deployment
+
 * Ability to install and Configure supported Pivotal HD cluster services using CLI
+
 * Ability to Reconfigure cluster services using CLI
+
 * Ability to Start/Stop cluster services
+
 * Ability to Monitor the Pivotal HD Services through GPCC UI
+
 * Multi-cluster support
 
 ##Hadoop Services supported by GPHD Manager Version 1.0.0

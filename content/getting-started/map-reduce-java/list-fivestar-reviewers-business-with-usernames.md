@@ -8,9 +8,7 @@ title: List Five star reviewers for a Business with user names
 * Level: Advanced
 
 ##Use case
-The tutorial uses distributed cache provided by MapReduce to cache the files required for applications. The MapReduce Framework copies the files to the slave nodes before any task is executed.
-Using distributed cache is also called as Replication Join. The data set is cached and used in Mapper or Reducer.
-Generally this type if join is useful in smaller datasets and should not be used for large data sets.
+The goal of the tutorial is to find out list of all users with their names who has rated a business as five star.
 
 ##Pre-requisites
 * Pivotal Command Center 2.0 deployed
@@ -18,7 +16,20 @@ Generally this type if join is useful in smaller datasets and should not be used
 * [Development Environment setup](../setting-development.html)
 
 ##Approach
-In this tutorial, the following important concepts are demonstrated:
+In the [previous](list-fivestar-reviewers-business.html) tutorial, we have joined business and reviews data set to find out the list of reviwers(users) for a business. The user list has the userid's rather than user names. It will be good to see the user name list rather the 
+userid's. Inorder to get the usernames, we have to process the other data set `users.json` which has both the userid and username.
+
+The tutorial uses [Distributed Cache](http://hadoop.apache.org/docs/current/api/org/apache/hadoop/filecache/DistributedCache.html) provided by MapReduce. The simplest way to use Distributed Cache is to pass the list of files as an argument to hadoop using `-files` option.
+The MapReduce Framework copies the files to the slave nodes before any task is executed. The cached files can be read in map or reduce tasks based on requirement. 
+
+The following are the steps to use Distributed Cache:
+
+* Understand the data set that is required to be copied. Generally this is smallest of the datasets. It is also good if the data set can be filtered to reduce further.
+* Copy the files to Distributed Cache using `-files` option
+* Get the files from the Distributed Cache in the map or reduce tasks
+* Read the cached file into memory for use in the Mapper
+
+The following important concepts are demonstrated:
 
 * Reduce side Join, joined by a common key across the datasets
 * Multiple data sets, processed by individual mappers
@@ -105,7 +116,7 @@ In this tutorial we will change the review mapper to use [Distributed Cache](htt
 
 ###Step 4: Preparing the user names
 
-The following code parses the `users.json` and creates a file `usernames.txt` in the `cache` folder.
+The following code parses the `users.json` and creates a file `usernames.txt` in the local folder `files`.
 
 ```java
 public class UserJSONParserUtil {
@@ -197,7 +208,7 @@ The  `UserJSONParserUtil` class reads the `user.json` using the JSON Parser and 
 Use eclipse to run the above program by passing the following arguments.
 
 ```java
-input/user.json cache/usernames.txt
+input/user.json files/usernames.txt
 ```
 
 output:
@@ -228,7 +239,7 @@ protected void setup(Context context) throws IOException,
 }
 ```
 
-The `DistributedCache.getCacheFiles()` returns all the files in the cache. The `FileUtils class` reads the file and returns the Map with key as `userid` and value as `username`.
+The `DistributedCache.getCacheFiles()` returns all the files in the cache. Since we have only one file, we will get the first file in the acache. The `FileUtils class` reads the file and returns the Map with key as `userid` and value as `username`.
 
 The code `FileUtils` is shown below:
 
@@ -337,7 +348,7 @@ userCache = FileUtils.readFile(files[0].getPath(),
 
 with
 ```java
-userCache = FileUtils.readFile("cache/usernames.txt",context.getConfiguration());
+userCache = FileUtils.readFile("files/usernames.txt",context.getConfiguration());
 ```
 
 ###Step 7: Running the tutorial in command line
@@ -399,7 +410,7 @@ hadoop fs -put input/review.json /user/gpadmin/sample4/input
 ####Submit the job
 
 ```bash
-hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files cache/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
+hadoop jar target/list_fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver  -libjars target/json-simple-1.1.jar -files files/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
 ```
 
 ####Check the output
@@ -421,7 +432,7 @@ Execute the following commands on the development machine.
 
 ```bash
 cp $HOME/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar target/
-tar -zcvf sample4.tar.gz target/* input/* cache/*
+tar -zcvf sample4.tar.gz target/* input/* files/*
 scp sample4.tar.gz gpadmin@DATA_NODE:/home/gpadmin/sample4.tar.gz 
 ```
 Note: Replace the DATA_NODE with the hostname where one of the datanodes is running.
@@ -446,7 +457,7 @@ hadoop fs -put input/review.json /user/gpadmin/sample4/input
 ####Submit the Job
 
 ```bash
-hadoop jar target/list-fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver -libjars target/json-simple-1.1.jar -files cache/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
+hadoop jar target/list-fivestar-business-reviewers-with-username-0.0.1.jar com.pivotal.hadoop.review.business.UserNameListBusinessDriver -libjars target/json-simple-1.1.jar -files files/usernames.txt /user/gpadmin/sample4/input/business.json /user/gpadmin/sample4/input/review.json /user/gpadmin/sample4/output
 ```
 
 ####Check the output

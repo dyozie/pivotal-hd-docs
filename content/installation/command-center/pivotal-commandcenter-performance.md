@@ -25,7 +25,7 @@ Guide for details).
 The agents are deployed as services on each host, including on the Pivotal Command
 Center admin host. To stop or start the nmon service run the following as root:
 
-```xml
+```bash
 # service nmon stop
 # service nmon start
 
@@ -46,25 +46,27 @@ you want deployed on your cluster.
 
 Following are the steps to create a local yum repo:
 
-1.	Mount the RHEL/CentOS DVD on a machine that will act as the local yum repo
-2.	Install a webserver on that machine (e.g. httpd), making sure that HTTP traffic can
-  	reach this machine
-3.	Install the following packages on the machine:
+**1.**	Mount the RHEL/CentOS DVD on a machine that will act as the local yum repo
 
-	```xml
+**2.**	Install a webserver on that machine (e.g. httpd), making sure that HTTP traffic can
+  	reach this machine
+
+**3.**	Install the following packages on the machine:
+
+```bash
 	yum-utils
 	createrep
-	```
-4.	Go to the directory where the DVD is mounted and run the following command:
+```
+**4.**	Go to the directory where the DVD is mounted and run the following command:
 
-	```xml
+```bash
   	# createrepo .
-	```
-5.	Create a repo file on each host with a descriptive filename in the
+```
+**5.**	Create a repo file on each host with a descriptive filename in the
 	/etc/yum.repos.d/ directory of each host (for example, CentOS-6.1.repo)
 	with the following contents:
 
-	```xml
+```bash
 	[CentOS-6.1]
 	name=CentOS 6.1 local repo for OS RPMS
 	baseurl=http://172.254.51.221/centos/$releasever/os/
@@ -73,13 +75,12 @@ Following are the steps to create a local yum repo:
 	gpgcheck=1
 	gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
 	/RPM-GPG-KEY-CentOS-6
-	```
-6.	Validate that you can access the local yum repos by running the following
+```
+**6.**	Validate that you can access the local yum repos by running the following
 	command:
 
-```xml
-
-Yum list
+```bash
+	Yum list
 
 ```
 

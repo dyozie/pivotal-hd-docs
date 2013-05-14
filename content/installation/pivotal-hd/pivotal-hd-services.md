@@ -120,7 +120,7 @@ the **GPCC** Admin local repository. The cluster nodes, during deployment stage,
 the **RPMs** from the Admin Nodes local yum repository. You will need to run the
 import utility every time you wish to sync/import a new version of the package.
 
-```xml
+```bash
 [gpadmin]# icm_client import --help
 Usage: icm_client [options]
 Options:
@@ -134,26 +134,26 @@ the version of GPHD stack (1 or 2)
 
 **Important:** This step is mandatory.
 
-```xml
+```bash
 [gpadmin]# icm_client import -p <PATH TO EXTRACTED GPHD TAR
 BALL> -v <VERSION_NUMBER>
 ```
 **Example:**
 
-```xml
+```bash
 [gpadmin]# icm_client import -p GPHD-2.0.1-21/ -v 2.0
 ```
 ###Step 3. Enable HAWQ Service
 
 **Note:** Required only for HAWQ/GPXF
 
-```xml
+```bash
 [gpadmin]# icm_client import -p <PATH TO EXTRACTED GPADS TAR BALL> -v
 <VERSION_NUMBER>
 ```
 **Example:**
 
-```xml
+```bash
 [gpadmin]# icm_client import -p GPADS/ -v 2.0
 ```
 For more details and help with troubleshooting, refer to the log file located at:

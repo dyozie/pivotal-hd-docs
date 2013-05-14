@@ -24,13 +24,13 @@ Following are the steps to create a local yum repo:
 
 *  Install the following packages on the machine:
 
-```xml
+```bash
     yum-utils
     createrep
 ```
 *  Go to the directory where the DVD is mounted and run the following command:
 
-```xml
+```bash
    # createrepo .
 ```
 
@@ -38,7 +38,7 @@ Following are the steps to create a local yum repo:
   /etc/yum.repos.d/ directory of each host (for example, CentOS-6.1.repo)
   with the following contents:
 
-```xml
+```bash
 
   [CentOS-6.1]
   name=CentOS 6.1 local repo for OS RPMS
@@ -53,7 +53,7 @@ Following are the steps to create a local yum repo:
 * Validate that you can access the local yum repos by running the following
       command:
 
-```xml
+```bash
 
    Yum list
    Creating a YUM EPEL Repository

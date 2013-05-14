@@ -17,7 +17,7 @@ cluster nodes:
 # Create a newline separated file named 'hostfile' containing all the
 cluster hosts (do not include admin host here, hbase is optional) \\
 
-```xml
+```bash
 [gpadmin]\# massh hostfile verbose 'sudo service --status-all |
 egrep "hadoop | zookeeper | hbase"'
 ```
@@ -25,7 +25,7 @@ Below is an example to check the status of all datanodes in the cluster.
 # Create a newline separated file named 'hostfile' containing
 all the datanode belonging to the service role \\
 
-```xml
+```bash
 [gpadmin]\# massh hostfile verbose 'sudo service
 hadoop-hdfs-datanode status'
 ```
@@ -40,7 +40,7 @@ the service.
 
 **Important:** Map reduce jobs can be run from any of the datanodes/resource manager/historyserver. Once logged in to one of the above.
 
-```xml
+```bash
 #clear input directory, if any |
 hadoop fs -rmr /tmp/test_input
 #create input directory
@@ -67,9 +67,9 @@ following list of users (gpadmin, hdfs, mapred, hbase), note the following.
 
    For example if it is set to the default value /yarn/apps, do the following
 
-   ```xml
+```bash
     sudo -u hdfs hadoop fs -chmod 777 /yarn/apps
-   ```
+```
 * Ignore the Exception trace that comes up, as this is just a warning. This is a known
   apache hadoop issue.
 
@@ -78,7 +78,7 @@ following list of users (gpadmin, hdfs, mapred, hbase), note the following.
 
 **Important:** Use the HBase Master node to run HBase tests.
 
-```xml
+```bash
 [gpadmin]\# ./bin/hbase shell
 hbase(main):003:0> create 'test', 'cf'
 0 row(s) in 1.2200 seconds
@@ -107,7 +107,7 @@ hbase(main):013:0> drop 'test'
 
 **Important:** Use the HAWQ Master node to run HAWQ tests.
 
-```xml
+```bash
 [gpadmin]\# source /usr/local/hawq/greenplum_path.sh
 [gpadmin]\# psql \-p 8432
 psql (8.2.15)

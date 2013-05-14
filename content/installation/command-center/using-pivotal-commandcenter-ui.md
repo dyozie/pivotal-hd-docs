@@ -43,12 +43,12 @@ status of nodes:
 
 The URL to access Pivotal Command Center UI from a browser is
 
-```xml
+```bash
 http://CommandCenterHost:5000/login
 ```
 To change the default port (5000), update the port settings in the following file:
 
-```xml
+```bash
 /usr/local/greenplum-cc/config/app.yml
 ```
 
@@ -322,7 +322,7 @@ This screen displays all **active** queries running on the HAWQ cluster:
 
 In this release, this screen only displays **active** queries as can be seen when you run:
 
-```xml
+```bash
 SELECT * FROM pg_stat_activity;
 
 ```
@@ -343,7 +343,7 @@ configures both Pivotal Command Center and Pivotal HD Manager, and starts servic
 You must run the installation script from the directory where it is
 installed, for example: GPCC-2.0.0.version
 For example:
-```xml
+```bash
 # ls
 GPCC-2.0.0.version
 GPCC-2.0.0.version.build.os.x86_64.tar.gz
@@ -365,7 +365,7 @@ http://node0781.ic.analyticsworkbench.com:5000/status
  To stop or restart the Command Center services, run the following commands on the
 Pivotal Command Center admin host:
 
-```xml
+```bash
 $ service commander stop
 $ service commander start
 $ service commander restart
@@ -377,7 +377,7 @@ $ service commander restart
 Launch a browser and navigate to the host on which you installed Command Center.
 For example:
 
-```xml
+```bash
 http://CommandCenterHost:5000
 
 ```

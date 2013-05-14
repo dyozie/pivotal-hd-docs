@@ -14,24 +14,24 @@ Cluster Deployment Errors
 
 If you see a 500 Internal Server Error, check the following logs for details:
 
-```xml
+```bash
 /usr/lib/gphd/gphdmgr/apache-tomcat/logs/catalina.out/var/log/gphd/gphdmgr/gphd
 mgr-webservices.log
 
 ```
 If you see Puppet cert generation error, check
 
-```xml
+```bash
 /var/log/gphd/gphdmgr/gphdmgr-webservices.log
 ```
 If config properties are not making into the cluster nodes, check
 
-```xml
+```bash
 /var/log/gphd/gphdmgr/gphdmgr-webservices.log
 ```
 If you see GPHDClusterInstaller.py script execution error, check
 
-```xml
+```bash
 /var/log/gphd/gphdmgr/GPHDClusterInstaller_XXX.log
 
 ```
@@ -40,7 +40,7 @@ deployment fails during the puppet deploy stage.
 
 In general if something fails on the server side, look at the logs in this order:
 
-```xml
+```bash
 
 /usr/lib/gphd/gphdmgr/apache-tomcat/logs/catalina.out
 /var/log/gphd/gphdmgr/gphdmgr-webservices.log
@@ -69,7 +69,7 @@ If there are errors like **Unable to generate certificates** or **SSLv3 authenti
 
 Run the following commands.:
 
-```xml
+```bash
 # service commander stop
 # rm -rf /var/lib/puppet/ssl-icm/*
 # service puppetmaster start
@@ -112,7 +112,7 @@ The solution is to either ensure that the hostname() returns FQDN on the namenod
 host or change the "dfs.http.address" value to 0.0.0.0 in the hdfs-site.xml and restart
 namenode.
 
-```xml
+```bash
 <property>
 <name>dfs.http.address</name>
 <value>0.0.0.0:50070</value>
@@ -179,13 +179,13 @@ Here are a few workarounds:
 
 **For example:**
 
-```xml
+```bash
 export http_proxy=http://proxy:3333
 export no_proxy=local.domain ## this is the local domain for hadoop cluster
 ```
 *  Modify these files so gphd.repo gets pushed out with fqdn name instead of shortname: /etc/puppet/modules/yumrepo/templates/yumrepo.erb
 
-```xml
+```bash
 Change from:
 
 baseurl=http://< %= scope.lookupvar("params::config::admin_host") %>/<%=
@@ -204,13 +204,13 @@ scope.lookupvar("params::config::repopath") %>
 
 * Mount the nfs repo on all cluster nodes.
 
-```xml
+```bash
 mount gpcc:/usr/lib/gphd/rpms /local_repo
 ```
 
 * Modify these files: /etc/puppet/modules/yumrepo/templates/yumrepo.erb
 
-```xml
+```bash
 Change from:
 
 baseurl=http://<%= scope.lookupvar("params::config::admin_host") %>/< %=
@@ -234,13 +234,13 @@ in lowercase before proceeding with the deployment.
 
 If you happen to face a postgres port conflict do the following:
 
-```xml
+```bash
 [root]# service commander stop
 ```
 
 Add the new port localhost:5435 in the gphdmgr properties file
 
-```xml
+```bash
 
 vim /etc/gphd/gphdmgr/conf/gphdmgr.properties
 "icm_db_url = jdbc:postgresql://localhost:5435/gphdmgr"
@@ -259,7 +259,7 @@ vim /etc/init.d/postgresql
 
 If an HTTP port conflict occurs do the following:
 
-```xml
+```bash
 
 [root]# service commander stop
 # Change the port in the tomcat server.xml file
@@ -305,7 +305,7 @@ HAWQ requires updating two non standard properties. In order to use them in GPHD
 Manager you will need to add those properties to the GPHD Manager's property data
 store as shown below.
 
-```xml
+```bash
 
 # On the Admin Node
 [gpadmin]# psql gphdmgr postgres
@@ -329,7 +329,7 @@ gphdmgr=# \q
 Add the following properties to your cluster configuration prior to deploying the
 cluster.
 
-```xml
+```bash
 # Add to hdfs/core-site.xml <property>
 <name>ipc.client.connection.maxidletime</name>
 <value>3600000</value> </property>
@@ -354,7 +354,7 @@ Change the following property in **`/etc/gphd/hadoop/conf/mapred-site.xml`** in 
 
 **from**
  
-```xml
+```bash
 <property>
       <name>
              mapreduce.task.io.sort.mb
@@ -365,7 +365,7 @@ Change the following property in **`/etc/gphd/hadoop/conf/mapred-site.xml`** in 
 </property>
 ```
 **to**
-```xml
+```bash
 <property>
       <name>
              mapreduce.task.io.sort.mb
@@ -378,7 +378,7 @@ Change the following property in **`/etc/gphd/hadoop/conf/mapred-site.xml`** in 
 
 If you really need 512 MB for the buffer, you must increase the heap size for Map and Reduce tasks. Change the heapsize to 2048m for map and reduce tasks in **`/etc/gphd/hadoop/conf/mapred-site.xml`** 
 
-```xml
+```bash
 <property>
       <name>
              mapreduce.map.java.opts
@@ -402,7 +402,7 @@ If you really need 512 MB for the buffer, you must increase the heap size for Ma
 Ideally it is better to change at the command center ClusterConfig directory and 
 issue the following command from the command center.
 
-```xml
+```bash
 gpadmin#icm_client reconfigure -l test -c ClusterconfigDir
 ```
 
@@ -412,7 +412,7 @@ Hbase Master starts and then exits with an error message saying Invalid permissi
 
 Change the following property in **hbase-site.xml**
 
-```xml
+```bash
 <property>
 	<name>
 		dfs.datanode.data.dir.perm

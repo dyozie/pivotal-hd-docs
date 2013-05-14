@@ -35,7 +35,7 @@ deploying a cluster to check the prerequisite status of each node.
 **HTTP Request Header:** Content-type: application/json
 Sample URL: curl -X POST -d @inputfile
 
-```xml
+```bash
 http://localhost:8080/gphdmgr/v1/scanhosts --header "Content-Type:application/json"
 Input (sample inputfile):
 {
@@ -109,14 +109,14 @@ application/json
 
 **Sample URL:**
 
-```xml
+```bash
  curl -X GET "http://localhost:8080/gphdmgr/v1/stacks"
 Input:
 Success:
 200OK
 ```
 
-```xml
+```bash
 \[
 {
 "name": "gphd",
@@ -225,12 +225,12 @@ Unknown errors:
 
 **Sample URL:**
 
-```xml
+```bash
 curl -X GET "http://localhost:8080/gphdmgr/v1/clusters
 Success:
 200 OK
 ```
-```xml
+```bash
 [
 {
 "cfgVersion": 1,
@@ -287,13 +287,13 @@ Unknown errors:
 
 **Sample URL:**
 
-```xml
+```bash
  curl -X GET "http://localhost:8080/gphdmgr/v1/clusters/1
 Success:
 200 OK
 ```
 
-```xml
+```bash
 [
 {
 "cfgVersion": 1,
@@ -380,13 +380,13 @@ Unknown errors:
 
 **Sample URL:**
 
-```xml
+```bash
  curl -X GET
 "http://localhost:8080/gphdmgr/v1/configurations/default/2.0" Input:
 Success:
 200 OK
 ```
-```xml
+```bash
 {
 "clusterConfigFiles": [
 {
@@ -451,11 +451,11 @@ Unknown errors:
 
 **Sample URL:** 
 
-```xml
+```bash
 curl -X POST -d
 @inputfile http://localhost:8080/gphdmgr/v1/clusters&nbsp;--header
 ```
-```xml
+```bash
  "Content-Type:application/json"Input (Sample inputfile) :
 
 {
@@ -513,13 +513,13 @@ Unknown errors:
 application/json
 
 **Sample URL:**
-```xml
+```bash
  curl -X GET
 "http://localhost:8080/gphdmgr/v1/cluster/test/start?force=1"
 Success:
 200 OK
 ```
-```xml
+```bash
 Cluster Start Complete
 
 No results:
@@ -545,14 +545,14 @@ Unknown errors:
 
 **Sample URL:**
 
-```xml
+```bash
  curl -X GET
 "http://localhost:8080/gphdmgr/v1/cluster/test/start?force=1"
 
 Success:
 200 OK
 ```
-```xml
+```bash
 Cluster Start Complete
 
 No results:
@@ -581,12 +581,12 @@ Unknown errors:
 
 **Sample URL:** 
 
-```xml
+```bash
 curl -X DELETE "http://localhost:8080/gphdmgr/v1/clusters/1" Input:
 Success:
 200 OK
 ```
-```xml
+```bash
 Uninstall complete
 
 No results:
@@ -615,13 +615,13 @@ Unknown errors:
 
 **Sample URL:**
 
-```xml
+```bash
  curl -X GET
 "http://localhost:8080/gphdmgr/v1/clusters/2/status" Input:
 Success:
 200 OK
 ```
-```xml
+```bash
 [
 {
 "clusterId": 2,

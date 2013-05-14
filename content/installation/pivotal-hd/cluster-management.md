@@ -29,7 +29,7 @@ The start option lets the user start all configured services of the cluster.
 
 **Important:** --services option has known issues. Please refrain from using it
 
-```xml
+```bash
 [gpadmin]#./icm_client start -h
 Usage: ./icm_client start [options]
 Options:
@@ -77,7 +77,7 @@ backup or wipe out all the data prior to Starting the new cluster.
 
 The stop option lets the user stop an entire cluster or a single service.
 
-```xml
+```bash
 [gpadmin]#./icm_client stop -h
 Usage: ./icm_client stop [options]
 Usage: ./icm_client stop [options]
@@ -109,7 +109,7 @@ These need to be initiated directly on the HAWQ Master.
 Hawq initialize is a **one time operation** that needs to be done only after the cluster is
 started (specifically after hdfs is up and running).
 
-```xml
+```bash
 [gpadmin]#./etc/init.d/hawq init
 ```
 As part of this step, the following occurs:
@@ -125,7 +125,7 @@ As part of this step, the following occurs:
 
 This operation starts the HAWQ Master and all the segments hosts along with the
 postgres database on the HAWQ Master.
-```xml
+```bash
 [gpadmin]#./etc/init.d/hawq start
 ```
 ##Stopping HAWQ
@@ -133,7 +133,7 @@ postgres database on the HAWQ Master.
 This operation stops the HAWQ Master and all the segments hosts along with the
 postgres database on the HAWQ Master.
 
-```xml
+```bash
 
 [gpadmin]#./etc/init.d/hawq stop
 ```
@@ -147,23 +147,25 @@ Since the Admin host is not part of the HAWQ cluster, you will need to
 manually give the Admin host the ability to remote query to HAWQ. This is
 done by modifying the pg_hba.conf file in the HAWQ Master.
 
-1.	Logon to the HAWQ Master as user ‘gpadmin’
+**1.**	Logon to the HAWQ Master as user ‘gpadmin’
 
-2.	Update $MASTER_DATA_DIRECTORY/pg_hba.conf. Look for the following
+**2.**	Update $MASTER_DATA_DIRECTORY/pg_hba.conf. Look for the following
   	entry host all gpadmin <master_host_ip>/32 trust and change the subnet entry
  	depending on your network configuration host all gpadmin <master_host_ip>/24
 	trust
 
-3. 	Restart HAWQ
-	```xml
-	/etc/init.d/hawq restart
-	```
+**3.** 	Restart HAWQ
 
-4. 	You must test HAWQ from the Admin host by running the following command.
-	```xml
+```bash
+	/etc/init.d/hawq restart
+```
+
+**4.**	You must test HAWQ from the Admin host by running the following command.
+
+```bash
 	$ sudo -u gpadmin psql -h <HAWQ MASTER NODE> -p <HAWQ PORT> -U
 	gpadmin postgres -c "select * from pg_stat_activity;"
-	```
+```
 
 ##Reconfiguring a Cluster
 
@@ -195,7 +197,7 @@ cluster. Some of the cluster specific configs that can't be updated are:
 
 **Important:** No changes allowed to properties which are derived from the properties listed in the above table.
 
-```xml
+```bash
 #icm_client reconfigure -h
 Usage: ./icm_client reconfigure [options]
 Options:
@@ -217,16 +219,16 @@ The steps below describe how to reconfigure an existing cluster.
 
 4. 	Reconfigure the cluster.
 
-	```xml
+```bash
 	icm_client reconfigure -l CLUSTERNAME -c LOCALDIR.
-	```
+```
 
 ##Retrieving Configuration of a Deployed Cluster
 
 The fetch-configuration option allows the user to fetch the configurations for an
 existing cluster and store them in a local file-system directory.
 
-```xml
+```bash
 ./icm_client fetch-configuration -h
 Usage: ./icm_client fetch-configuration [options]
 Options:
@@ -247,7 +249,7 @@ icm_client fetch-configuration -l CLUSTERNAME -o LOCALDIR
 
 The list option lets the user see all the installed clusters.
 
-```xml
+```bash
 [gpadmin]# icm_client list --help
 Usage: /usr/bin/icm_client list [options]
 Options:
@@ -270,7 +272,7 @@ any running clusters.
 **Important:** Uninstall will not delete dfs.data.dir, dfs.name.dir, dfs.mapred.dir
 and dfs.checkpoint.dir directories. This is done intentionally to preserve user data.
 
-```xml
+```bash
 [gpadmin]#./icm_client uninstall -h
 Usage: ./icm_client uninstall [options]
 Options:
@@ -319,7 +321,7 @@ You have the following options based on your choice of operation:
 You can locally manage the service role on the target host. If you wish to restart a
 datanode say node100.
 
-```xml
+```bash
 [gpadmin]# ssh gpadmin@node100
 [gpadmin]# sudo service hadoop-hdfs-namenode restart
 ```
@@ -329,13 +331,13 @@ You can remotely manage the service role across one of more target hosts.
 
 If you wish to restart a datanode on say node100.
 
-```xml
+```bash
 [gpadmin]# massh node100 verbose 'sudo service hadoop-hdfs-datanode restart'
 ```
 If you wish to remotely restart all the datanodes create a newline separated file named
 'hostfile' containing all the datanode(s) you wish to start/stop/restart or check status.
 
-```xml
+```bash
 [gpadmin]# massh hostfile verbose 'sudo service
 hadoop-hdfs-datanode restart'
 ```
