@@ -25,13 +25,13 @@ Following are the steps to create a local yum repo:
 *  Install the following packages on the machine:
 
 ```bash
-    yum-utils
-    createrep
+yum-utils
+createrep
 ```
 *  Go to the directory where the DVD is mounted and run the following command:
 
 ```bash
-   # createrepo .
+# createrepo .
 ```
 
 * Create a repo file on each host with a descriptive filename in the
@@ -39,18 +39,18 @@ Following are the steps to create a local yum repo:
   with the following contents:
 
 ```xml
-  [CentOS-6.1]
-  name=CentOS 6.1 local repo for OS RPMS
-  baseurl=http://172.254.51.221/centos/$releasever/os/
-  $basearch/
-  enabled=1
-  gpgcheck=1
-  gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
-  /RPM-GPG-KEY-CentOS-6
+[CentOS-6.1]
+name=CentOS 6.1 local repo for OS RPMS
+baseurl=http://172.254.51.221/centos/$releasever/os/
+$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=http://172.254.51.221/centos/$releasever/os/$basearch
+/RPM-GPG-KEY-CentOS-6
 ```
 * Validate that you can access the local yum repos by running the following
       command:
 
 ```bash
-   Yum list
+Yum list
 ```

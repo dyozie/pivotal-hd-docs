@@ -68,7 +68,7 @@ following list of users (gpadmin, hdfs, mapred, hbase), note the following.
    For example if it is set to the default value /yarn/apps, do the following
 
 ```bash
-    sudo -u hdfs hadoop fs -chmod 777 /yarn/apps
+sudo -u hdfs hadoop fs -chmod 777 /yarn/apps
 ```
 * Ignore the Exception trace that comes up, as this is just a warning. This is a known
   apache hadoop issue.
@@ -104,7 +104,6 @@ hbase(main):013:0> drop 'test'
 ```
 ##HAWQ Test
 
-
 **Important:** Use the HAWQ Master node to run HAWQ tests.
 
 ```bash
@@ -116,15 +115,12 @@ gpadmin=# \d
 No relations found.
 gpadmin=# \l
 List of databases
-Name
-\|
-Owner
-\| Encoding \| Access privileges
-\--\--\--{}-\--\-\--\--+-\--\-----------\-
-gpadmin \| gpadmin \| UTF8 \|
-postgres \| gpadmin \| UTF8 \|
-template0 \| gpadmin \| UTF8 \|
-template1 \| gpadmin \| UTF8 \|
+Name | Owner | Encoding | Access privileges
+----\--\--{}-\--\-\--\--+-\--\-----------\-
+gpadmin | gpadmin | UTF8 |
+postgres | gpadmin | UTF8 |
+template0 | gpadmin | UTF8 |
+template1 | gpadmin | UTF8 |
 (4 rows)
 gpadmin=# \c gpadmin
 You are now connected to database "gpadmin" as user "gpadmin".
@@ -139,10 +135,9 @@ CREATE TABLE
 gpadmin=# insert into test values (1, '435252345');
 INSERT 0 1
 gpadmin=# select * from test;
-a \|
-b
-\--+-\--------\-
-1 \| 435252345
+a | b
+\--+-\--------\
+1 | 435252345
 (1 row)
 gpadmin=#
 ```
