@@ -113,11 +113,10 @@ disable SELinux
 Run the following command on the Pivotal HD Admin Node as user "gpadmin".
 
 **Note:** massh is an open source parallel SSH utility that is shipped along with the PHD
-tarball. More details about massh can be found at:
+tarball. More details about massh can be found at: [http://m.a.tt/er/massh/](http://m.a.tt/er/massh/)
 
 ```bash
 
-http://m.a.tt/er/massh/
 [gpadmin]# massh ./HostFile.txt verbose "sudo yum install ruby
 facter -y --disablerepo=* --enablerepo=gphd-admin-localrepo"
 
