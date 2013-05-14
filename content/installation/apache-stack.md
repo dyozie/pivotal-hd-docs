@@ -46,9 +46,7 @@ Pivotal HD mandates using Hive Metastore backed by a DB Server.
 
 ```bash
 hive.metastore.warehouse.dir = /hive/gphd/warehouse
-
 hive.metastore.local = false
-
 ```
 The following table describes the configuration parameters that you can modify for
 Hive.
@@ -77,7 +75,7 @@ To set up the HIVE_METASTORE
 2. Login to the host as root.
 
 ```bash
-	$> yum install mysql
+$> yum install mysql
 ```
 3. Download the mysql connector, untar, and copy the mysql-connector-java-*
    directory to the desired location.
@@ -85,9 +83,9 @@ To set up the HIVE_METASTORE
    The path of the mysql-connector-java*.jar file is required during Hive installation.
 
 ```bash
-	$> curl -L
-	'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connect
-	or-java-5.1.22.tar.gz/from/http://cdn.mysql.com' | tar zx
+$> curl -L
+'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connect
+or-java-5.1.22.tar.gz/from/http://cdn.mysql.com' | tar zx
 ```
 
 ##To set up MySQL Server
@@ -97,30 +95,27 @@ To set up the HIVE_METASTORE
 **2.** Login as root to the node to install mysql DBMS.
 
 ```bash
-	$> yum install mysql
-	$> yum install mysql-server
-
+$> yum install mysql
+$> yum install mysql-server
 ```
 **3.** Go to the mysql command prompt.
 
 **4.** Press **Enter** after the following command if you do not want to set a password.
 
 ```bash
-	$> mysql -p
-
+$> mysql -p
 ```
 In the mysql prompt, run the following commands.
 Run the hostname command on the host to find the fully
 qualified hostname (FQDN) for the host.
 
 ```bash
-	MySql> CREATE USER 'hive'@'<Enter current hostname here>'
-	IDENTIFIED BY 'hive';
-	MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY
-	'hive';
-	MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'<Enter Hive
-	Metastore hostname here>' IDENTIFIED BY 'hive';
-
+MySql> CREATE USER 'hive'@'<Enter current hostname here>'
+IDENTIFIED BY 'hive';
+MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%' IDENTIFIED BY
+'hive';
+MySql> GRANT ALL PRIVILEGES ON *.* TO 'hive'@'<Enter Hive
+Metastore hostname here>' IDENTIFIED BY 'hive';
 ```
 
 ##To complete Hive post-installation
@@ -129,22 +124,19 @@ qualified hostname (FQDN) for the host.
 
 **2.** Create hive.warehouse.dir
 ```bash
-	$> sudo -u hdfs hadoop fs -mkdir /hive/gphd/warehouse
+$> sudo -u hdfs hadoop fs -mkdir /hive/gphd/warehouse
 ```
 **3.** Set permissions for hive.warehouse.dir.
 
 ```bash
-	$> sudo -u hdfs hadoop fs -chmod 775 /hive/gphd/warehouse
-
+$> sudo -u hdfs hadoop fs -chmod 775 /hive/gphd/warehouse
 ```
 **4.** Set the ownership for hive.warehouse.dir
 
 ```bash
-	$> sudo -u hdfs hadoop fs -chown hadoop:hadoop
-	/hive/gphd/warehouse
-
+$> sudo -u hdfs hadoop fs -chown hadoop:hadoop
+/hive/gphd/warehouse
 ```
-
 ##Configuring a Secure Hive Cluster
 
 Follow the instructions below to configure Hive for a security-enabled HD cluster.
@@ -161,27 +153,21 @@ hive-site.xml (if you are user).
 
 **For example:**
 
-```bash
+```xml
 <property>
-<name>hive.metastore.sasl.enabled</name>
-<value>true</value>
-<description>If true, the metastore thrift interface will be
-secured with SASL. Clients must authenticate with
-Kerberos. </description>
+  <name>hive.metastore.sasl.enabled</name>
+  <value>true</value>
+  <description>If true, the metastore thrift interface will be secured with SASL. Clients must authenticate with Kerberos. </description>
 </property>
 <property>
-<name>hive.metastore.kerberos.keytab.file</name>
-<value>/etc/*****/hive.keytab</value>
-<description>The path to the Kerberos Keytab file containing
-the metastore thrift server's service
-principal. </description>
+  <name>hive.metastore.kerberos.keytab.file</name>
+  <value>/etc/*****/hive.keytab</value>
+  <description>The path to the Kerberos Keytab file containing the metastore thrift server's service principal. </description>
 </property>
 <property>
-<name>hive.metastore.kerberos.principal</name>
-<value>hive-metastore/_HOST@EXAMPLE.COM</value>
-<description>The service principal for the metastore thrift
-server. The special string _HOST will be replaced
-automatically with the correct host name.</description>
+  <name>hive.metastore.kerberos.principal</name>
+  <value>hive-metastore/_HOST@EXAMPLE.COM</value>
+  <description>The service principal for the metastore thrift server. The special string _HOST will be replaced automatically with the correct host name.</description>
 </property>
 ```
 
@@ -198,7 +184,6 @@ Download and copy GPHD Tools Tarball to /home/gpadmin/. Make sure the tarball
 has read permission for user 'gpadmin'. To extract the GPHDTools tarball:
 
 ```bash
-
 [root@hdp2-w17 gpadmin]# chown gpadmin:gpadmin
 GPHDTools-1.0.0-31.tar.gz
 [root@hdp2-w17 gpadmin]# ls -lrt GPHDTools-1.0.0-31.tar.gz
@@ -221,8 +206,8 @@ spring-data-hadoop-1.0.1.RC1-3.noarch.rpm
 -rw-rw-r-- 1 gpadmin gpadmin
 76 Mar 20 00:44
 spring-data-hadoop-1.0.1.RC1-3.noarch.rpm.md5
-
 ```
+
 ##Installing Spring Data Hadoop through RPM
 
 To install Spring Data Hadoop through RPM:
@@ -256,13 +241,9 @@ drwxr-xr-x 2 root root 4096 Mar 20 20:49 samples
 
 Note: Please refer to readme.txt and files within docs/ directory, to start using Spring Data
 Hadoop.
-
 ```
 
-##HVE
-
-
-##Hadoop Virtualization Extensions
+##Hadoop Virtualization Extensions(HVE)
 
 Hadoop Virtualization Extensions (HVE) allows Hadoop clusters implemented on
 virtualized infrastructure full awareness of the topology on which they are running,
@@ -294,7 +275,7 @@ hive-default.xml configuration file to true, as shown in the example below.
 Add the Kerberos principals and their locations to the hive-default.xml or
 hive-site.xml (if you are user). For example:
 
-```bash
+```xml
 <property>
 <name>hive.metastore.sasl.enabled</name>
 <value>true</value>
@@ -337,7 +318,7 @@ Follow the steps below to install the Kerberos KDC Master:
 **4.** 	Run the following command:
 
 ```bash
-	yum install <package>
+yum install <package>
 ```
 
 **5.** 	Edit the */etc/krb5.conf* and */var/kerberos/krb5kdc/kdc.conf*
@@ -345,62 +326,62 @@ Follow the steps below to install the Kerberos KDC Master:
 
 **Sample /etc/krb5.conf**
 
-```bash
-	[logging]
-	default = FILE:/var/log/krb5libs.log
-	kdc = FILE:/var/log/krb5kdc.log
-	admin_server = FILE:/var/log/kadmind.log
-	[libdefaults]
-	default_realm = HD.GREENPLUM.COM
-	dns_lookup_realm = false
-	dns_lookup_kdc = false
-	ticket_lifetime = 24h
-	forwardable = yes
-	udp_preference_limit = 1
-	default_tgs_enctypes = des3-hmac-sha1
-	default_tkt_enctypes = des3-hmac-sha1
-		permitted_enctypes = des3-hmac-sha1
-	[realms]
-	HD.GREENPLUM.COM = {
-	kdc = myhost.mydomain:88
-	admin_server = myhost.mydomain:749
-	default_domain = mydomain }
-	[domain_realm]
-	.mydomain = HD.MYCOMPANY.COM
-	mydomain = HD.MYCOMPANY.COM
-	[appdefaults]
-	pam = {
-	debug = false
-	ticket_lifetime = 36000
-	renew_lifetime = 36000
-	forwardable = true
-	krb4_convert = false
-	}	
+```xml
+[logging]
+default = FILE:/var/log/krb5libs.log
+kdc = FILE:/var/log/krb5kdc.log
+admin_server = FILE:/var/log/kadmind.log
+[libdefaults]
+default_realm = HD.GREENPLUM.COM
+dns_lookup_realm = false
+dns_lookup_kdc = false
+ticket_lifetime = 24h
+forwardable = yes
+udp_preference_limit = 1
+default_tgs_enctypes = des3-hmac-sha1
+default_tkt_enctypes = des3-hmac-sha1
+	permitted_enctypes = des3-hmac-sha1
+[realms]
+HD.GREENPLUM.COM = {
+kdc = myhost.mydomain:88
+admin_server = myhost.mydomain:749
+default_domain = mydomain }
+[domain_realm]
+.mydomain = HD.MYCOMPANY.COM
+mydomain = HD.MYCOMPANY.COM
+[appdefaults]
+pam = {
+debug = false
+ticket_lifetime = 36000
+renew_lifetime = 36000
+forwardable = true
+krb4_convert = false
+}	
 ```
 **Sample /var/kerberos/krb5kdc/kdc.conf**
 
-```bash
-	[kdcdefaults]
-	v4_mode = nopreauth
-	kdc_tcp_ports = 88
-	[realms]
-	HD.GREENPLUM.COM = {
-	master_key_type = des3-hmac-sha1
-	acl_file = /var/kerberos/krb5kdc/kadm5.acl
-	dict_file = /usr/share/dict/words
-	admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
-	supported_enctypes =
-	aes256-cts:normal aes128cts:normal
-	des3-hmac-sha1:normal arcfour-hmac:normal
-	des-hmac-sha1:normal des-cbc-md5:normal
-	des-cbc-crc:normal des-cbc-crc:v4
-	des-cbc-crc:afs3 }
+```xml
+[kdcdefaults]
+v4_mode = nopreauth
+kdc_tcp_ports = 88
+[realms]
+HD.GREENPLUM.COM = {
+master_key_type = des3-hmac-sha1
+acl_file = /var/kerberos/krb5kdc/kadm5.acl
+dict_file = /usr/share/dict/words
+admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+supported_enctypes =
+aes256-cts:normal aes128cts:normal
+des3-hmac-sha1:normal arcfour-hmac:normal
+des-hmac-sha1:normal des-cbc-md5:normal
+des-cbc-crc:normal des-cbc-crc:v4
+des-cbc-crc:afs3 }
 ```
 
 **6.** 	Use the command line kdb5 utility to create the KDC database, as follows:
 
 ```bash
-	/user/kerberos/sbin/kdb5_util create \-s
+/user/kerberos/sbin/kdb5_util create \-s
 ```
 
 The create command creates the database to store keys for the Kerberos realm that is
@@ -413,58 +394,58 @@ every time the KDC server starts it asks for a password.
 
 **For example:**
 
+```xml
+kdcadmin/admin@HD.MYCOMPANY.COM
+```
+**Note:**Most users do not need administrative access to the KDC server. They can use
+kadmin to manage their own principals (for example, to change their own password).
+
+**Note:**kadmin itself uses Kerberos to authenticate to the server, so before using
+kadmin, you need to add the administrative user to KDC database by running
+kadmin.local. kadmin.local is local to the server and does not use Kerberos
+authentication. To add the administrative user to the KDC database, run the following
+command.
+
 ```bash
-	kdcadmin/admin@HD.MYCOMPANY.COM
+/usr/kerberos/sbin/kadmin.local \-q "addprinc
+adminusername/admin"
 ```
 
-	**Note:**Most users do not need administrative access to the KDC server. They can use
-	kadmin to manage their own principals (for example, to change their own password).
-
-
-	**Note:**kadmin itself uses Kerberos to authenticate to the server, so before using
-	kadmin, you need to add the administrative user to KDC database by running
-	kadmin.local. kadmin.local is local to the server and does not use Kerberos
-	authentication. To add the administrative user to the KDC database, run the following
-	command.
-
-	```bash
-	/usr/kerberos/sbin/kadmin.local \-q "addprinc
-	adminusername/admin"
-	```
 **8.** 	Start the Kerberos daemons using following commands:
 
 ```bash
-	/sbin/service krb5kdc start
-	/sbin/service kadmin start
-	/sbin/service krb524 start
-	If you want to start Kerberos automatically upon restart, run the following commands:
-	/sbin/chkconfig krb5kdc on
-	/sbin/chkconfig kadmin on
-	/sbin/chkconfig krb524 on
+/sbin/service krb5kdc start
+/sbin/service kadmin start
+/sbin/service krb524 start
+```
+If you want to start Kerberos automatically upon restart, run the following commands:
+
+```bash
+/sbin/chkconfig krb5kdc on
+/sbin/chkconfig kadmin on
+/sbin/chkconfig krb524 on
 ```
 **9.** 	Verify that your Kerberos installation is running correctly:
 
 **a.**  Run the kinit command to obtain a ticket and store it in the cache:
 
 ```bash
-	[hadoop@myhost ~]$ kinit
-	Password for hadoop@HD.MYCOMPANY.COM
-
+[hadoop@myhost ~]$ kinit
+Password for hadoop@HD.MYCOMPANY.COM
 ```
 **b.**Run the klist command to check the token issued:
 
 ```bash
-	[hadoop@myhost ~]$ klist
-	Ticket cache: FILE:/tmp/krb5cc_500
-	Default principal: hadoop@HD.MYCOMPANY.COM
-	Valid starting
-	Expires
-	Service principal
-	10/16/11 22:43:34 10/17/11 22:43:34
-	krbtgt/HD.MYCOMPANY.COM@HD.MYCOMPANY.COM
-	Kerberos 4 ticket cache: /tmp/tkt500
-	klist: You have no tickets cached
-
+[hadoop@myhost ~]$ klist
+Ticket cache: FILE:/tmp/krb5cc_500
+Default principal: hadoop@HD.MYCOMPANY.COM
+Valid starting
+Expires
+Service principal
+10/16/11 22:43:34 10/17/11 22:43:34
+krbtgt/HD.MYCOMPANY.COM@HD.MYCOMPANY.COM
+Kerberos 4 ticket cache: /tmp/tkt500
+klist: You have no tickets cached
 ```
 ##Vaidya
 
@@ -521,42 +502,31 @@ corresponding java class itself, but you can override it by specifying it in the
 description.
 
 ##Diagnostic Rule Test
-```bash
 
+```xml
 <DiagnosticTest>
-<Title>Balanaced Reduce Partitioning</Title>
-<ClassName>
-org.apache.hadoop.vaidya.postexdiagnosis.tests.Balanc
-edReducePartitioning
-</ClassName>
-<Description>
-This rule tests as to how well the input to reduce
-tasks is balanced
-</Description>
-<Importance>High</Importance>
-<SuccessThreshold>0.40</SuccessThreshold>
-<Prescription>advice</Prescription>
-<InputElement>
-<PercentReduceRecords>0.85</PercentReduceRecords>
-</InputElement>
+    <Title>Balanaced Reduce Partitioning</Title>
+        <ClassName>
+            org.apache.hadoop.vaidya.postexdiagnosis.tests.BalancedReducePartitioning
+        </ClassName>
+    <Description>
+       This rule tests as to how well the input to reduce tasks is balanced
+    </Description>
+    <Importance>High</Importance>
+    <SuccessThreshold>0.40</SuccessThreshold>
+    <Prescription>advice</Prescription>
+    <InputElement>
+        <PercentReduceRecords>0.85</PercentReduceRecords>
+    </InputElement>
 </DiagnosticTest>
 </ReferenceDetails>
-<TestPrescription>
-
-
-* Use the appropriate partitioning function
-
-* For streaming job consider following partitioner and
-  hadoop config parameters
-
-* org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
-
-* -jobconf stream.map.output.field.separator,
-
--jobconf stream.num.map.output.key.fields
-</TestPrescription>
+    <TestPrescription>
+        * Use the appropriate partitioning function
+        * For streaming job consider following partitioner and hadoop config parameters
+        * org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+        * -jobconf stream.map.output.field.separator, -jobconf stream.num.map.output.key.fields
+    </TestPrescription>
 </TestReportElement>
-
 ```
 
 Vaidya tool returns a diagnostic report as an XML document with one report element
@@ -567,17 +537,16 @@ importance.
 
 ##Test Report Element in the diagnostic report
 
-```bash
+```xml
 <TestReportElement>
-<TestTitle>Balanaced Reduce Partitioning</TestTitle>
-<TestDescription>
-This rule tests as to how well the input to reduce tasks
-is balanced
-</TestDescription>
-<TestImportance>HIGH</TestImportance>
-<TestResult>POSITIVE(FAILED)</TestResult>
-<TestSeverity>0.69</TestSeverity>
-<ReferenceDetails>
+   <TestTitle>Balanaced Reduce Partitioning</TestTitle>
+   <TestDescription>
+      This rule tests as to how well the input to reduce tasks is balanced
+   </TestDescription>
+   <TestImportance>HIGH</TestImportance>
+   <TestResult>POSITIVE(FAILED)</TestResult>
+   <TestSeverity>0.69</TestSeverity>
+   <ReferenceDetails>
 * TotalReduceTasks: 4096
 
 * BusyReduceTasks processing 0.85% of total records:
