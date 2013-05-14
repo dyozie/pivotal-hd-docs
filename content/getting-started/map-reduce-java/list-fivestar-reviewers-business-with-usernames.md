@@ -46,7 +46,7 @@ Steps:
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://github.com:rajdeepd/pivotal-samples.git
+git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
