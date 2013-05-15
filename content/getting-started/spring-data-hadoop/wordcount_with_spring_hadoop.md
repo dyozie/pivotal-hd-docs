@@ -2,25 +2,24 @@
 title: Run wordcount example with Spring Hadoop
 ---
 
-##Run wordcount example with Spring Hadoop
-The tutorial demonstrates running the worcount example with Spring Hadoop
+##Run wordcount example with Spring Hadoop on Pivotal HD
+The tutorial demonstrates running the wordcount example with Spring Hadoop 1.0.0 RC1 on Pivotal HD 1.0
 
-* Approximate time: 30 Mins
+* Approximate time: 45 Mins
 * Level: Basic
 
 ##Use case
-Count the words in a directory or document
+Count the words in a directory or document.
 
 ##Pre-requisites
 * Pivotal Command Center 2.0 deployed
 * Pivotal HD deployed
-* [Development Environment setup](../setting-development.html)
 
 ##Approach
 Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
 With Spring Hadoop, the job creation is handled by Spring Hadoop. The jobs can be submitted with various configuration options without changing the code. 
 
-Designing and writing of Mapper and Reduce classes does not change with Hadoop. With Spring Batch, the job can be part of the chain of Jobs. The Spring Hadoop helps by providing a clean way of invoking MapReduce jobs without worrying about the complexity.
+Designing and writing of Mapper and Reducer classes does not change with Hadoop. With Spring Batch, the job can be part of chain of Jobs. The Spring Hadoop helps by providing a clean way of invoking MapReduce jobs without worrying about the complexity.
 
 *  Creating Application Context with Spring Hadoop
 *  Run the example
@@ -30,7 +29,7 @@ Designing and writing of Mapper and Reduce classes does not change with Hadoop. 
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://github.com/rajdeepd/pivotal-docs.git
+git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
