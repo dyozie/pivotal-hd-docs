@@ -270,7 +270,13 @@ hadoop jar target/count-city-fivestar-businesses-0.0.1.jar com.pivotal.hadoop.re
 
 ####Check the output
 
-Verify the job in the hadoop cluster.
+Verify the job in the hadoop cluster as shown below:
+
+![Job Command Center](/images/gs/mapreduce/sample2.png)
+
+Click View more job details to see the job details as shown below:
+
+![Job Details](/images/gs/mapreduce/sample2-details.png)
 
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
