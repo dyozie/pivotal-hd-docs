@@ -113,15 +113,13 @@ Select File->Import and select `Existing projects into Workspace`
 
 Click `Browse` to select the directory where source code is present
 
-![import](/images/gs/setup/mean-2.png)
+![import](/images/gs/setup/browse.png)
 
 Select the directory and click `Open`
 
-![import](/images/gs/setup/mean-3.png)
-
 Click `Deselect All` and check the box for the project we are interested in and Click `Finish`
 
-![import](/images/gs/setup/mean-4.png)
+![import](/images/gs/setup/select-project.png)
 
 ###Build the project
 Go to package Explorer, select the project and right click to get properties.
