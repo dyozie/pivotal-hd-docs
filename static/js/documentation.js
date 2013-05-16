@@ -54,7 +54,9 @@ $(function() {
     var clickedTopic = $(this).parents('.js-maintopic'),
         topicGuides = clickedTopic.find('.js-guides li')
 
-    if(clickedTopic.find('ul').length === 0) {
+    //if(clickedTopic.find('ul').length === 0) {
+    //change to display the main topic as well
+    if(($(this).attr('href').toString() !== "#") || (clickedTopic.find('ul').length === 0)) {
       return true;
     } else if(activeItem != clickedTopic.index()){
       if(helpList.eq(activeItem)){
