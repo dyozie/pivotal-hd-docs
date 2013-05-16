@@ -13,11 +13,11 @@ The tutorials are covered with an overview of the MapReduce pattern used in the 
 
 The following are the lisf of tutorials:
 
-* **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
-* **[Count of five star rated businesses in a city](map-reduce-java/count-city-fivestar-businesses.html)**
-* **[List of Five star reviewers for a Business](map-reduce-java/list-fivestar-reviewers-business.html)**
-* **[List of Five star reviewers for a Business with User Names](map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
-* **[Season and monthly count of reviews](map-reduce-java/count-businesses-reviews-season.html)**
+* **[Count of Businesses in a city](getting-started/map-reduce-java/count-businesses-in-city.html)**
+* **[Count of five star rated businesses in a city](getting-started/map-reduce-java/count-city-fivestar-businesses.html)**
+* **[List of Five star reviewers for a Business](getting-started/map-reduce-java/list-fivestar-reviewers-business.html)**
+* **[List of Five star reviewers for a Business with User Names](getting-started/map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
+* **[Season and monthly count of reviews](getting-started/map-reduce-java/count-businesses-reviews-season.html)**
 
 ##MapReduce Patterns
 The following are some of the patterns covered in the tutorials.
@@ -25,14 +25,14 @@ The following are some of the patterns covered in the tutorials.
 
 The  pattern is used for calculating statistical summaries like min, max, count of values in the dataset. The pattern is simple, but using the Combiner effectively is key to improving the performance. The following tutorials illustrate the summarization patterns:
 
-* **[Count of Businesses in a city](map-reduce-java/count-businesses-in-city.html)**
-* **[Season and monthly count of reviews](map-reduce-java/count-businesses-reviews-season.html)**
+* **[Count of Businesses in a city](getting-started/map-reduce-java/count-businesses-in-city.html)**
+* **[Season and monthly count of reviews](getting-started/map-reduce-java/count-businesses-reviews-season.html)**
 
 ###Filtering Patterns
 
 The Filter Pattern is used to filter the dataset with specific criteria. It does not change the values of the dataset. The pattern is generally used to get a small subset for further analysis. The examples of the pattern are top ten, bloom filter and distinct.
 
-* **[Count of five star rated businesses in a city](map-reduce-java/count-city-fivestar-businesses.html)**
+* **[Count of five star rated businesses in a city](getting-started/map-reduce-java/count-city-fivestar-businesses.html)**
 
 ###Joins
 
@@ -42,24 +42,24 @@ The second tutorial below uses the `Distributed Cache` feature of Hadoop to writ
 
 The second tutorial below uses the `Distributed Cache` feature of Hadoop to write names into the output instead of cryptic user_ids.
 
-* **[List of Five star reviewers for a Business](map-reduce-java/list-fivestar-reviewers-business.html)**
-* **[List of Five star reviewers for a Business with User Names](map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
+* **[List of Five star reviewers for a Business](getting-started/map-reduce-java/list-fivestar-reviewers-business.html)**
+* **[List of Five star reviewers for a Business with User Names](getting-started/map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
 
 
 ##Map Reduce API
 
 The following tutorials covers the MapReduce framework:
 
-* **[Custom Input Format](map-reduce-java/count-businesses-in-city.html)**
-* **[Multiple Inputs](map-reduce-java/count-city-fivestar-businesses.html)**
-* **[Combiner](map-reduce-java/count-businesses-reviews-season.html)**
-* **[Distributed Cache](map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
-* **[Multiple Outputs](map-reduce-java/count-businesses-reviews-season.html)**
+* **[Custom Input Format](getting-started/map-reduce-java/count-businesses-in-city.html)**
+* **[Multiple Inputs](getting-started/map-reduce-java/count-city-fivestar-businesses.html)**
+* **[Combiner](getting-started/map-reduce-java/count-businesses-reviews-season.html)**
+* **[Distributed Cache](getting-started/map-reduce-java/list-fivestar-reviewers-business-with-usernames.html)**
+* **[Multiple Outputs](getting-started/map-reduce-java/count-businesses-reviews-season.html)**
 
 ##Spring Hadoop
 Spring Hadoop along with Spring Batch provides a powerful framework for running MapReduce Applications in production.
 
-* **[Basic Word Count example with Spring Hadoop](spring-data-hadoop/wordcount_with_spring_hadoop.html)**
+* **[Basic Word Count example with Spring Hadoop](getting-started/spring-data-hadoop/wordcount_with_spring_hadoop.html)**
 
 ##Working with Tutorials
 
