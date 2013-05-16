@@ -74,7 +74,15 @@ mvn compile package
 
 ###Step 2: Importing the project to Eclipse IDE
 
-Import the sample `spring-hadoop-wordcount` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+Import the sample `spring-hadoop-wordcount` project into eclipse.
+
+* Select File->Import and select `Existing projects into Workspace`
+
+![import](/images/gs/setup/import-maven.png)
+
+* Click `Browse` to select the directory where source code is present
+* Select the directory and click `Open`
+* Click `Deselect All` and check the box for the project we are interested in and Click `Finish`
 
 ###Step 3: Creating Application Context with Spring Hadoop
 
