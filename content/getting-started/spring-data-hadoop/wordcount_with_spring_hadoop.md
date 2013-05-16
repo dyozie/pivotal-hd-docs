@@ -3,7 +3,7 @@ title: Run WordCount example with Spring Hadoop
 ---
 
 ##Run WordCount example with Spring Hadoop on Pivotal HD
-The tutorial demonstrates running the wordcount example with Spring Hadoop 1.0.0 RC1 on Pivotal HD 1.0
+The tutorial demonstrates running the wordcount example with Spring Hadoop 1.0.0 RC1 on Hadoop 2.0.3-alpha
 
 * Approximate time: 45 Mins
 * Level: Basic
@@ -15,6 +15,7 @@ Count the words in a directory or a document.
 * Maven installed and available to build the project
 * Hadoop 2.0.3-alpha is up and running on localhost
 * [Development Environment setup](../setting-development.html)
+* The tutorial comes with spring data `1.0.1.RC1` version
 
 ##Approach
 Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
@@ -35,10 +36,44 @@ git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
 
+Add the jar file to local maven repository using the following instructions:
+```bash
+cd pivotal-samples/spring-hadoop-wordcount
+mvn install:install-file -Dfile=libs/spring-data-hadoop-1.0.1.RC1.jar -DgroupId=org.springframework.data \
+    -DartifactId=spring-data-hadoop -Dversion=1.0.1.RC1 -Dpackaging=jar
+```
+
+The tutorial comes with pom.xml, which has the following entries. This will take care of the dependencies for the project.
+
+```xml
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-hadoop</artifactId>
+    <version>1.0.1.RC1</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>3.2.1.RELEASE</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>3.2.1.RELEASE</version>
+</dependency>
+```
+
+###Building project
+Build the project using maven
+```bash
+cd spring-hadoop-wordcount`
+mvn clean
+mvn compile package
+```
 
 ###Step 2: Importing the project to Eclipse IDE
 
-Import the sample `spring-hadoop` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+Import the sample `spring-hadoop-wordcount` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
 
 
 ###Step 3: Creating Application Context with Spring Hadoop
@@ -72,8 +107,6 @@ The Application Context file is shown below,
 
 </beans:beans>
 ```
-
-Spring Hadoop has the namespace, which is made default in the above xml.
 The configuration tag provides the location of HDFS and Jobtracker to submit the jobs.
 The Job is defined in the `applicationContext.xml` as shown above. 
 The `configuration` element will override the default configuration properties. Custom properties can also be inclulded here and can be used in the mapper and reducer.
@@ -88,7 +121,7 @@ The main program creates and initializes the application context. Since `run-at-
 The code for the main driver program is shown below:
 
 ```java
-package com.pivotal.springhadoop;
+package com.pivotal.springhadoop.wordcount;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -146,30 +179,29 @@ public class WordCount {
 }
 ```
 
-
 ###Step 5: Running the tutorial
 
 ####Build the project
 
 Follow the instructions [Setting Development Environment](../setting-development.html)  to build the project in eclipse.
 
-This will create target directory with `spring-hadoop-0.0.1.jar` file
+This will create target directory with `spring-hadoop-wordcount-0.0.1.jar` file
 
 ####Customize **hadoop-properties** in `resources` directory
 
 ```xml
-wordcount.input.path=/user/gpadmin/spring-hadoop-sample/input
-wordcount.output.path=/user/gpadmin/spring-hadoop-sample/output
+wordcount.input.path=/user/gpadmin/spring-hadoop-wordcount/input
+wordcount.output.path=/user/gpadmin/spring-hadoop-wordcount/output
 hd.fs=hdfs://localhost:9000
-LIB_DIR=file:///home/gpadmin/pivotal-samples/spring-hadoop/target
+LIB_DIR=file:///PROJECT_DIR/pivotal-samples/spring-hadoop/target
 ```
-Change the LIB_DIR to the direcotry where the jar is present.
+Change the PROJECT_DIR to the `spring-hadoop-wordcount` project directory.
 
 ####Upload the input
 
 ```bash
-hadoop fs -mkdir -p /user/gpadmin/spring-hadoop-sample/input
-hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop-sample/input
+hadoop fs -mkdir -p /user/gpadmin/spring-hadoop-wordcount/input
+hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop-wordcount/input
 ```
 ####Launch the Main Program from Eclipse
 
@@ -191,7 +223,7 @@ Click on the job to see the job details
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
 ```bash
-hadoop fs -cat /user/gpadmin/spring-hadoop-sample/output/part-r-00000
+hadoop fs -cat /user/gpadmin/spring-hadoop-worcount/output/part-r-00000
 ```
 
 ####You have successfully run the word count example usign Spring Hadoop
