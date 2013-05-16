@@ -204,7 +204,7 @@ This will create target directory with `spring-hadoop-wordcount-0.0.1.jar` file
 wordcount.input.path=/user/gpadmin/spring-hadoop-wordcount/input
 wordcount.output.path=/user/gpadmin/spring-hadoop-wordcount/output
 hd.fs=hdfs://localhost:9000
-LIB_DIR=file:///PROJECT_DIR/pivotal-samples/spring-hadoop/target
+LIB_DIR=file:///PROJECT_DIR/pivotal-samples/spring-hadoop-wordcount/target
 ```
 Change the PROJECT_DIR to the `spring-hadoop-wordcount` project directory.
 
