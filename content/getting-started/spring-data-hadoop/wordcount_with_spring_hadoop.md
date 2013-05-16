@@ -1,9 +1,9 @@
 ---
-title: Run WordCount example with Spring Hadoop
+title: Run WordCount example with Spring Data - Apache Hadoop
 ---
 
-##Run WordCount example with Spring Hadoop on Pivotal HD
-The tutorial demonstrates running the wordcount example with Spring Hadoop 1.0.0 RC1 on Hadoop 2.0.3-alpha
+##Run WordCount example with Spring Data - Apache Hadoop
+The tutorial demonstrates running the wordcount example with Spring Data for Apache Hadoop
 
 * Approximate time: 45 Mins
 * Level: Basic
@@ -14,7 +14,6 @@ Count the words in a directory or a document.
 ##Pre-requisites
 * Maven installed and available to build the project
 * Hadoop 2.0.3-alpha is up and running on localhost
-* [Development Environment setup](../setting-development.html)
 * The tutorial comes with spring data `1.0.1.RC1` version
 
 ##Approach
@@ -37,6 +36,7 @@ git clone https://github.com/rajdeepd/pivotal-samples.git
 This will create pivotal-samples directory.
 
 Add the jar file to local maven repository using the following instructions:
+
 ```bash
 cd pivotal-samples/spring-hadoop-wordcount
 mvn install:install-file -Dfile=libs/spring-data-hadoop-1.0.1.RC1.jar -DgroupId=org.springframework.data \
@@ -65,6 +65,7 @@ The tutorial comes with pom.xml, which has the following entries. This will take
 
 ###Building project
 Build the project using maven
+
 ```bash
 cd spring-hadoop-wordcount`
 mvn clean
@@ -74,7 +75,6 @@ mvn compile package
 ###Step 2: Importing the project to Eclipse IDE
 
 Import the sample `spring-hadoop-wordcount` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
-
 
 ###Step 3: Creating Application Context with Spring Hadoop
 
@@ -107,14 +107,15 @@ The Application Context file is shown below,
 
 </beans:beans>
 ```
-The configuration tag provides the location of HDFS and Jobtracker to submit the jobs.
+
+The configuration tag provides the configuration for the Job. In the sample we are configuring hdfs url path using `fs.default.name` property.
 The Job is defined in the `applicationContext.xml` as shown above. 
-The `configuration` element will override the default configuration properties. Custom properties can also be inclulded here and can be used in the mapper and reducer.
-Spring Hadoop provides number of attributes for configuring the job. In this sample, we are using mapper, reducer, input, output and libs attributes. 
+The `configuration` element will override the default configuration properties. Custom properties can also be included here and can be used in the mapper and reducer.
+Spring Data for Apache Hadoop provides number of attributes for configuring the job. In this sample, we are using mapper, reducer, input, output and libs attributes. 
 
 The attribute `run-at-startup="true"` runs the job as soon the spring application context is initialized.
 
-###Step 4: Spring Hadoop Driver
+###Step 4: Hadoop Driver class
 
 The main program creates and initializes the application context. Since `run-at-startup="true"` is set for the runner, the runner will  invoke the mapreduce job as soon the context is initialized.
 
@@ -183,7 +184,9 @@ public class WordCount {
 
 ####Build the project
 
-Follow the instructions [Setting Development Environment](../setting-development.html)  to build the project in eclipse.
+###Build the project
+Go to package Explorer, select the project and right click to get properties.
+Click `Run As -> Maven Install` to build the project.
 
 This will create target directory with `spring-hadoop-wordcount-0.0.1.jar` file
 
@@ -203,6 +206,7 @@ Change the PROJECT_DIR to the `spring-hadoop-wordcount` project directory.
 hadoop fs -mkdir -p /user/gpadmin/spring-hadoop-wordcount/input
 hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop-wordcount/input
 ```
+
 ####Launch the Main Program from Eclipse
 
 Select the `WordCount` class in the package explorer
