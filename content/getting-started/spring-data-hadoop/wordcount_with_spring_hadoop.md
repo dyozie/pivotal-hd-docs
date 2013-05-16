@@ -1,19 +1,20 @@
 ---
-title: Run wordcount example with Spring Hadoop
+title: Run WordCount example with Spring Hadoop
 ---
 
-##Run wordcount example with Spring Hadoop on Pivotal HD
+##Run WordCount example with Spring Hadoop on Pivotal HD
 The tutorial demonstrates running the wordcount example with Spring Hadoop 1.0.0 RC1 on Pivotal HD 1.0
 
 * Approximate time: 45 Mins
 * Level: Basic
 
 ##Use case
-Count the words in a directory or document.
+Count the words in a directory or a document.
 
 ##Pre-requisites
-* Pivotal Command Center 2.0 deployed
-* Pivotal HD deployed
+* Maven installed and available to build the project
+* Hadoop 2.0.3-alpha is up and running on localhost
+* [Development Environment setup](../setting-development.html)
 
 ##Approach
 Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
@@ -21,8 +22,9 @@ With Spring Hadoop, the job creation is handled by Spring Hadoop. The jobs can b
 
 Designing and writing of Mapper and Reducer classes does not change with Hadoop. With Spring Batch, the job can be part of chain of Jobs. The Spring Hadoop helps by providing a clean way of invoking MapReduce jobs without worrying about the complexity.
 
-*  Creating Application Context with Spring Hadoop
-*  Run the example
+* Creating Application Context with Spring Hadoop
+* Build the example to get the jar file for the job
+* Run the WordCount example from eclipse
 
 ##Working with the Tutorial
 
@@ -32,6 +34,7 @@ Designing and writing of Mapper and Reducer classes does not change with Hadoop.
 git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
 This will create pivotal-samples directory.
+
 
 ###Step 2: Importing the project to Eclipse IDE
 
@@ -45,47 +48,104 @@ The Application Context file is shown below,
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/hadoop"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-	http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/hadoop http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
 
-	<context:property-placeholder location="hadoop.properties" />
+    <context:property-placeholder location="hadoop.properties" />
 
-	<configuration>
-		fs.default.name=${hd.fs}
-		mapred.job.tracker=${hd.jt}
-	</configuration>
+    <configuration >
+        fs.default.name=${hd.fs}
+    </configuration>
 
-	<job id="wordcountJob" input-pfath="${wordcount.input.path}"
-		output-path="${wordcount.output.path}" libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
-		mapper="com.akrantha.springhadoop.edu.WordCount.TokenizerMapper"
-		reducer="com.akrantha.springhadoop.edu.WordCount.IntSumReducer" />
+    <job id="wordcountJob" 
+        input-path="${wordcount.input.path}"
+        output-path="${wordcount.output.path}"
+        libs="${LIB_DIR}/spring-hadoop-0.0.1.jar"
+        mapper="com.pivotal.springhadoop.WordCount.TokenizerMapper"
+        reducer="com.pivotal.springhadoop.WordCount.IntSumReducer" 
+        />
 
-	<job-runner id="runner" run-at-startup="true" job-ref="wordcountJob" />
+        <job-runner id="runner" run-at-startup="true" job-ref="wordcountJob" />
 
 </beans:beans>
 ```
 
 Spring Hadoop has the namespace, which is made default in the above xml.
 The configuration tag provides the location of HDFS and Jobtracker to submit the jobs.
-The Job is defined with xml as shown above, and the JobRunner runs the Job.
+The Job is defined in the `applicationContext.xml` as shown above. 
+The `configuration` element will override the default configuration properties. Custom properties can also be inclulded here and can be used in the mapper and reducer.
+Spring Hadoop provides number of attributes for configuring the job. In this sample, we are using mapper, reducer, input, output and libs attributes. 
+
+The attribute `run-at-startup="true"` runs the job as soon the spring application context is initialized.
 
 ###Step 4: Spring Hadoop Driver
+
+The main program creates and initializes the application context. Since `run-at-startup="true"` is set for the runner, the runner will  invoke the mapreduce job as soon the context is initialized.
 
 The code for the main driver program is shown below:
 
 ```java
-public static void main(String[] args) {
-    // TODO Auto-generated method stub
-    String[] res = (args != null && args.length > 0 ? args : CONFIGS);
-    AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(res);
-    // shutdown the context along with the VM
-    ctx.registerShutdownHook();
+package com.pivotal.springhadoop;
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class WordCount {
+
+    private static final Log log = LogFactory.getLog(WordCount.class);
+
+    public static void main(String[] args) throws Exception {
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext(
+                "/applicationContext.xml", WordCount.class);
+        log.info("Word Count Application Running");
+        context.registerShutdownHook();
+    }
+
+    public static class TokenizerMapper extends
+            Mapper<Object, Text, Text, IntWritable> {
+
+        private final static IntWritable one = new IntWritable(1);
+        private Text word = new Text();
+
+        public void map(Object key, Text value, Context context)
+                throws IOException, InterruptedException {
+            StringTokenizer itr = new StringTokenizer(value.toString());
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                context.write(word, one);
+            }
+        }
+    }
+
+    public static class IntSumReducer extends
+            Reducer<Text, IntWritable, Text, IntWritable> {
+        private IntWritable result = new IntWritable();
+
+        public void reduce(Text key, Iterable<IntWritable> values,
+                Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values) {
+                sum += val.get();
+            }
+            result.set(sum);
+            context.write(key, result);
+        }
+    }
 }
 ```
-The code creates the Application Context and Spring Hadoop run the job after initialization. 
+
 
 ###Step 5: Running the tutorial
 
@@ -98,34 +158,41 @@ This will create target directory with `spring-hadoop-0.0.1.jar` file
 ####Customize **hadoop-properties** in `resources` directory
 
 ```xml
-wordcount.input.path=/user/gpadmin/spring-hadoop/input
-wordcount.output.path=/user/gpadmin/spring-hadoop/output
-
+wordcount.input.path=/user/gpadmin/spring-hadoop-sample/input
+wordcount.output.path=/user/gpadmin/spring-hadoop-sample/output
 hd.fs=hdfs://localhost:9000
-hd.jt=localhost:9001
-LIB_DIR=file:///home/gpadmin/spring-hadoop/target
+LIB_DIR=file:///home/gpadmin/pivotal-samples/spring-hadoop/target
 ```
 Change the LIB_DIR to the direcotry where the jar is present.
 
 ####Upload the input
 
 ```bash
-hadoop fs -mkdir -p /user/gpadmin/spring-hadoop/input
-hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop/input
+hadoop fs -mkdir -p /user/gpadmin/spring-hadoop-sample/input
+hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop-sample/input
 ```
-
 ####Launch the Main Program from Eclipse
 
-You will see that the MapReduce program is submitted to the cluster. See the messages on the console.
+Select the `WordCount` class in the package explorer
+Go to eclipse main menu, select `Run -> Run As -> Java Application` to submit the job to the Hadoop cluster.
+
+The MapReduce program is submitted to the cluster. The messages on the console indicate that the job is submitted and can be see on the url `http://localhost:8088/cluster/apps`
 
 ###Step 6: Check the output
+
+Go to url `http://localhost:8088/cluster/apps`
+
+![Jobs](/images/gs/spring-hadoop/job.png)
+
+Click on the job to see the job details
+
+![Jobs](/images/gs/spring-hadoop/job-details.png)
 
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
 ```bash
-hadoop fs -cat /user/gpadmin/spring-hadoop/output/part-r-00000
-
+hadoop fs -cat /user/gpadmin/spring-hadoop-sample/output/part-r-00000
 ```
 
-####You have successfully completed the Basic SpringHadoop Tutorial.
+####You have successfully run the word count example usign Spring Hadoop
 
