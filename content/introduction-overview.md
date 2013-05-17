@@ -8,122 +8,81 @@ The guide covers a brief introduction to the following components of HD
 
 <ol class="class-list">
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/overview.html">
       <h2>Overview</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about Overview
+      This section gives an overview about BigData problem and Pivotal HD product.
+      It also talks about hadoop and various hadoop versions
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/overview.html">
-          Overview
-        </a>
-      </li>
-    </ol>
+
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/pivotalhd-component.html">
       <h2>Pivotal HD Components</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about Pivotal HD Components
+      This section covers various Pivotal HD Components and a brief description about this.
+      It illustrates relation between the open source hadoop components and Pivotal HD specific components like Hawq and DataLoader.
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/pivotalhd-component.html">
-          Pivotal HD Components
-        </a>
-      </li>
-    </ol>
+    
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/hdfs.html">
       <h2>HDFS</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about HDFS
-    </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/hdfs.html">
-          HDFS
-        </a>
-      </li>
-    </ol>
+      This section covers HDFS and its architecure, various node types - Name Node and Data Node.
+     </p>
+    
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/yarn.html">
       <h2>Yarn</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about Yarn
+      This section provides an overview of Yarn - how it manages resource in Hadoop 2.0. It also covers a basic flow of hand shake between various components like
+      Resource Manager, Application Manager and Application Master when a MapReduce application is submitted to a Hadoop cluster
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/yarn.html">
-          Yarn
-        </a>
-      </li>
-    </ol>
+    
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/hive.html">
       <h2>Hive</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about Hive
+      This section covers overview , configuring and using Hive
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/hive.html">
-          Hive
-        </a>
-      </li>
-    </ol>
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="introduction/hawq.html">
       <h2>HAWQ</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about HAWQ
+      This section provides a brief summary about HAWQ - component which provides SQL capabilities to Pivotal HD
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/hawq.html">
-          HAWQ
-        </a>
-      </li>
-    </ol>
+    
   </li>
   <li>
-    <a class="title" href="javascript:void(0)">
+    <a class="title" href="/introduction/dataloader.html">
       <h2>DataLoader</h2>
       <span></span>
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      Description about DataLoader
+      This section covers Data Loader - data ingestion tool for Pivotal HD.
     </p>
-    <ol class="lesson-list">
-      <li>
-        <a href="/introduction/dataloader.html">
-          HDFS
-        </a>
-      </li>
-    </ol>
-  </li>
+     </li>
 </ol>
