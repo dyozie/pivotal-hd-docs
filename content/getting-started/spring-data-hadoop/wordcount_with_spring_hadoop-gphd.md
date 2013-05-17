@@ -16,28 +16,25 @@ Count the words in a directory or a document.
 * Pivotal HD Cluster installed
 * git should be avialable on one of the machines in the Pivotal HD cluster
 * The tutorial comes with spring data `1.0.1.RC1` version
+* THe tutorial requires to be run on one of the nodes in the Pivotal HD cluster
+* The tutorial is tested with Pivtoal HD product 2.0
 
 ###Install Maven if not present
 Download maven binaries from [here](http://apache.claz.org/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz)
 
-Set the PATH variable, so that maven is availble in the PATH
-
-Replace MAVEN_INSTALL_DIR to the location where maven is installed.
+Set the PATH variable, so that maven is availble in the PATH as shown below:
 
 ```bash
 export MAVEN_HOME=MAVEN_INSTALL_DIR
 export PATH=$PATH:$MAVEN_HOME/bin
 ```
+Replace MAVEN_INSTALL_DIR to the location where maven is installed.
 
 ##Approach
 Every MapReduce program comes with the `Main` class; that used the MapReduce API to submit the job.
 With Spring Hadoop, the job creation is handled by Spring Hadoop. The jobs can be submitted with various configuration options without changing the code. 
 
 Designing and writing of Mapper and Reducer classes does not change with Hadoop. With Spring Batch, the job can be part of chain of Jobs. The Spring Hadoop helps by providing a clean way of invoking MapReduce jobs without worrying about the complexity.
-
-* Creating Application Context with Spring Hadoop
-* Build the example to get the jar file for the job
-* Run the WordCount example from eclipse
 
 ##Working with the Tutorial
 
@@ -46,7 +43,12 @@ Designing and writing of Mapper and Reducer classes does not change with Hadoop.
 ```bash
 git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
-This will create pivotal-samples directory.
+This will create pivotal-samples directory. Change directory to project directory.
+
+```bash
+cd pivotal-samples
+cd spring-hadoop-wordcount-gphd
+```
 
 ###Add GPHD libraries to maven
 
@@ -113,76 +115,62 @@ The jars are referenced in the `pom.xm` as shown below:
             <artifactId>hamcrest-all</artifactId>
             <version>1.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-hadoop</artifactId>
             <version>1.0.1.RC1</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.2.1.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>3.2.1.RELEASE</version>
         </dependency>
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-auth</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-hdfs</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-common</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-client-common</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-client-core</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-client-jobclient</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-examples</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-yarn-api</artifactId>
@@ -198,116 +186,94 @@ The jars are referenced in the `pom.xm` as shown below:
             <artifactId>gphd-yarn-client</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>gphd</groupId>
             <artifactId>gphd-yarn-common</artifactId>
             <version>2.0.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava-testlib</artifactId>
             <version>11.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>1.8.8</version>
         </dependency>
-
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.8.8</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.1</version>
         </dependency>
-
-       <dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
-       <dependency>
+        <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>2.4.0a</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
             <version>1.2</version>
         </dependency>
-
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.6</version>
         </dependency>
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.5</version>
         </dependency>
-
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
         </dependency>
-
-
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro-ipc</artifactId>
             <version>1.5.3</version>
         </dependency>
-
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
             <version>1.2</version>
         </dependency>
-
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.6</version>
         </dependency>
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.5</version>
         </dependency>
-
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -315,7 +281,6 @@ The jars are referenced in the `pom.xm` as shown below:
         </dependency>
     </dependencies>
 </project>
-
 ```
 
 ###Step 3: Creating Application Context with Spring Hadoop
@@ -422,8 +387,7 @@ public class WordCount {
 }
 ```
 
-###Step 5: Running the tutorial
-
+###Step 5: Running the tutorial on Pivotal HD Cluster
 
 ####Customize **hadoop-properties** in `resources` directory
 
@@ -438,8 +402,8 @@ Change the PROJECT_DIR to the `spring-hadoop-wordcount-gphd` project directory.
 ####Upload the input
 
 ```bash
-hadoop fs -mkdir -p /user/gpadmin/spring-hadoop-wordcount-gphd/input
-hadoop fs -put input/animals.txt /user/gpadmin/spring-hadoop-wordcount-gphd/input
+hadoop fs -mkdir -p /user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/input
+hadoop fs -put input/animals.txt /user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/input
 ```
 
 ###Build the project using maven
@@ -479,7 +443,7 @@ Check the output directory in hadoop file system. The output directory should co
 See the output using
 
 ```bash
-hadoop fs -cat /user/gpadmin/spring-hadoop-wordcount-gphd/output/part-r-00000
+hadoop fs -cat /user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/output/part-r-00000
 ```
 
 You have successfully run the Spring Apache Hadoop sample on Pivotal HD Cluster!.
