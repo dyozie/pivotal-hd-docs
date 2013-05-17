@@ -4,8 +4,7 @@ title: Introduction to Pivotal HD
 
 ##Brief Overview Pivotal HD 2.0 Product
 
-The guide covers a brief introduction to the following components of HD
-
+This guide covers a brief introduction of the following components : 
 <ol class="class-list">
   <li>
     <a class="title" href="/introduction/overview.html">
