@@ -57,6 +57,8 @@ chmod 755 src/main/scripts/add-to-maven.sh
 src/main/scripts/add-to-maven.sh
 ```
 
+This shell file is shipped along with the sample
+
 This will add the spring data hadoop distribution and all required jars for running the application to a maven repository.
 The jars are referenced in the `pom.xm` as shown below:
 
@@ -413,7 +415,7 @@ $ mvn clean package appassembler:assemble
 ```
 The maven appassembler creates a shell script `wordcount` in the directory `target/appassembler/bin`. The shell script has the classpath correctly set.
  
-Verify uisng the followig command
+Verify using the following command
 
 ```bash
 ls -al target/appassembler/bin/wordcount
