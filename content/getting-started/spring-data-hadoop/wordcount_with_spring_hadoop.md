@@ -237,4 +237,4 @@ Check the output directory in hadoop file system. The output directory should co
 ```bash
 hadoop fs -cat /user/gpadmin/spring-hadoop-worcount/output/part-r-00000
 ```
-You have successfully run the Spring Apache Hadoop sample on Pivotal HD Cluster!.
+You have successfully run the Spring Data sample on Apache Hadoop 2.0.3-alpha

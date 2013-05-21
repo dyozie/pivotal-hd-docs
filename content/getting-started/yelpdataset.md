@@ -33,10 +33,24 @@ Business objects contain basic information about local businesses. The 'business
 }
 ```
 
-A sample 5 records are shown below:
+A sample record is shown below:
 
 ```xml
-
+{
+ "business_id": "rncjoVoEFUJGCUoC1JgnUA",
+ "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345",
+ "open": true,
+ "categories": ["Accountants", "Professional Services", "Tax Services", "Financial Services"],
+ "city": "Peoria",
+ "review_count": 3,
+ "name": "Peoria Income Tax Service",
+ "neighborhoods": [],
+ "longitude": -112.241596,
+ "state": "AZ",
+ "stars": 5.0,
+ "latitude": 33.581867000000003,
+ "type": "business"
+}
 ```
 
 ###Review Objects
@@ -59,10 +73,20 @@ Review objects contain the review text, the star rating, and information on vote
 }
 ```
 
-A sample 5 records are shown below:
+A sample record are shown below:
 
 ```xml
-
+{
+    "votes":
+        {"funny": 0, "useful": 5, "cool": 2},
+    "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q",
+    "review_id": "fWKvX83p0-ka4JS3dc6E5A",
+    "stars": 5,
+    "date": "2011-01-26",
+    "text": "My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.\n\nDo yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.\n\nWhile EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best \"toast\" I've ever had.\n\nAnyway, I can't wait to go back!",
+    "type": "review",
+    "business_id": "rncjoVoEFUJGCUoC1JgnUA"
+}
 ```
 
 ###User Objects
@@ -83,9 +107,20 @@ User objects contain aggregate information about a single user across all of Yel
 }
 ```
 
-A sample 5 records are shown below:
+A sample user record is shown below:
 
 ```xml
-
+{
+   "votes":
+        {"funny": 0,
+         "useful": 7,
+         "cool": 0
+        },
+    "user_id": "rLtl8ZkDX5vH5nAx9C3q5Q",
+    "name": "Jim",
+    "average_stars": 5.0,
+    "review_count": 6,
+    "type": "user"
+}
 ```
 

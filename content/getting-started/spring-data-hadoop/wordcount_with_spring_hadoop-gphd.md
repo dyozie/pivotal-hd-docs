@@ -57,8 +57,6 @@ chmod 755 src/main/scripts/add-to-maven.sh
 src/main/scripts/add-to-maven.sh
 ```
 
-This shell file is shipped along with the sample
-
 This will add the spring data hadoop distribution and all required jars for running the application to a maven repository.
 The jars are referenced in the `pom.xm` as shown below:
 
@@ -434,11 +432,11 @@ target/appassembler/bin/wordcount
 
 Verify the job in the hadoop cluster as shown below:
 
-![Job Command Center](/images/gs/mapreduce/sample1.png)
+![Job Command Center](/images/gs/spring-hadoop/job-pivotal.png)
 
 Click View more job details to see the job details as shown below:
 
-![Job Details](/images/gs/mapreduce/sample1-details.png)
+![Job Details](/images/gs/spring-hadoop/job-pivotal-details.png)
 
 Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
 
