@@ -6,7 +6,7 @@ Greenplum DataLoader is an advanced Big Data ingesting tool. It focuses on loadi
 It features loading batch data onto large data warehouse or analytics platforms for offline analysis. It deploys code, partitions data into chunks, splits jobs into multiple tasks and schedules the tasks, taking into account data locality and network topology, and handles job failures.
 Greenplum HD DataLoader can dynamically scale the execution of data loading tasks to maximize the system resource. With single node deployment, it linearly scales out on disk numbers up to the maximum machine bandwidth. With multi-node cluster deployment, it linearly scales out on machine numbers up to the maximum network bandwidth. This horizontal scalability promises optimized, and best possible throughput.
 
-![Greenplum DataLoader](/images/dataloader.png)
+![Greenplum DataLoader](/images/dataloader1.png)
 
 Staged, batch data loading is useful when throughput, linear scalability, and resource efficiency are priorities. In batch mode, Greenplum HD DataLoader can efficiently load large volumes of data.
 

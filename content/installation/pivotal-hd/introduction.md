@@ -33,7 +33,7 @@ necessary action to configure the cluster node with appropriate Hadoop service r
 Puppet agents are not run in a continuous daemon mode but rather invoked on demand
 for the deployment of Hadoop service components.
 
-![](/images/pivotal-hd/architecture.png)
+![](/images/pivotal-hd/architecture1.png)
 
 [Figure 1.1 GPHD High Level Architecture]
 
