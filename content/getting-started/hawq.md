@@ -27,13 +27,9 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
     </p>
     <ol class="lesson-list">
       <li>
-        <a href="hawq/count-businesses-in-city/load.html">
-        Loading the Sample Data
+        <a href="/getting-started/hawq/count-business-in-city.html">
+        Use Internal and External Tables
        </a>
      </li>
-     <li>
-      <a href="hawq/count-businesses-in-city/cmd.html">
-        Running HAWQ queries from Command Line
-      </a>
-    </li>
+     
 </ol>
