@@ -1,6 +1,6 @@
 
 .header-wrap {
-	background: url(../images/header_bg.png) 0 0 repeat-x;
+	background: #00786e url('http://www.gopivotal.com/sites/all/themes/gopivotal/assets/images/nav_bg.gif');
 	position: relative;
 }
 
@@ -18,24 +18,29 @@
 	width: 220px;
 	float: left;
 	margin-right: 16px;
-	padding: 20px 0 10px;
+	padding: 9px 0 10px;
 }
 
 .logo {
 	display: block;
-	background: url(../images/logo_greenplum_main.png) no-repeat scroll top left;
-	width: 220px;
+	background: url(http://www.gopivotal.com/sites/all/themes/gopivotal/assets/images/nav_logo.gif) no-repeat scroll left;
+	width: 150px;
+	margin-left: -30px;
 	height: 44px;
 }
 
 .logo-pivotal {
-	width: 175px;
+	font-weight: bold;
 	height: 24px;
 	position: absolute;
 	right: 0;
 	bottom: 20px;
-	font-size: 25px;
-	font-weight: bold;;
+	font-size: 24px;
+}
+
+.logo-pivotal a {
+	font-weight: 400;
+	color: #fff;
 }
 
 .header-shadow {
@@ -92,37 +97,35 @@ li.expanded, li.collapsed, li.leaf {
 }
 
 #sub-nav ul li a {
-	font-size: 11px;
-	font-weight: bold;
-	color: #8b8f9e;
-	text-decoration: none;
-	padding: 6px 0 5px 0;
+	border-bottom: 1px solid #999;
+	color: #999;
 	display: block;
-	background: url(../images/nav_shadow.png) 0 100% repeat-x;
-	text-transform: uppercase;
-	line-height: 1.2;
+	font-size: 12px;
 	letter-spacing: 1px;
+	padding: 6px 0 5px 0;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: 600;
 }
 
 #sub-nav ul li ul li a {
+	color: #999;
 	background: #FFF;
-	border-bottom: 1px solid #dbdbe1;
-	color: #005696;
-	font-size: 12px;
-	text-transform: none;
+	border-bottom: 1px solid #EEE;
+	font-size: 14px;
+	font-weight: 600;
 	letter-spacing: 0;
+	padding: 10px 0 10px 10px;
+	text-transform: uppercase;
 }
 
 #sub-nav ul > li >  a:hover, #sub-nav ul li ul li a:hover {
-	color: #000000;
+	color: #005696;
 }
 
-#sub-nav ul li a.active {
-	color: #49a942;
-}
-
-#sub-nav ul li ul li a:hover.active {
-	color: #49a942;
+#sub-nav ul li a.active, #sub-nav ul li ul li a.active {
+	color: #000;
+	font-weight: 800;
 }
 
 .last, .sub-page .last {
@@ -149,8 +152,8 @@ li.expanded, li.collapsed, li.leaf {
 /* FOOTER */
 
 .footer-wrap {
-	padding-top: 24px;
-	background: url(../images/footer_shadow.png) 0 0 repeat-x;
+	background: #00786E;
+	padding: 24px 0 24px 0;
 }
 
 .footer-logo {
@@ -169,25 +172,33 @@ li.expanded, li.collapsed, li.leaf {
 }
 
 .fss {
-	font-size: 11px;
-	line-height: 14px;
+	color: #CCC;
 	display: block;
+	font-size: 12px;
+	line-height: 16px;
+	padding-right: 10px;
+}
+
+.fclightgray {
+	color: #7FBBB6;
 }
 
 .link-list a {
 	text-decoration: none;
-	color: #888888;
+	color: #7FBBB6;
 }
 
 .link-list {
 	margin: 0 0 20px 0;
 }
 
-.footer-wrap .span-2 {
-	float: left;
-	margin-top: 8px;
+.link-list a:hover {
+	color: #80BCB8;
 }
 
+.footer-wrap .span-2 {
+	float: left;
+}
 
 /* Getting Started Page */
 
@@ -276,10 +287,14 @@ ol.lesson-list li a {
 	text-decoration: none;
 }
 ol.lesson-list li a:hover {
-	color: #7aa1b0 !important;
+	color: #005696 !important;
 	text-decoration: underline;
 }
 
 ol.class-list li a.title:hover span {
 	display: block;
+}
+
+ol.class-list h2 {
+	padding-top: 0px;
 }
