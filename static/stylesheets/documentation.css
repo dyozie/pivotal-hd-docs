@@ -74,6 +74,10 @@ p code {
   margin-bottom: 20px;
 }
 
+.content a {
+  font-size: 14px;
+}
+
 .content h3 {
   font-weight: normal;
   line-height: 32px;
@@ -103,6 +107,11 @@ p code {
 
 .content ul li {
   color: rgb(88, 89, 91);
+  list-style-type: disc;
+  font-size: 14px;
+  padding-left: 5px;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 
