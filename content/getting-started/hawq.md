@@ -29,7 +29,11 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
       <li>
         <a href="/getting-started/hawq/count-business-in-city.html">
         Use Internal and External Tables
-       </a>
      </li>
-     
+     <li>
+       </a>
+        <a href="/getting-started/hawq/count-business-in-city/springdata-jdbc.html">
+        Use Spring Data JDBC
+       </a>
+   </li>
 </ol>

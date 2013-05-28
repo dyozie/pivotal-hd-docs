@@ -34,7 +34,8 @@ For our tutorial we will use the sample data from the following format
 We have transformed the original `json` data into the format given below so that it can be loaded into a `external table`
 
 ```java
-	'rncjoVoEFUJGCUoC1JgnUA'|'8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345'|true|'{"Accountants","Professional Services","Tax Services","Financial Services"}'|'Peoria'|3|'Peoria Income Tax Service'|'{}'|-112.241596|AZ|5.0|33.581867000000003|'business''0FNFSzCFP_rGUoJx8W7tJg'|'2149 W Wood Dr\nPhoenix, AZ 85029'|true|'{"Sporting Goods", "Bikes", "Shopping"}'|'Phoenix'|5| 'Bike Doctor'|'{}'|-112.10593299999999|AZ|5.0|33.604053999999998|'business'
+'rncjoVoEFUJGCUoC1JgnUA'|'8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345'|true|'{"Accountants","Professional Services","Tax Services","Financial Services"}'|'Peoria'|3|'Peoria Income Tax Service'|'{}'|-112.241596|AZ|5.0|33.581867000000003|'business'
+'0FNFSzCFP_rGUoJx8W7tJg'|'2149 W Wood Dr\nPhoenix, AZ 85029'|true|'{"Sporting Goods", "Bikes", "Shopping"}'|'Phoenix'|5| 'Bike Doctor'|'{}'|-112.10593299999999|AZ|5.0|33.604053999999998|'business'
 ```
 
 

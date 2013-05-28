@@ -102,7 +102,7 @@ hadoop fs -cat /user/gpadmin/output/part-r-0000
 ###Clone the source from git repository
 
 ```bash
-
+git clone http://github.com/rajdeepd/pivotal-samples
 ```
 
 ###Importing source code to Eclipse
