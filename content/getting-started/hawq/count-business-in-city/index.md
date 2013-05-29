@@ -30,13 +30,7 @@ For our tutorial we will use the sample data from the following format
 }
 ```
 
-
-We have transformed the original `json` data into the format given below so that it can be loaded into a `external table`
-
-```java
-'rncjoVoEFUJGCUoC1JgnUA'|'8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345'|true|'{"Accountants","Professional Services","Tax Services","Financial Services"}'|'Peoria'|3|'Peoria Income Tax Service'|'{}'|-112.241596|AZ|5.0|33.581867000000003|'business'
-'0FNFSzCFP_rGUoJx8W7tJg'|'2149 W Wood Dr\nPhoenix, AZ 85029'|true|'{"Sporting Goods", "Bikes", "Shopping"}'|'Phoenix'|5| 'Bike Doctor'|'{}'|-112.10593299999999|AZ|5.0|33.604053999999998|'business'
-```
+We have transformed the original `json` data into the format so that it can be loaded into a `external table` or we can use `COPY` command to load the data into Internal Table. The data for businesses reviewed can be found in the directory [pivotal-samples/sample-data/hawq/business.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/business.txt)
 
 
 ##Start the HAWQ Service ##
@@ -121,49 +115,17 @@ gpadmin=# \d
 
 **Insert Values**
 
-* 	Insert values into the table `business` by executing the `insert` command
+* 	Insert values into the table `business` by executing the `COPY` command
 
 ```bash
-gpadmin=# insert into business values('rncjoVoEFUJGCUoC1JgnUA',
-	'8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345',
-	true,
-	'{"Accountants","Professional Services","Tax Services","Financial Services"}',
-	'Peoria',
-	3,
-	'Peoria Income Tax Service',
-	'{}',
-	-112.241596,
-	'AZ',
-	5.0,
-	33.581867000000003,
-	'business'
-);
+gpadmin=#COPY business FROM '/home/gpadmin/pivotal-samples/sample-data/business.txt' DELIMITERS '|';
 ```
+
+If the command is successful, the output will be
 
 ```bash
-gpadmin=# insert into business values('0FNFSzCFP_rGUoJx8W7tJg', 
-	E'2149 W Wood Dr\nPhoenix, 
-	AZ 85029',
-	true,
-	'{"Sporting Goods", "Bikes", "Shopping"}', 
-	'Phoenix',
-	5, 
-	'Bike Doctor',
-	'{}', 
-	-112.10593299999999,
-	'AZ',
-	5.0,
-	33.604053999999998,
-	'business'
-);
+COPY 15
 ```
-
-Output of a successful insert is
-
-```bash
-INSERT 0 1
-```
-
 
 **Querying the Data**
 
@@ -176,10 +138,17 @@ gpadmin=# select city, count(*) from business GROUP BY city;
 Output of the command executed above will be :
 
 ```bash
-city     | count 
----------+-------
- Peoria  |     1
- Phoenix |     1
+   city         | count 
+----------------+-------
+ Glendale       |     1
+ Tempe          |     1
+ Glendale Az    |     1
+ Phoenix        |     7
+ Gilbert        |     1
+ Fountain Hills |     1
+ Scottsdale     |     2
+ Peoria         |     1
+(8 rows)
 ```
 
 
@@ -207,16 +176,9 @@ Serving HTTP on port 8080, directory /home/gpadmin/e_tables
 ```
 __Note__ : Please make sure command `export LD_LIBRARY_PATH=/usr/local/hawq-1.0.0.0/lib:$LD_LIBRARY_PATH` is excited to have the right openssl library `libssl.so.0.9.8` is in the path for native libraries to be loaded by dynamic loader.
 
-
-
 **Copy external file**
 
-Make sure follow file is available as `business.txt` in `/home/gpadmin/e_tables` folder. There are two business listed below with all the fields transformed from the JSON format into a `|` delimited format.
-
-```java
-'rncjoVoEFUJGCUoC1JgnUA'|'8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345'|true|'{"Accountants","Professional Services","Tax Services","Financial Services"}'|'Peoria'|3|'Peoria Income Tax Service'|'{}'|-112.241596|AZ|5.0|33.581867000000003|'business'
-'0FNFSzCFP_rGUoJx8W7tJg'|'2149 W Wood Dr\nPhoenix, AZ 85029'|true|'{"Sporting Goods", "Bikes", "Shopping"}'|'Phoenix'|5| 'Bike Doctor'|'{}'|-112.10593299999999|AZ|5.0|33.604053999999998|'business'
-```
+Make sure follow file is available as `business.txt` in `/home/gpadmin/e_tables` folder. This file is available under `pivotal-samples/sample-data/hawq`.
 
 **Create External Table**
 
@@ -279,11 +241,16 @@ gpadmin=# select city, count(*) from ext_business GROUP BY city;
 Output of the select query executed can be seen below
 
 ```bash
-city       | count 
------------+-------
- 'Peoria'  |     1
- 'Phoenix' |     1
-(2 rows)
+   city         | count 
+----------------+-------
+ Glendale       |     1
+ Tempe          |     1
+ Glendale Az    |     1
+ Phoenix        |     7
+ Gilbert        |     1
+ Fountain Hills |     1
+ Scottsdale     |     2
+ Peoria         |     1
 ```
 
 ###Summary ###

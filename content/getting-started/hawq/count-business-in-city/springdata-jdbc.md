@@ -19,7 +19,7 @@ We will be implementing the use case : Number of businesses in the dataset from 
 
 You will use the [yelp data set](/getting-started/yelpdataset.html) format for this Spring JDBC Sample. For this particular sample we will use the same data set as used in [hawq exercise](/getting-started/hawq/count-business-in-city.html)
 
-Make sure the table `business` has been created and appropriate values inserted as specified in the [hawq exercise](/getting-started/hawq/count-business-in-city.html)
+Make sure the table `business` has been created and appropriate values inserted using `COPY` psql command as specified in the [hawq exercise](/getting-started/hawq/count-business-in-city.html)
 
 ### Source Code ###
 
@@ -107,63 +107,80 @@ public Class BusinessCount {
 
 ```java
 ApplicationContext context;
-DataSource dataSource;
 JdbcTemplate template;
 ```
-*    Defining the DataSource  : Datasource is like a connection factory which instantiates the underlying connections to the database using JDBC. In this sample the apache commons DataSource implementation has been used. The `datasource-beans.xml` file shown below creates a DataSource for MySQL database:
 
-```xml
-<bean id="hawqDataSource" class="org.apache.commons.dbcp.BasicDataSource"
-    destroy-method="close">
-    <property name="driverClassName" value="${jdbc.driverClassName}" />
-    <property name="url" value="${jdbc.url}" />
-    <property name="username" value="${jdbc.username}" />
-    <property name="password" value="${jdbc.password}" />
-</bean>
-```
-
-*   Initialize the DataSource using the ApplicationContext created from the xml above
-*   Create a `JdbcTemplate` instance from the `datasource` object
-
+*    Class `JdbcConfiguration` provides an implementation of `JdbcTemplate` bean. It is annotated with `@Configuration` and `@PropertySource(..)`.
+*    Method `jdbcTemplate(Environment environment)` is annotated with `@Bean` and overridden
+*    java.sql.Driver Object ,Jdbc Url:  `url`, Username : `user` and password `pwd` are extracted from `org.springframework.core.env.Environment`.
+*    A `SimpleDriverDataSource` object is instantiated
+*    A `JdbcTemplate` object is instantiated from this DataSource object above and returned
+    
 ```java
-public BusinessCount() {
-    context = new ClassPathXmlApplicationContext("datasources-beans.xml");
-    dataSource = context.getBean("postGresDataSource", DataSource.class);
-    template = new JdbcTemplate(dataSource);
-}
-```
-
-*  Define a Custom Data class `RowRecord` to be populated by the `RowMapper` from the `ResultSet`.  com.springRowMapper : An interface used by JdbcTemplate for mapping rows of a ResultSet on a per-row basis
-
-```java
-class RowRecord {
-     String city;
-     int count;
-     public String toString() {
-        String s = "{" +
-               "city=" + city + "," +
-               "count=" + count + 
-             "}";
-        return s;
+@Configuration
+@PropertySource("classpath:/jdbc.properties")
+public class JdbcConfiguration {
+    @Bean(name = "jdbc")
+    public JdbcTemplate jdbcTemplate(Environment environment)
+            throws InstantiationException, IllegalAccessException,
+            ClassNotFoundException {
+        java.sql.Driver driver = (java.sql.Driver) Class.forName(
+                environment.getProperty("jdbc.driverClassName")).newInstance();
+        String url = environment.getProperty("jdbc.url");
+        String user = environment.getProperty("jdbc.username");
+        String pw = environment.getProperty("jdbc.password");
+        return new JdbcTemplate(new SimpleDriverDataSource(driver, url, user,pw));
     }
 }
 ```
 
-*  `JDBCTemplate` object `template` will execute the select query listed below. Returned ResultSet is mapped to a List of RowRecord objects.
+*    In the BusinessCount constructor `ApplicationContext` and `JdbcTemplate` are initialized 
+```java
+public BusinessCount() {
+    context = new AnnotationConfigApplicationContext(JdbcConfiguration.class);
+    jdbcTemplate = (JdbcTemplate) context.getBean("jdbc");
+}
+```
+
+*    Define a Custom Data class `RowRecord` to be populated by the `RowMapper` from the `ResultSet`.  
+*    com.spring.RowMapper : An interface used by JdbcTemplate for mapping rows of a ResultSet on a per-row basis
+
+```java
+public class City {
+    private int countOfBusinesses;
+    private String cityName;
+    public City(String name, int count) {
+        this.cityName = name;
+        this.countOfBusinesses = count;
+    }
+    public String getCityName() {
+        return cityName;
+    }
+    public int getCountOfBusinesses() {
+        return countOfBusinesses;
+    }
+    public String toString() {
+         String s = "{" +
+                "city=" + cityName + "," +
+                "count=" + countOfBusinesses + 
+                 "}";
+         return s;
+     }
+}
+```
+
+*  `JDBCTemplate` object `jdbcTemplate` will execute the select query listed below. Returned `ResultSet` is mapped to a List of `City` objects.
 
 ```java
 public void executeQuery() {
-    List<RowRecord> rowRecords = template.query(
-        "select city,count(*) a from business group by city",
-        new RowMapper<RowRecord>() {
-          public RowRecord mapRow(ResultSet rs, int rowNum) throws SQLException {
-            RowRecord row = new RowRecord();
-            row.city = rs.getString("city");
-            row.count = rs.getInt("a");
-            return row;
-          }
+       List<City> rowRecords = jdbcTemplate.query(
+        "select city,count(*) countOfBusinesses from business group by city",
+        new RowMapper<City>() {
+            public City mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new City(rs.getString("city"), rs.getInt("countOfBusinesses"));
+            }
         });
-    System.out.println("Returned: "+ rowRecords);
+    System.out.println("Returned: " + rowRecords);
 }
 ```
 
@@ -185,7 +202,7 @@ Sample can be run from within eclipse. *Right click* on `BusinessCount` class an
 The output can be see in the Eclipse console
 
 ```bash
-Returned: [{city=Phoenix,count=1}, {city=Peoria,count=1}]
+Returned: [{city=Glendale,count=1}, {city=Tempe,count=1}, {city=Glendale Az,count=1}, {city=Phoenix,count=7}, {city=Gilbert,count=1}, {city=Fountain Hills,count=1}, {city=Scottsdale,count=2}, {city=Peoria,count=1}]
 ```
 
 You can also see the status of HAWQ query on the Pivotal Command Center and time taken to execute.
