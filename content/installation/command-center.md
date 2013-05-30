@@ -1,5 +1,5 @@
 ---
-title: Pivotal HD Installation and Administration
+title: Pivotal Command Center 2.0 Installation and User Guide
 ---
 
 ##About this Guide
