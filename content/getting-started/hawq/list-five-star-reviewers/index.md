@@ -1,5 +1,5 @@
 ---
-title: HAWQ - List of Five star reviewers(users) for a Business
+title: HAWQ - List of Five star reviewers (users) for a Business
 ---
 
 
@@ -7,16 +7,18 @@ In this tutorial you will learn how to use HAWQ to join tables and query data.
 
 ##Use Case##
 
-The sample datasets have information about the Businesses, Review. Each business is located in a city. Each Review has a user who reviewed the business. The goal of the tutorial is to find out list of all users who has rated a business as five star.
+The sample datasets have information about the Businesses and Reviews from users. Each business is located in a city. Users has posted
+reviews about the business. The goal of the tutorial is to find out list of all users who has rated a business as five star.
 
 ##Sample Data ##
 
 For our tutorial we will use the sample data from the following format .
 
 `business`
-```java
 
-{"business_id": "rncjoVoEFUJGCUoC1JgnUA", 
+```java
+{
+"business_id": "rncjoVoEFUJGCUoC1JgnUA", 
 "full_address": "8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345", 
 "open": true, 
 "categories": ["Accountants", "Professional Services", "Tax Services", "Financial Services"],
@@ -28,18 +30,20 @@ For our tutorial we will use the sample data from the following format .
 "state": "AZ",
 "stars": 5.0, 
 "latitude": 33.581867000000003,
-"type": "business"}
+"type": "business"
+}
 ```
 We have transformed the original `json` data into the format given below .
 
-
 ```java
 rncjoVoEFUJGCUoC1JgnUA|8466 W Peoria Ave\nSte 6\nPeoria, AZ 85345|true|["Accountants","Professional Services","Tax Services","Financial Services"]|Peoria|3|Peoria Income Tax Service|[]|-112.241596|AZ|5.0|33.581867|business
-
 ```
-`review`
+
+`review data set`
+
 ```java
-{"votes": {"funny": 0, "useful": 1, "cool": 0}, 
+{
+"votes": {"funny": 0, "useful": 1, "cool": 0}, 
 "user_id": "HK35ai8frY75iMYBVdD_Pg",
 "review_id": "EnAdKZ_u_wj9ifTRwkfVwg",
 "stars": 5,
@@ -57,7 +61,7 @@ We have transformed the original `json` data into the format given below .
 ```
 
 
-The data for businesses reviewed can be found in the directory [pivotal-samples/sample-data/hawq/business.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/business.txt) and [pivotal-samples/sample-data/hawq/reviews.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/reviews.txt).
+The data for businesses reviewed can be found in the directory [pivotal-samples/sample-data/hawq/business.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/hawq/business.txt) and [pivotal-samples/sample-data/hawq/reviews.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/hawq/reviews.txt).
 
 
 
@@ -136,7 +140,7 @@ gpadmin=# \d
 * 	Load data into the table `business` by executing the `COPY` command
 
 ```bash
-gpadmin=#COPY business FROM '/home/gpadmin/pivotal-samples/sample-data/business.txt' DELIMITERS '|';
+gpadmin=#COPY business FROM '/home/gpadmin/pivotal-samples/sample-data/hawq/business.txt' DELIMITERS '|';
 ```
 
 If the command is successful, the output will be
@@ -148,7 +152,7 @@ COPY 15
 * 	Load data into the table `review` by executing the `copy` command
 
 ```bash
-gpadmin=#COPY business FROM '/home/gpadmin/pivotal-samples/sample-data/reviews.txt' DELIMITERS '|';
+gpadmin=#COPY review FROM '/home/gpadmin/pivotal-samples/sample-data/hawq/reviews.txt' DELIMITERS '|';
 ```
 
 If the command is successful, the output will be
@@ -171,15 +175,14 @@ Output of the command executed above will be :
 ```bash
              name             |        user_id        
 ------------------------------+------------------------
+ Valley Permaculture Alliance | w6DgbWFq671y50A_QsILwQ
  Bike Doctor                  | yEQacRqY2MJRHTkrUJYLOw
  Bike Doctor                  | muIhE1HQZscwe06ISMu81A
  Bike Doctor                  | WkEu8km8U-6X-mm5OdkHjw
  Peoria Income Tax Service    | EnAdKZ_u_wj9ifTRwkfVwg
- Valley Permaculture Alliance | w6DgbWFq671y50A_QsILwQ
 (5 rows)
 
 ```
-
 
 ##Use External Tables ##
 
@@ -285,14 +288,16 @@ Output of the command executed above will be :
 ```bash
              name             |        user_id        
 ------------------------------+------------------------
+ Valley Permaculture Alliance | w6DgbWFq671y50A_QsILwQ
  Bike Doctor                  | yEQacRqY2MJRHTkrUJYLOw
  Bike Doctor                  | muIhE1HQZscwe06ISMu81A
  Bike Doctor                  | WkEu8km8U-6X-mm5OdkHjw
  Peoria Income Tax Service    | EnAdKZ_u_wj9ifTRwkfVwg
- Valley Permaculture Alliance | w6DgbWFq671y50A_QsILwQ
 (5 rows)
 
 ```
 
 ###Summary ###
-In this tutorial we learnt how to join tables using internal and external tables on HAWQ.
+In this tutorial we learnt how to get the list of users who has given five star rating to the business. 
+We have used `join` on `business` and `review` tables to get the result. 
+The tutorial demonstrates HAWQ using internal and external tables.
