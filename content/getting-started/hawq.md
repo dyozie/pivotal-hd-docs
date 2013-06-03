@@ -46,6 +46,11 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/list-five-star-reviewers.html">
         Use Internal and External Tables
+ </a></li><li><a href="/getting-started/hawq/list-five-star-reviewers.html">
+      
+        </a><a href="/getting-started/hawq/list-five-star-reviewers/springdata-jdbc.html">
+        Use Spring Data JDBC
+       </a>
    </li>
 </ol>
 </li></ol>
