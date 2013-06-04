@@ -30,7 +30,7 @@ For our tutorial we will use the sample data from the following format
 }
 ```
 
-We have transformed the original `json` data into the format so that it can be loaded into a `external table` or we can use `COPY` command to load the data into Internal Table. The data for businesses reviewed can be found in the directory [pivotal-samples/sample-data/hawq/business.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data/business.txt)
+We have transformed the original `json` data into the format so that it can be loaded into a `external table` or we can use `COPY` command to load the data into Internal Table. The data for businesses reviewed can be found in the directory [pivotal-samples/sample-data/hawq/business.txt](https://github.com/rajdeepd/pivotal-samples/blob/master/sample-data//hawq/business.txt)
 
 
 ##Start the HAWQ Service ##

@@ -10,7 +10,7 @@ This site provide developers with resources to get started with Pivotal HD.
       <h2>Overview</h2>
       <span></span>
     </a>
-    <img src="images/elephant_rgb_sq_4.png" alt="">
+    <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
       This section gives an overview about BigData problem and Pivotal HD product.
       It also talks about hadoop and various hadoop versions
@@ -49,7 +49,7 @@ This site provide developers with resources to get started with Pivotal HD.
       <h2>Getting Started</h2>
       <span></span>
     </a>
-    <img src="images/elephant_rgb_sq_6.png" alt="">
+    <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
       This section provides tutorials on getting started with MapReduce, HAWQ 
     </p>
