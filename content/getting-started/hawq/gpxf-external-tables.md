@@ -5,46 +5,49 @@ title: HAWQ - GPXF External Tables
 Overview 
 --------
 
-In this exercise we will create HAWQ tables and load data into them using the `COPY` Command
+In this exercise we will create GPXF External tables. 
+We will use `HdfsDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
+
 
 ##Create Internal HAWQ tables
 
 Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_tables_hawq.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/create_hawq_tables.sql)
 
-1. Create <code>retail_demo</code> Schema
+1. Create <code>retail_demo</code> Schema if it is not already created
 
 	<pre class="terminal">
 	CREATE SCHEMA retail_demo;
 	</pre>
 
-2. Create table `retail_demo.categories_dim_hawq`
+2. Create table `retail_demo.categories_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.categories_dim_hawq
+	CREATE EXTERNAL TABLE retail_demo.categories_dim_gpxf
 	(
-	    category_id integer NOT NULL,
-	    category_name character varying(400) NOT NULL
+	    category_id integer,
+	    category_name character varying(400)
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	</pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/categories_dim/categories_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
+		</pre>
 	
-3. Create table `retail_demo.customers_dim_hawq`
+3. Create table `retail_demo.customers_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.customers_dim_hawq
+	CREATE EXTERNAL TABLE retail_demo.customers_dim_gpxf
 	(
 	    customer_id TEXT,
 	    first_name TEXT,
 	    last_name TEXT,
 	    gender TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	</pre>
-	
-4. Create table `retail_demo.order_lineitems_hawq`
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customers_dim/customers_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
+		
+4. Create table `retail_demo.order_lineitems_gpxf`
 
 	<pre class="terminal">
-	CREATE  TABLE retail_demo.order_lineitems_hawq
+	CREATE  EXTERNAL TABLE retail_demo.order_lineitems_gpxf
 	(
 	    order_id TEXT,
 	    order_item_id TEXT,
@@ -79,13 +82,14 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    ordering_session_id TEXT,
 	    website_url TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/order_lineitems/order_lineitems.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
 	</pre>
 	
-5. Create table `retail_demo.orders_hawq`
+5. Create table `retail_demo.orders_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.orders_hawq
+	CREATE EXTERNAL TABLE retail_demo.orders_gpxf
 	(
 	    order_id TEXT,
 	    customer_id TEXT,
@@ -119,13 +123,14 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    ordering_session_id TEXT,
 	    website_url TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/orders/orders.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
 	</pre>
 	
-6. Create table `retail_demo.customer_addresses_dim_hawq`
+6. Create table `retail_demo.customer_addresses_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.customer_addresses_dim_hawq
+	CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_gpxf
 	(
 	    customer_address_id TEXT,
 	    customer_id TEXT,
@@ -141,75 +146,91 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    country TEXT,
 	    phone_number TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	</pre>
-	
-7. Create table `retail_demo.date_dim_hawq`
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
+		
+7. Create table `retail_demo.date_dim_gpxf`
+    <pre class="terminal">
+	CREATE EXTERNAL TABLE retail_demo.date_dim_gpxf
+	(
+	    calendar_day date,
+	    reporting_year smallint,
+	    reporting_quarter smallint,
+	    reporting_month smallint,
+	    reporting_week smallint,
+	    reporting_dow smallint
+	)
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/date_dim/date_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
+	   </pre>
 
 
-8. Create table `retail_demo.email_addresses_dim_hawq`
+8. Create table `retail_demo.email_addresses_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.email_addresses_dim_hawq
+	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_gpxf
 	(
 	    customer_id TEXT,
 	    email_address TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	</pre>
-	
-9. Create table `retail_demo.payment_methods_hawq
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
+		
+9. Create table `retail_demo.payment_methods_gpxf`
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.payment_methods_hawq
+	CREATE EXTERNAL TABLE retail_demo.payment_methods_gpxf
 	(
 	    payment_method_id smallint,
 	    payment_method_code character varying(20)
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	ALTER TABLE retail_demo.payment_methods_hawq OWNER TO gpadmin;
-	</pre>
-	
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
+		
 10. Create table `retail_demo.products_dim_hawq
 
 	<pre class="terminal">
-	CREATE TABLE retail_demo.products_dim_hawq
+	CREATE EXTERNAL TABLE retail_demo.products_dim_gpxf
 	(
 	    product_id TEXT,
 	    category_id TEXT,
 	    price TEXT,
 	    product_name TEXT
 	)
-	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	</pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/products_dim/products_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
+      </pre>
 
-##Load Data into HAWQ tables	 ##
+##Verifying Table Creation
 
-Run the following sql scripts from the `pivotal_samples/sample_data` folder to upload data into HAWQ tables.
+Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables have been created
 
 ```bash
-zcat customers_dim.tsv.gz | psql -c "COPY retail_demo.customers_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat categories_dim.tsv.gz | psql -c "COPY retail_demo.categories_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat order_lineitems.tsv.gz | psql -c "COPY retail_demo.order_lineitems_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat orders.tsv.gz | psql -c "COPY retail_demo.orders_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat customer_addresses_dim.tsv.gz | psql -c "COPY retail_demo.customer_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat email_addresses_dim.tsv.gz | psql -c "COPY retail_demo.email_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat products_dim.tsv.gz | psql -c "COPY retail_demo.products_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat payment_methods.tsv.gz | psql -c "COPY retail_demo.payment_methods_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat date_dim.tsv.gz | psql -c "COPY retail_demo.date_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+demo=# \dx retail_demo.*_gpxf
+                           List of relations
+   Schema    |            Name             | Type  |  Owner  | Storage  
+-------------+-----------------------------+-------+---------+----------
+ retail_demo | categories_dim_gpxf         | table | gpadmin | external
+ retail_demo | customer_addresses_dim_gpxf | table | gpadmin | external
+ retail_demo | customers_dim_gpxf          | table | gpadmin | external
+ retail_demo | date_dim_gpxf               | table | gpadmin | external
+ retail_demo | email_addresses_dim_gpxf    | table | gpadmin | external
+ retail_demo | order_lineitems_gpxf        | table | gpadmin | external
+ retail_demo | orders_gpxf                 | table | gpadmin | external
+ retail_demo | payment_methods_gpxf        | table | gpadmin | external
+ retail_demo | products_dim_gpxf           | table | gpadmin | external
+(9 rows)
 ```
 
-You can also run a perl script [load_hawq_data_perl.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/load_hawq_tables_perl.sh) which will upload all the files from folder with extension `.gz`. 
-
-##Verifying Data loaded ##
+##Verifying Data Loaded ##
 
 Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_hawq_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/verify_load_hawq_tables.sh)
+[verify_load_gpxf_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/verify_load_gpxf_tables.sh))
 
 Output of the sh script should look like
 
 ```bash
-[gpadmin@pivhdsne hawq_tables]$ ./verify_load_hawq_tables.sh							    
+[gpadmin@pivhdsne gpxf_tables]$ ./verify_load_gpxf_tables.sh							    
         Table Name           |    Count 
 -----------------------------+------------------------
  customers_dim_hawq          |   401430  
@@ -225,4 +246,30 @@ Output of the sh script should look like
 
 ##Running HAWQ Queries ##
 
-TODO
+###Use Case 1 ###
+
+Query `retail_demo.orders_gpxf` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+
+```bash
+select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax
+from retail_demo.orders_gpxf
+group by billing_address_postal_code
+order by total desc limit 10;
+```
+
+```bash
+ billing_address_postal_code |   total   |    tax    
+-----------------------------+-----------+-----------
+ 48001                       | 111868.32 | 6712.0992
+ 15329                       | 107958.24 | 6477.4944
+ 42714                       | 103244.58 | 6194.6748
+ 41030                       |  101365.5 |   6081.93
+ 50223                       | 100511.64 | 6030.6984
+ 03106                       |  83566.41 |         0
+ 57104                       |  77383.63 | 3095.3452
+ 23002                       |  73673.66 |  3683.683
+ 25703                       |  68282.12 | 4096.9272
+ 26178                       |   66836.4 |  4010.184
+(10 rows)
+Time: 15481.221 ms
+```
