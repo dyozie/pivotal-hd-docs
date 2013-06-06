@@ -54,8 +54,6 @@ hadoop fs -mkdir /retail_demo/categories_dim
 
 ###Load the Files into HDFS ###
 
-Execute the following put commands to upload `tsv.gz` files to HDFS.
-
 ```bash
 hadoop fs -mkdir /retail_demo
 hadoop fs -mkdir /retail_demo/categories_dim
