@@ -225,4 +225,28 @@ Output of the sh script should look like
 
 ##Running HAWQ Queries ##
 
-TODO
+Query `retail_demo.orders_hawq` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+
+```bash
+select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax
+from retail_demo.orders_hawq
+group by billing_address_postal_code
+order by total desc limit 10;
+```
+
+```bash
+ billing_address_postal_code |   total   |    tax    
+-----------------------------+-----------+-----------
+ 48001                       | 111868.32 | 6712.0992
+ 15329                       | 107958.24 | 6477.4944
+ 42714                       | 103244.58 | 6194.6748
+ 41030                       |  101365.5 |   6081.93
+ 50223                       | 100511.64 | 6030.6984
+ 03106                       |  83566.41 |         0
+ 57104                       |  77383.63 | 3095.3452
+ 23002                       |  73673.66 |  3683.683
+ 25703                       |  68282.12 | 4096.9272
+ 26178                       |   66836.4 |  4010.184
+(10 rows)
+Time: 2120.214 ms
+```
