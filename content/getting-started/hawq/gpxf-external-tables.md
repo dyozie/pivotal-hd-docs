@@ -8,11 +8,11 @@ Overview
 In this exercise we will create GPXF External tables. 
 We will use `HdfsDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
-##PreRequsities ##
+##Pre-Requsities ##
 
 Please make sure the `.tsv.gz` files from Retail Data set have been loaded into HDFS. Please refer to [Loading Data into HDFS](/getting-started/dataset.html) section in the document for Data Set.
 
-##Create Internal HAWQ tables
+##Create External GPXF tables using HdfsDataFragmenter
 
 Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql]( https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/create_gpxf_tables.sql)
 
@@ -153,6 +153,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
 7. Create table `retail_demo.date_dim_gpxf`
+
     <pre class="terminal">
 	CREATE EXTERNAL TABLE retail_demo.date_dim_gpxf
 	(
