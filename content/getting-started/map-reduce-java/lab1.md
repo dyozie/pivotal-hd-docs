@@ -215,13 +215,16 @@ Note: The step assumes that, you have set up the local machine to run hadoop in 
 ####Upload the input
 
 ```bash
-hadoop fs -put input/orders.tsv /user/gpadmin/sample1/input
+hadoop fs -mkdir -p /user/gpadmin/sample1/input
+cd /pivotal-samples/sample-data
+hadoop fs -put orders.tsv.gz /user/gpadmin/sample1/input
+
 ```
 
 ####Submit the job
 
 ```bash
-hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample1/input/orders.tsv.gz /user/gpadmin/sample1/output
 ```
 
 ####Check the output
@@ -235,6 +238,17 @@ See the output using
 ```bash
 hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
 
+48001    111868.31999999998    6712.0992
+15329    107958.24    6477.4944
+42714    103244.58    6194.6748
+41030    101365.50000000003    6081.93
+50223    100511.64000000001    6030.698400000001
+3106    83566.41    0.0
+57104    77383.62999999996    3095.3451999999997
+23002    73673.65999999999    3683.682999999999
+25703    68282.12    4096.9272
+26178    66836.4    4010.1839999999997
+
 ```
 
 ###Step 8: Running the tutorial on Pivotal HD Cluster
@@ -243,7 +257,7 @@ hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
 Execute the following commands on the development machine.
 
 ```bash
-tar -zcvf sample1.tar.gz target/* input/*
+tar -zcvf sample1.tar.gz target/* /pivotal-samples/sample-data/orders.tsv.gz
 scp sample1.tar.gz gpadmin@DATA_NODE:/home/gpadmin/sample1.tar.gz 
 ```
 Note: Replace the DATA_NODE with the hostname where one of the datanode is running.
@@ -261,7 +275,7 @@ tar -zxvf ../sample1.tar.gz
 
 ```bash
 hadoop fs -mkdir -p /user/gpadmin/sample1/input
-hadoop fs -put input/orders.tsv /user/gpadmin/sample1/input
+hadoop fs -put /pivotal-samples/sample-data/orders.tsv.gz /user/gpadmin/sample1/input
 ```
 
 ####Submit the Job
@@ -286,6 +300,17 @@ See the output using
 
 ```bash
 hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
+
+48001    111868.31999999998    6712.0992
+15329    107958.24    6477.4944
+42714    103244.58    6194.6748
+41030    101365.50000000003    6081.93
+50223    100511.64000000001    6030.698400000001
+3106    83566.41    0.0
+57104    77383.62999999996    3095.3451999999997
+23002    73673.65999999999    3683.682999999999
+25703    68282.12    4096.9272
+26178    66836.4    4010.1839999999997
 
 ```
 
