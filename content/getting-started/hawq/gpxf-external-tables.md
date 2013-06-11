@@ -6,12 +6,12 @@ Overview
 --------
 
 In this exercise we will create GPXF External tables. 
-We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
+We will use `HdfsDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
 
-##Create GPXF External Tables with HDFS Fragmenter
+##Create Internal HAWQ tables
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_tables_hawq.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/create_hawq_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -19,164 +19,153 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	CREATE SCHEMA retail_demo;
 	</pre>
 
-2. Create table `retail_demo.categories_dim_hbase`
+2. Create table `retail_demo.categories_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.categories_dim_hbase
+	CREATE EXTERNAL TABLE retail_demo.categories_dim_gpxf
 	(
-	    --category_id integer,
-	    recordkey integer,
-	    "cf1:category_name" character(400)
+	    category_id integer,
+	    category_name character varying(400)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/categories_dim/categories_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
 		</pre>
 	
-3. Create table `retail_demo.customers_dim_hbase`
+3. Create table `retail_demo.customers_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.customers_dim_hbase
+	CREATE EXTERNAL TABLE retail_demo.customers_dim_gpxf
 	(
-	    -- customer_id integer,
-	    recordkey integer,
-	    "cf1:first_name" TEXT,
-	    "cf1:last_name" TEXT,
-	    "cf1:gender" character(1)
+	    customer_id TEXT,
+	    first_name TEXT,
+	    last_name TEXT,
+	    gender TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-		</pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customers_dim/customers_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-4. Create table `retail_demo.order_lineitems_hbase`
+4. Create table `retail_demo.order_lineitems_gpxf`
 
 	<pre class="terminal">
-	CREATE  EXTERNAL TABLE retail_demo.order_lineitems_hbase
+	CREATE  EXTERNAL TABLE retail_demo.order_lineitems_gpxf
 	(
-	    recordkey integer,
-	    "cf1:order_id" TEXT,
-	    "cf1:order_item_id" TEXT,
-	    "cf1:product_id" TEXT,
-	    "cf1:product_name" TEXT,
-	    "cf1:customer_id" TEXT,
-	    "cf1:store_id" TEXT,
-	    "cf1:item_shipment_status_code" TEXT,
-	    "cf1:order_datetime" TEXT,
-	    "cf1:ship_datetime" TEXT,
-	    "cf1:item_return_datetime" TEXT,
-	    "cf1:item_refund_datetime" TEXT,
-	    "cf1:product_category_id" TEXT,
-	    "cf1:product_category_name" TEXT,
-	    "cf1:payment_method_code" TEXT,
-	    "cf1:tax_amount" TEXT,
-	    "cf1:item_quantity" TEXT,
-	    "cf1:item_price" TEXT,
-	    "cf1:discount_amount" TEXT,
-	    "cf1:coupon_code" TEXT,
-	    "cf1:coupon_amount" TEXT,
-	    "cf1:ship_address_line1" TEXT,
-	    "cf1:ship_address_line2" TEXT,
-	    "cf1:ship_address_line3" TEXT,
-	    "cf1:ship_address_city" TEXT,
-	    "cf1:ship_address_state" TEXT,
-	    "cf1:ship_address_postal_code" TEXT,
-	    "cf1:ship_address_country" TEXT,
-	    "cf1:ship_phone_number" TEXT,
-	    "cf1:ship_customer_name" TEXT,
-	    "cf1:ship_customer_email_address" TEXT,
-	    "cf1:ordering_session_id" TEXT,
-	    "cf1:website_url" TEXT
+	    order_id TEXT,
+	    order_item_id TEXT,
+	    product_id TEXT,
+	    product_name TEXT,
+	    customer_id TEXT,
+	    store_id TEXT,
+	    item_shipment_status_code TEXT,
+	    order_datetime TEXT,
+	    ship_datetime TEXT,
+	    item_return_datetime TEXT,
+	    item_refund_datetime TEXT,
+	    product_category_id TEXT,
+	    product_category_name TEXT,
+	    payment_method_code TEXT,
+	    tax_amount TEXT,
+	    item_quantity TEXT,
+	    item_price TEXT,
+	    discount_amount TEXT,
+	    coupon_code TEXT,
+	    coupon_amount TEXT,
+	    ship_address_line1 TEXT,
+	    ship_address_line2 TEXT,
+	    ship_address_line3 TEXT,
+	    ship_address_city TEXT,
+	    ship_address_state TEXT,
+	    ship_address_postal_code TEXT,
+	    ship_address_country TEXT,
+	    ship_phone_number TEXT,
+	    ship_customer_name TEXT,
+	    ship_customer_email_address TEXT,
+	    ordering_session_id TEXT,
+	    website_url TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-	
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/order_lineitems/order_lineitems.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
 	</pre>
 	
-5. Create table `retail_demo.orders_hbase`
+5. Create table `retail_demo.orders_gpxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.orders_hbase
+	CREATE EXTERNAL TABLE retail_demo.orders_gpxf
 	(
-	    --order_id TEXT,
-	    recordkey integer,
-	    "cf1:order_id" TEXT.
-	    "cf1:customer_id" TEXT,
-	    "cf1:store_id" TEXT,
-	    "cf1:order_datetime" TEXT,
-	    "cf1:ship_completion_datetime" TEXT,
-	    "cf1:return_datetime" TEXT,
-	    "cf1:refund_datetime" TEXT,
-	    "cf1:payment_method_code" TEXT,
-	    "cf1:total_tax_amount" TEXT,
-	    "cf1:total_paid_amount" TEXT,
-	    "cf1:total_item_quantity" TEXT,
-	    "cf1:total_discount_amount" TEXT,
-	    "cf1:coupon_code" TEXT,
-	    "cf1:coupon_amount" TEXT,
-	    "cf1:order_canceled_flag" TEXT,
-	    "cf1:has_returned_items_flag" TEXT,
-	    "cf1:has_refunded_items_flag" TEXT,
-	    "cf1:fraud_code" TEXT,
-	    "cf1:fraud_resolution_code" TEXT,
-	    "cf1:billing_address_line1" TEXT,
-	    "cf1:billing_address_line2" TEXT,
-	    "cf1:billing_address_line3" TEXT,
-	    "cf1:billing_address_city" TEXT,
-	    "cf1:billing_address_state" TEXT,
-	    "cf1:billing_address_postal_code" TEXT,
-	    "cf1:billing_address_country" TEXT,
-	    "cf1:billing_phone_number" TEXT,
-	    "cf1:customer_name" TEXT,
-	    "cf1:customer_email_address" TEXT,
-	    "cf1:ordering_session_id" TEXT,
-	    "cf1:website_url" TEXT
+	    order_id TEXT,
+	    customer_id TEXT,
+	    store_id TEXT,
+	    order_datetime TEXT,
+	    ship_completion_datetime TEXT,
+	    return_datetime TEXT,
+	    refund_datetime TEXT,
+	    payment_method_code TEXT,
+	    total_tax_amount TEXT,
+	    total_paid_amount TEXT,
+	    total_item_quantity TEXT,
+	    total_discount_amount TEXT,
+	    coupon_code TEXT,
+	    coupon_amount TEXT,
+	    order_canceled_flag TEXT,
+	    has_returned_items_flag TEXT,
+	    has_refunded_items_flag TEXT,
+	    fraud_code TEXT,
+	    fraud_resolution_code TEXT,
+	    billing_address_line1 TEXT,
+	    billing_address_line2 TEXT,
+	    billing_address_line3 TEXT,
+	    billing_address_city TEXT,
+	    billing_address_state TEXT,
+	    billing_address_postal_code TEXT,
+	    billing_address_country TEXT,
+	    billing_phone_number TEXT,
+	    customer_name TEXT,
+	    customer_email_address TEXT,
+	    ordering_session_id TEXT,
+	    website_url TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/orders?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-		</pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/orders/orders.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
+	</pre>
 	
-6. Create table `retail_demo.customer_addresses_dim_hbase`
+6. Create table `retail_demo.customer_addresses_dim_gpxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_hbase
+	CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_gpxf
 	(
-	    recordkey integer,
-	    "cf1:customer_id" integer,
-	    -- "cf1:valid_from_timestamp" timestamp without time zone,
-	    "cf1:valid_from_timestamp" TEXT,
-	    -- "cf1:valid_to_timestamp" timestamp without time zone,
-	    "cf1:valid_to_timestamp" TEXT,
-	    "cf1:house_number" TEXT,
-	    "cf1:street_name" TEXT,
-	    "cf1:appt_suite_no" TEXT,
-	    "cf1:city" TEXT,
-	    "cf1:state_code" TEXT,
-	    "cf1:zip_code" TEXT,
-	    "cf1:zip_plus_four" TEXT,
-	    "cf1:country" TEXT,
-	    "cf1:phone_number" TEXT
+	    customer_address_id TEXT,
+	    customer_id TEXT,
+	    valid_from_timestamp TEXT,
+	    valid_to_timestamp TEXT,
+	    house_number TEXT,
+	    street_name TEXT,
+	    appt_suite_no TEXT,
+	    city TEXT,
+	    state_code TEXT,
+	    zip_code TEXT,
+	    zip_plus_four TEXT,
+	    country TEXT,
+	    phone_number TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/customer_addresses_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-		</pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-7. Create table `retail_demo.date_dim_hbase`
+7. Create table `retail_demo.date_dim_gpxf`
     <pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.date_dim_hbase
+	CREATE EXTERNAL TABLE retail_demo.date_dim_gpxf
 	(
-	    recordkey integer,
-	    "cf1:calendar_day" TEXT,
-	    "cf1:reporting_year" integer,
-	    "cf1:reporting_quarter" integer,
-	    "cf1:reporting_month" integer,
-	    "cf1:reporting_week" integer,
-	    "cf1:reporting_dow" integer
+	    calendar_day date,
+	    reporting_year smallint,
+	    reporting_quarter smallint,
+	    reporting_month smallint,
+	    reporting_week smallint,
+	    reporting_dow smallint
 	)
-	LOCATION ('gpxf://pivhdsne:50070/date_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-	    </pre>
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/date_dim/date_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
+	   </pre>
 
 
-8. Create table `retail_demo.email_addresses_dim_hbase`
+8. Create table `retail_demo.email_addresses_dim_gpxf`
 
 	<pre class="terminal">
 	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_gpxf
@@ -187,7 +176,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	LOCATION ('gpxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-9. Create table `retail_demo.payment_methods_hbase`
+9. Create table `retail_demo.payment_methods_gpxf`
 
 	<pre class="terminal">
 	CREATE EXTERNAL TABLE retail_demo.payment_methods_gpxf
@@ -198,20 +187,18 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	LOCATION ('gpxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?Fragmenter=HdfsDataFragmenter')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-10. Create table `retail_demo.products_dim_hbase`
+10. Create table `retail_demo.products_dim_hawq
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.products_dim_hbase
+	CREATE EXTERNAL TABLE retail_demo.products_dim_gpxf
 	(
-	    -- product_id integer,
-	    recordkey integer,
-	    "cf1:category_id" integer,
-	    -- "cf1:price" numeric(15,2),
-	    "cf1:price" TEXT,
-	    "cf1:product_name" TEXT
+	    product_id TEXT,
+	    category_id TEXT,
+	    price TEXT,
+	    product_name TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/products_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('gpxf://pivhdsne:50070/retail_demo/products_dim/products_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	FORMAT 'TEXT' (DELIMITER = E'\t');
       </pre>
 
 ##Verifying Table Creation
@@ -219,28 +206,53 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables have been created
 
 ```bash
+demo=# \dx retail_demo.*_gpxf
+                           List of relations
+   Schema    |            Name             | Type  |  Owner  | Storage  
+-------------+-----------------------------+-------+---------+----------
+ retail_demo | categories_dim_gpxf         | table | gpadmin | external
+ retail_demo | customer_addresses_dim_gpxf | table | gpadmin | external
+ retail_demo | customers_dim_gpxf          | table | gpadmin | external
+ retail_demo | date_dim_gpxf               | table | gpadmin | external
+ retail_demo | email_addresses_dim_gpxf    | table | gpadmin | external
+ retail_demo | order_lineitems_gpxf        | table | gpadmin | external
+ retail_demo | orders_gpxf                 | table | gpadmin | external
+ retail_demo | payment_methods_gpxf        | table | gpadmin | external
+ retail_demo | products_dim_gpxf           | table | gpadmin | external
+(9 rows)
 ```
 
 ##Verifying Data Loaded ##
 
 Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_gpxf_hbase_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/verify_load_gpxf_hbase_tables.sh))
+[verify_load_gpxf_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/verify_load_gpxf_tables.sh))
 
 Output of the sh script should look like
 
 ```bash
-[gpadmin@pivhdsne gpxf_tables]$ ./verify_load_gpxf_hbase_tables.sh							    
+[gpadmin@pivhdsne gpxf_tables]$ ./verify_load_gpxf_tables.sh							    
+        Table Name           |    Count 
+-----------------------------+------------------------
+ customers_dim_hawq          |   401430  
+ categories_dim_hawq         |   56 
+ customer_addresses_dim_hawq |   1130639
+ email_addresses_dim_hawq    |   401430
+ order_lineitems_hawq        |   1024158
+ orders_hawq                 |   512071
+ payment_methods_hawq        |   5
+ products_dim_hawq           |   698911
+-----------------------------+------------------------
 ```
 
 ##Running HAWQ Queries ##
 
 ###Use Case 1 ###
 
-Query `retail_demo.orders_hbase` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+Query `retail_demo.orders_gpxf` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
 
 ```bash
 select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax
-from retail_demo.orders_hbase
+from retail_demo.orders_gpxf
 group by billing_address_postal_code
 order by total desc limit 10;
 ```
