@@ -1,11 +1,11 @@
 ---
-title: HAWQ -- GPXF External Tables - HDFS
+title: HAWQ -- GPXF External Tables - HBase
 ---
 
 Overview 
 --------
 
-In this exercise we will create GPXF External tables. 
+In this exercise we will create GPXF External tables.
 We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
 
@@ -220,6 +220,9 @@ Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables 
 
 ```bash
 ```
+
+##Loading Data into HBase ##
+
 
 ##Verifying Data Loaded ##
 
