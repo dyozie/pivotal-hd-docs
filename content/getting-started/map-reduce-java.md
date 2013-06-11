@@ -12,17 +12,12 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
       <span></span>
    
     <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
-      This tutorial provides instructions to run a ...
+      This tutorial provides instructions to run a java map reduce program to list top ten postal codes by highest revenue .
     </p>
     <ol class="lesson-list"><li>
-        <a href="/getting-started/hawq/lab1-1.html">
-        Lab 1-1
-    
-     </a></li><li><a href="/getting-started/hawq/lab1-2.html">
-      
-        </a><a href="/getting-started/hawq/lab1-2">
-        Lab 1-2
-       </a>
+        <a href="/getting-started/map-reduce-java/lab1.html">
+        Top ten postal codes by highest revenue  
+     </a></li><li>
    </li>
 
 </ol>
@@ -30,21 +25,16 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
 </ol>
 
 <ol class="class-list"><li>
-      <h3>Lab1</h3>
+      <h3>Lab2</h3>
       <span></span>
    
     <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
       This tutorial provides instructions to run a ...
     </p>
     <ol class="lesson-list"><li>
-        <a href="/getting-started/hawq/lab1-1.html">
-        Lab 1-1
-    
-     </a></li><li><a href="/getting-started/hawq/lab1-2.html">
+        </li><li><a href="/getting-started/hawq/lab1-2.html">
       
-        </a><a href="/getting-started/hawq/lab1-2">
-        Lab 1-2
-       </a>
+        </a>
    </li>
 
 </ol>

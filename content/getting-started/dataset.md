@@ -58,6 +58,10 @@ hadoop fs -mkdir /retail_demo/orders
 hadoop fs -put orders.tsv.gz /retail_demo/orders/
 hadoop fs -mkdir /retail_demo/products_dim
 hadoop fs -put products_dim.tsv.gz /retail_demo/products_dim/
+hadoop fs -mkdir /retail_demo/date_dim/
+hadoop fs -put date_dim.tsv.gz /retail_demo/date_dim/
+hadoop fs -mkdir /retail_demo/payment_methods/
+hadoop fs -put payment_methods.tsv.gz /retail_demo/payment_methods/
 ```
 
 Verify Existence of the files with the  command `hdfs fsck` : This is a HDFS filesystem checking utility.
