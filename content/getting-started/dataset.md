@@ -33,26 +33,14 @@ On the Namenode type the following command
 hadoop fs -rm -r /retail_demo
 ```
 
-###Create directory structure  in HDFS
-
-```bash
-hadoop fs -mkdir /retail_demo
-```
-
-For each entity create corresponding folder
-
-```bash
-hadoop fs -mkdir /retail_demo/customer_addresses_dim
-hadoop fs -mkdir /retail_demo/customers_dim
-hadoop fs -mkdir /retail_demo/email_addresses_dim
-hadoop fs -mkdir /retail_demo/order_lineitems
-hadoop fs -mkdir /retail_demo/orders
-hadoop fs -mkdir /retail_demo/products_dim
-hadoop fs -mkdir /retail_demo/categories_dim
-```
-
 
 ###Load the Files into HDFS ###
+
+In the following commands we are doing the following steps
+
+*  Creating a root folder `/retail_demo` in HDFS.
+*  Creating subdirectory for each data type.
+*  Executing `hadoop fs -put` command on each `.tsv.gz` file.
 
 ```bash
 hadoop fs -mkdir /retail_demo
