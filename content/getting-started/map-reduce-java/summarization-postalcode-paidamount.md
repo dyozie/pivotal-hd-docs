@@ -1,9 +1,7 @@
 ---
-title:
+title: Top Ten Postal Codes by Revenue
 ---
 
-Top Ten Postal Codes by Revenue
---------------------------------------------------------------
 The given dataset has information about the Orders. Each Order has postal code of the customer. This use case is a simple example on how to get top ten postal codes by revenue .
 
 * Approximate time: 45 mins
@@ -42,36 +40,25 @@ Import the sample `PostalCodes-PaidAmount-Tax` project into eclipse using the in
 ###Step 3: Understand the Data formats
 Data Header is shown below:
 
-```xml
+```java
 order_id  | customer_id | store_id  |   order_datetime       |ship_completion_datetime | 
- 
 return_datetime   |   refund_datetime   | payment_method_code |total_tax_amount | 
-
 total_paid_amount | total_item_quantity | total_discount_amount |coupon_code    | 
-
 coupon_amount | order_canceled_flag | has_returned_items_flag |has_refunded_items_flag | 
-
 fraud_code | fraud_resolution_code | billing_address_line1 |billing_address_line2 |
-
 billing_address_line3 | billing_address_city | billing_address_state |billing_address_postal_code | 
-
 billing_address_country | billing_phone_number | customer_name   |
-
 customer_email_address  | ordering_session_id  | website_url
 ```
  
 
 Data separated by `\t`  is shown below:
 
-```xml
+```java
 8180565407	49711957	69	2010-10-07 08:48:35	2010-10-10 03:01:47
-
 FreeReplacement	0.41300	5.90000	1	0.05000	None	0.00000	N	N	N
-
 7385 CLINTON	Apt 24		INDIANAPOLIS	IN	46201
-
 USA	(105)037-5575	Casey Mahon	Casey.Mahon@sitebilgi.net
-	
 OS22196-563554-06-11957	http://myretailsite.emc.com/product_detail
 ```
 

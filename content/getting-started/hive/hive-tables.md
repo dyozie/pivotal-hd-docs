@@ -221,7 +221,7 @@ Execute the following `create table` commands to create the tables in . You can 
 	  LOCATION '/retail_demo/customer_addresses_dim/';
 	</pre>
 	
-##Load Data into HAWQ tables	 ##
+##Load Data into Hive tables	 ##
 
 Run the following commands on the Hive CLI to load data from a Local File System into Hive. You will use `LOAD` command in the format listed below. It can directed load data in `.tsv.gz` format into a Hive table which has a row format delimited fields set as `\t`
 

@@ -112,11 +112,11 @@ li.expanded, li.collapsed, li.leaf {
 	color: #999;
 	background: #FFF;
 	border-bottom: 1px solid #EEE;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: 600;
 	letter-spacing: 0;
 	padding: 10px 0 10px 10px;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 }
 
 #sub-nav ul > li >  a:hover, #sub-nav ul li ul li a:hover {
