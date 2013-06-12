@@ -31,6 +31,15 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
         </li>
   
      </ol>
+
+<ol class="lesson-list">
+        <li>
+        <a href="/getting-started/hawq/springdata-jdbc.html">
+        Springdata-Jdbc
+        </a>
+        </li>
+  
+     </ol>
 </li>
 </ol>
 
