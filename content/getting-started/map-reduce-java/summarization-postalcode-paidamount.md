@@ -163,8 +163,8 @@ Since we are interested in finding the top ten postal codes by revenue, we will 
 
 We are setting the number of reducers to one, so that, we can calculate the top ten postal codes by revenue. This could reduce the performance if the data is huge. This can be solved by using combiners and chaining the tasks.
 
-###Step 7: Running the tutorial in command line
-The following instructions can be used to run the sample on the Pseudo distributed cluster.
+###Step 7: Running the tutorial in Pivotal Hd Vitual Machine
+The following instructions can be used to run the sample on the Pivotal Hd Vitual Machine.
 
 ####Building the project 
 
