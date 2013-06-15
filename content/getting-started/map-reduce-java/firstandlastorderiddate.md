@@ -92,17 +92,17 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 
 
 ```java
-@Override
-public void reduce(IntWritable key, Iterable<Text> counts, Context context)
-		throws IOException, InterruptedException {
-	StringBuffer temp;
-	Text result = new Text();
-	StringBuffer lastOrderDate = null;
-	StringBuffer firstOrderDate = null;
-	try {
-		firstlastOrderDate = new StringBuffer(lastOrderDate(key, counts));
+    @Override
+    public void reduce(IntWritable key, Iterable<Text> counts, Context context)
+    throws IOException, InterruptedException {
+    StringBuffer temp;
+    Text result = new Text();
+    StringBuffer lastOrderDate = null;
+    StringBuffer firstOrderDate = null;
+        try {
+            firstlastOrderDate = new StringBuffer(lastOrderDate(key, counts));
 	} catch (ParseException e) {
-		e.printStackTrace();
+            e.printStackTrace();
 	}
 	temp = new StringBuffer(key.toString());
 	temp.append("\t");
