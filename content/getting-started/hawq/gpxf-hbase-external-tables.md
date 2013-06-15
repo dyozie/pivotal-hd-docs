@@ -314,54 +314,48 @@ Run the following commands on `psql` hawq shell to verify that the data has been
 
 * Count the number of rows in table `retail_demo.email_addresses_dim_hbase`
 
-	<pre class="terminal">	
-	demo=# select count(*) from retail_demo.email_addresses_dim_hbase;
- 	count  
+	<pre class="terminal">demo=# select count(*) from retail_demo.email_addresses_dim_hbase;
+	count  
 	--------
- 	401430
-	(1 row)						    
-	</pre>
-
+	401430
+	(1 row)</pre>
+	
 * Count the number of rows in table `retail_demo.customer_addresses_dim_hbase`
 
-	<pre class="terminal">
-       demo=# select count("cf1:customer_id") from retail_demo.customer_addresses_dim_hbase;
-       count  
--      --------
-       1130639
-       (1 row)
-	</pre>
-
-* Count the number of rows in table `retail_demo.products_dim_hbase`
-
-	<pre class="terminal">
-	demo=# select count(*) from retail_demo.products_dim_hbase;
- 	count  
+	<pre class="terminal">demo=# select count("cf1:customer_id") from retail_demo.customer_addresses_dim_hbase;
+	count  
 	--------
- 	698911
+	1130639
 	(1 row)
 	</pre>
+	
+* Count the number of rows in table `retail_demo.products_dim_hbase`
 
+	<pre class="terminal">demo=# select count(*) from retail_demo.products_dim_hbase;
+	count  
+	--------
+	698911
+	(1 row)
+	</pre>
+	
 * Count the number of rows in table `retail_demo.customers_dim_hbase`
 
-	<pre class="terminal">
-	demo=# select count(recordkey) from retail_demo.customers_dim_hbase;
-       count  
-       --------
-      401430
-      (1 row)
+	<pre class="terminal">demo=# select count(recordkey) from retail_demo.customers_dim_hbase;
+	count  
+	--------
+	401430
+	(1 row)
 	</pre>
-
+	
 * Count the number of rows in table `retail_demo.orders_hbase`
 
-	<pre class="terminal">
-	demo=# select count(recordkey) from retail_demo.orders_hbase;
-       count  
-       --------
-      401430
-      (1 row)
+	<pre class="terminal">demo=# select count(recordkey) from retail_demo.orders_hbase;
+	count  
+	--------
+	401430
+	(1 row)
 	</pre>
-
+	
 ##Running HAWQ Queries ##
 
 ###Use Case 1 ###
@@ -387,3 +381,5 @@ demo=# select "cf1:billing_address_postal_code", sum("cf1:total_paid_amount"::fl
  26178                           |   66836.4 |  4010.184
 (10 rows)
 ```
+
+This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv
