@@ -163,8 +163,8 @@ Since we are interested in finding the top ten postal codes by revenue, we will 
 
 We are setting the number of reducers to one, so that, we can calculate the top ten postal codes by revenue. This could reduce the performance if the data is huge. This can be solved by using combiners and chaining the tasks.
 
-###Step 7: Running the tutorial in command line
-The following instructions can be used to run the sample on the Pseudo distributed cluster.
+###Step 7: Running the tutorial in Pivotal Hd Vitual Machine
+The following instructions can be used to run the sample on the Pivotal Hd Vitual Machine.
 
 ####Building the project 
 
@@ -181,37 +181,14 @@ Build the project
 mvn clean compile
 mvn -DskipTests package
 ```
-
-####Set the environment
-
-Make sure the following environment variable are set.
-
-```bash
- export HADOOP_HOME=$HOME/hadoop-2.0.3-alpha
- export HADOOP_MAPRED_HOME=$HOME/hadoop-2.0.3-alpha
- export HADOOP_COMMON_HOME=$HOME/hadoop-2.0.3-alpha
- export HADOOP_HDFS_HOME=$HOME/hadoop-2.0.3-alpha
- export YARN_HOME=$HOME/hadoop-2.0.3-alpha
- export HADOOP_CONF_DIR=$HOME/hadoop-2.0.3-alpha/etc/hadoop
- export JAVA_HOME=$HOME/java/jdk1.7.0_17
- export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
-```
-
-Note: The step assumes that, you have set up the local machine to run hadoop in Psuedo distributed mode.
-
 ####Upload the input
+Please refer [here](../dataset.html) for loading data to hdfs. 
 
-```bash
-hadoop fs -mkdir -p /user/gpadmin/sample1/input
-cd /pivotal-samples/sample-data
-hadoop fs -put orders.tsv.gz /user/gpadmin/sample1/input
-
-```
 
 ####Submit the job
 
 ```bash
-hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample1/input/orders.tsv.gz /user/gpadmin/sample1/output
+hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /retail_demo/orders/orders.tsv.gz /output-mr1
 ```
 
 ####Check the output
