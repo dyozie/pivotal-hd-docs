@@ -94,38 +94,27 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 ```java
     @Override
     public void reduce(IntWritable key, Iterable<Text> counts, Context context)
-        throws IOException, InterruptedException {
+    throws IOException, InterruptedException {
     StringBuffer temp;
     Text result = new Text();
     StringBuffer lastOrderDate = null;
     StringBuffer firstOrderDate = null;
-    String flag;
-    ArrayList<String> list = new ArrayList<String>();
-        for (Text t : counts) {
-        list.add(t.toString());
-        }
         try {
-        flag = "first";
-        firstOrderDate = new StringBuffer(lastOrderDate(key, list, flag));
-        flag = "last";
-        lastOrderDate = new StringBuffer(lastOrderDate(key, list, flag));
-        } catch (ParseException e) {
-        e.printStackTrace();
-        }
-        temp = new StringBuffer(key.toString());
-        temp.append("\t");
-        temp.append(lastOrderDate);
-        temp.append("\t");
-        temp.append(firstOrderDate);
-        result.set(temp.toString());
+            firstlastOrderDate = new StringBuffer(lastOrderDate(key, counts));
+	} catch (ParseException e) {
+            e.printStackTrace();
+	}
+	temp = new StringBuffer(key.toString());
+	temp.append("\t");
+	temp.append(firstlastOrderDate);
+	result.set(temp.toString());
 	context.write(NullWritable.get(), result);
 	}
 
-    public static String lastOrderDate(IntWritable key,
-        ArrayList<String> counts, String flag) throws ParseException {
+    public static String lastOrderDatelastOrderDate(IntWritable key, Iterable<Text> counts) throws ParseException {
         ........
 	........
-        return olderDate_Id.replaceAll(",", "\t");
+        return valDate;
 	}
 
 ```

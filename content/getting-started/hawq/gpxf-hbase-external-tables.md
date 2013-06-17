@@ -9,9 +9,9 @@ In this exercise we will create GPXF External tables.
 We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
 
-##Create GPXF External Tables with HDFS Fragmenter
+##Create GPXF External Tables with HBase Fragmenter
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_hbase_tables.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -30,7 +30,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	)
 	LOCATION ('gpxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter')
 	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
-		</pre>
+	</pre>
 	
 3. Create table `retail_demo.customers_dim_hbase`
 
@@ -98,7 +98,6 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	(
 	    --order_id TEXT,
 	    recordkey integer,
-	    "cf1:order_id" TEXT.
 	    "cf1:customer_id" TEXT,
 	    "cf1:store_id" TEXT,
 	    "cf1:order_datetime" TEXT,
@@ -119,7 +118,6 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:fraud_resolution_code" TEXT,
 	    "cf1:billing_address_line1" TEXT,
 	    "cf1:billing_address_line2" TEXT,
-	    "cf1:billing_address_line3" TEXT,
 	    "cf1:billing_address_city" TEXT,
 	    "cf1:billing_address_state" TEXT,
 	    "cf1:billing_address_postal_code" TEXT,
@@ -216,25 +214,148 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 
 ##Verifying Table Creation
 
-Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables have been created
+Execute the following command on HAWQ shell to verify all the `EXTERNAL`  HBase tables have been created
 
 ```bash
+demo=# \dx retail_demo.*hbase
+                            List of relations
+   Schema    |             Name             | Type  |  Owner  | Storage  
+-------------+------------------------------+-------+---------+----------
+ retail_demo | categories_dim_hbase         | table | gpadmin | external
+ retail_demo | customer_addresses_dim_hbase | table | gpadmin | external
+ retail_demo | customers_dim_hbase          | table | gpadmin | external
+ retail_demo | date_dim_hbase               | table | gpadmin | external
+ retail_demo | email_addresses_dim_hbase    | table | gpadmin | external
+ retail_demo | order_lineitems_hbase        | table | gpadmin | external
+ retail_demo | orders_hbase                 | table | gpadmin | external
+ retail_demo | payment_methods_hbase        | table | gpadmin | external
+ retail_demo | products_dim_hbase           | table | gpadmin | external
+(9 rows)
 ```
 
-##Loading Data into HBase ##
+##Create tables in HBase ##
+
+Execute the  Perl Script [create_hbase_tables.pl](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_hbase_tables.pl) to create corresponding tables in HBase. 
+
+The script does the following
+
+*  Runs a foreach loop on `%tables` array
+*  For each element `$table` in `%tables`
+   * Opens HBase shell
+   * Executes `create $table` command 
+   * Closes HBase shell
+
+```bash
+#!/usr/bin/env perl
+my %tables = (
+ "customers_dim",       
+ "categories_dim",        
+ "customer_addresses_dim",
+ "email_addresses_dim",
+ "order_lineitems",
+ "orders",
+ "payment_methods",
+ "products_dim"
+ );
+foreach my $table (%tables){
+  print "$table\n";
+  print "Creating HBase table '$table' ...\n";
+  open HBASE, "| hbase shell" or die $!;
+  print HBASE "create '$table', 'cf1'\n";
+  close HBASE;
+}
+```
+
+##Load Data into HBase ##
+
+###Using importtsv Utility ###
+
+You will use `ImportTsv` utility shipped with HBase to bulk import `.tsv.gz` data into HBase. The command is give in the format `hadoop jar /path/to/hbase-VERSION.jar importtsv`
+
+Execute the following commands
+
+<ol>
+	<li>
+       <p>Import Data into `products_dim` HBase table</p>
+	<pre class="terminal">hadoop jar /usr/lib/gphd/hbase/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar importtsv -libjars /usr/lib/gphd/hbase/lib/guava-11.0.2.jar \
+             - Dimporttsv.columns=HBASE_ROW_KEY,cf1:category_id,cf1:price,cf1:product_name products_dim /retail_demo/products_dim
+	</pre>
+	</li>
+       <li>
+       <p>Import Data into `email_addresses_dim` HBase table</p>
+	<pre class="terminal">hadoop jar /usr/lib/gphd/hbase/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar importtsv -libjars /usr/lib/gphd/hbase/lib/guava-11.0.2.jar \
+            -Dimporttsv.columns=HBASE_ROW_KEY,cf1:email_address email_addresses_dim /retail_demo/email_addresses_dim
+	</pre>
+	</li>
+       <li>
+       <p>Import Data into `customer_addresses_dim` HBase table</p>
+	<pre class="terminal">hadoop jar /usr/lib/gphd/hbase/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar importtsv -libjars /usr/lib/gphd/hbase/lib/guava-11.0.2.jar \
+-Dimporttsv.columns=HBASE_ROW_KEY,cf1:customer_id,cf1:valid_from_timestamp,cf1:valid_to_timestamp,cf1:house_number,cf1:street_name,cf1:appt_suite_no,cf1:city,cf1:state_code,cf1:zip_code,cf1:zip_plus_four,cf1:country,cf1:phone_number customer_addresses_dim /retail_demo/customer_addresses_dim
+	</pre>
+	</li>
+        <li>
+       <p>Import Data into `customer_addresses_dim` HBase table</p>
+	<pre class="terminal">hadoop jar /usr/lib/gphd/hbase/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar importtsv -libjars /usr/lib/gphd/hbase/lib/guava-11.0.2.jar -Dimporttsv.columns=HBASE_ROW_KEY,cf1:first_name,cf1:last_name,cf1:gender customers_dim /retail_demo/customers_dim
+	</pre>
+	</li>
+
+       <li>
+       <p>Import Data into `orders` HBase table</p>
+	<pre class="terminal">
+hadoop jar /usr/lib/gphd/hbase/hbase-0.94.2-gphd-2.0.1.0-SNAPSHOT.jar importtsv -libjars /usr/lib/gphd/hbase/lib/guava-11.0.2.jar -Dimporttsv.columns=HBASE_ROW_KEY,cf1:customer_id,cf1:store_id,cf1:order_datetime,cf1:ship_completion_datetime,cf1:return_datetime,cf1:refund_datetime,cf1:payment_method_code,cf1:total_tax_amount,cf1:total_paid_amount,cf1:total_item_quantity,cf1:total_discount_amount,cf1:coupon_code,cf1:coupon_amount,cf1:order_canceled_flag,cf1:has_returned_items_flag,cf1:has_returned_items_flag,cf1:has_returned_items_flag,cf1:fraud_code,cf1:fraud_resolution_code,cf1:billing_address_line1,cf1:billing_address_line2,cf1:billing_address_city,cf1:billing_address_state,cf1:billing_address_postal_code,cf1:billing_address_country,cf1:billing_phone_number,cf1:customer_name,cf1:customer_email_address,cf1:ordering_session_id,cf1:website_url orders /retail_demo/orders/orders.tsv.gz
+	</pre>
+	</li>
+</ol>
 
 
 ##Verifying Data Loaded ##
 
-Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_gpxf_hbase_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/verify_load_gpxf_hbase_tables.sh))
+Run the following commands on `psql` hawq shell to verify that the data has been successfully loaded.
 
-Output of the sh script should look like
+* Count the number of rows in table `retail_demo.email_addresses_dim_hbase`
 
-```bash
-[gpadmin@pivhdsne gpxf_tables]$ ./verify_load_gpxf_hbase_tables.sh							    
-```
+	<pre class="terminal">demo=# select count(*) from retail_demo.email_addresses_dim_hbase;
+	count  
+	--------
+	401430
+	(1 row)</pre>
+	
+* Count the number of rows in table `retail_demo.customer_addresses_dim_hbase`
 
+	<pre class="terminal">demo=# select count("cf1:customer_id") from retail_demo.customer_addresses_dim_hbase;
+	count  
+	--------
+	1130639
+	(1 row)
+	</pre>
+	
+* Count the number of rows in table `retail_demo.products_dim_hbase`
+
+	<pre class="terminal">demo=# select count(*) from retail_demo.products_dim_hbase;
+	count  
+	--------
+	698911
+	(1 row)
+	</pre>
+	
+* Count the number of rows in table `retail_demo.customers_dim_hbase`
+
+	<pre class="terminal">demo=# select count(recordkey) from retail_demo.customers_dim_hbase;
+	count  
+	--------
+	401430
+	(1 row)
+	</pre>
+	
+* Count the number of rows in table `retail_demo.orders_hbase`
+
+	<pre class="terminal">demo=# select count(recordkey) from retail_demo.orders_hbase;
+	count  
+	--------
+	401430
+	(1 row)
+	</pre>
+	
 ##Running HAWQ Queries ##
 
 ###Use Case 1 ###
@@ -242,25 +363,27 @@ Output of the sh script should look like
 Query `retail_demo.orders_hbase` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
 
 ```bash
-select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax
-from retail_demo.orders_hbase
-group by billing_address_postal_code
-order by total desc limit 10;
+demo=# select "cf1:billing_address_postal_code", sum("cf1:total_paid_amount"::float8) as total, sum("cf1:total_tax_amount"::float8) as tax from retail_demo.orders_hbase                                                                                                                           group by "cf1:billing_address_postal_code" order by total desc limit 10;
 ```
 
 ```bash
- billing_address_postal_code |   total   |    tax    
------------------------------+-----------+-----------
- 48001                       | 111868.32 | 6712.0992
- 15329                       | 107958.24 | 6477.4944
- 42714                       | 103244.58 | 6194.6748
- 41030                       |  101365.5 |   6081.93
- 50223                       | 100511.64 | 6030.6984
- 03106                       |  83566.41 |         0
- 57104                       |  77383.63 | 3095.3452
- 23002                       |  73673.66 |  3683.683
- 25703                       |  68282.12 | 4096.9272
- 26178                       |   66836.4 |  4010.184
+ cf1:billing_address_postal_code |   total   |    tax    
+---------------------------------+-----------+-----------
+ 48001                           | 111868.32 | 6712.0992
+ 15329                           | 107958.24 | 6477.4944
+ 42714                           | 103244.58 | 6194.6748
+ 41030                           |  101365.5 |   6081.93
+ 50223                           | 100511.64 | 6030.6984
+ 03106                           |  83566.41 |         0
+ 57104                           |  77383.63 | 3095.3452
+ 23002                           |  73673.66 |  3683.683
+ 25703                           |  68282.12 | 4096.9272
+ 26178                           |   66836.4 |  4010.184
 (10 rows)
-Time: 15481.221 ms
 ```
+
+<<<<<<< HEAD
+This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase. Finally we created gpxf tables pointing to these HBase tables.
+=======
+This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv
+>>>>>>> 40b73300f18532f3a68260c8b182d8f001666107
