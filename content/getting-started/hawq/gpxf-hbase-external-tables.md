@@ -158,6 +158,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 		</pre>
 		
 7. Create table `retail_demo.date_dim_hbase`
+
     <pre class="terminal">
 	CREATE EXTERNAL TABLE retail_demo.date_dim_hbase
 	(
@@ -382,8 +383,5 @@ demo=# select "cf1:billing_address_postal_code", sum("cf1:total_paid_amount"::fl
 (10 rows)
 ```
 
-<<<<<<< HEAD
+
 This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase. Finally we created gpxf tables pointing to these HBase tables.
-=======
-This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv
->>>>>>> 40b73300f18532f3a68260c8b182d8f001666107
