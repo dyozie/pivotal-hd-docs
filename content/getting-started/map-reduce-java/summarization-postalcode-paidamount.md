@@ -35,7 +35,7 @@ This will create pivotal-samples directory.
 
 ###Step 2: Importing the project to Eclipse IDE
 
-Import the sample `PostalCodes-PaidAmount-Tax` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+Import the sample `taxpaid_by_postalcode` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
 
 ###Step 3: Understand the Data formats
 Data Header is shown below:
@@ -163,8 +163,8 @@ Since we are interested in finding the top ten postal codes by revenue, we will 
 
 We are setting the number of reducers to one, so that, we can calculate the top ten postal codes by revenue. This could reduce the performance if the data is huge. This can be solved by using combiners and chaining the tasks.
 
-###Step 7: Running the tutorial in Pivotal Hd Vitual Machine
-The following instructions can be used to run the sample on the Pivotal Hd Vitual Machine.
+###Step 7: Running the tutorial in Pivotal Hd Virtual Machine
+The following instructions can be used to run the sample on the Pivotal Hd Virtual Machine.
 
 ####Building the project 
 
@@ -173,7 +173,7 @@ Go to the project directory
 ```bash
 cd  pivotal-samples
 ls
-cd PostalCodes-PaidAmount-Tax
+cd taxpaid_by_postalcode
 ```
 Build the project
 
@@ -188,7 +188,7 @@ Please refer [here](../dataset.html) for loading data to hdfs.
 ####Submit the job
 
 ```bash
-hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /retail_demo/orders/orders.tsv.gz /output-mr1
+hadoop jar target/taxpaid_by_postalcode-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /retail_demo/orders/orders.tsv.gz /output-mr1
 ```
 
 ####Check the output
@@ -231,8 +231,8 @@ Login to datanode and extract the `sample1.tar.gz` to a directory. This will cre
 
 ```bash
 cd /home/gpadmin
-mkdir PostalCodes-PaidAmount-Tax
-cd PostalCodes-PaidAmount-Tax
+mkdir taxpaid_by_postalcode
+cd taxpaid_by_postalcode
 tar -zxvf ../sample1.tar.gz 
 ```
 ####Upload the datasets to HDFS
@@ -245,7 +245,7 @@ hadoop fs -put /pivotal-samples/sample-data/orders.tsv.gz /user/gpadmin/sample1/
 ####Submit the Job
 
 ```bash
-hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample1/input /user/gpadmin/sample1/output
+hadoop jar target/taxpaid_by_postalcode-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample1/input /user/gpadmin/sample1/output
 ```
 
 ####Check the output

@@ -35,7 +35,7 @@ This will create pivotal-samples directory.
 
 ###Step 2: Importing the project to Eclipse IDE
 
-Import the sample `CustormerFistLastOrderDate` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
+Import the sample `customer_first_and_last_order_dates` project into eclipse using the instructions given in the [Setting Development Environment](../setting-development.html). 
 
 ###Step 3: Understand the Data formats
 Data Header is shown below:
@@ -123,15 +123,15 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 
 ```java
     Job job = new Job(getConf());
-    job.setJarByClass(CustormerFistLastOrderDateDriver.class);
+    job.setJarByClass(CustomerFirstLastOrderDateDriver.class);
 
     FileInputFormat.setInputPaths(job, new Path(args[0]));
     Path outputPath = new Path(args[1]);
     outputPath.getFileSystem(job.getConfiguration()).delete(outputPath,
 				true);
 
-    job.setMapperClass(CustormerFistLastOrderDateMapper.class);
-    job.setReducerClass(CustormerFistLastOrderDateReducer.class);
+    job.setMapperClass(CustomerFirstLastOrderDateMapper.class);
+    job.setReducerClass(CustomerFirstLastOrderDateReducer.class);
 
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
@@ -145,8 +145,8 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 ```
 
 
-###Step 8: Running the tutorial in Pivotal Hd Vitual Machine
-The following instructions can be used to run the sample on the Pivotal Hd Vitual Machine.
+###Step 8: Running the tutorial in Pivotal Hd Virtual Machine
+The following instructions can be used to run the sample on the Pivotal Hd Virtual Machine.
 
 ####Building the project 
 
@@ -155,7 +155,7 @@ Go to the project directory
 ```bash
 cd  pivotal-samples
 ls
-cd CustormerFistLastOrderDate
+cd customer_first_and_last_order_dates
 ```
 Build the project
 
@@ -170,7 +170,7 @@ Please refer [here](../dataset.html) for loading data to hdfs.
 ####Submit the job
 
 ```bash
-hadoop jar target/CustormerFistLastOrderDate-1.0.jar com.pivotal.hadoop.CustormerFistLastOrderDateDriver /retail_demo/orders/orders.tsv.gz /output-mr2
+hadoop jar target/customer_first_and_last_order_dates-1.0.jar com.pivotal.hadoop.CustomerFirstLastOrderDateDriver /retail_demo/orders/orders.tsv.gz /output-mr2
 ```
 
 ####Check the output
@@ -182,7 +182,7 @@ Check the output directory in hadoop file system. The output directory should co
 See the output using
 
 ```bash
-hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
+hadoop fs -cat /output-mr2/part-r-00000
 
 137    8228753927    2010-10-02 09:26:40    6952760836    2010-10-10 23:46:16
 274    6952804085    2010-10-10 14:16:48    8038062167    2010-10-14 09:17:33
@@ -217,21 +217,18 @@ Login to datanode and extract the `sample2.tar.gz` to a directory. This will cre
 
 ```bash
 cd /home/gpadmin
-mkdir PostalCodes-PaidAmount-Tax
-cd PostalCodes-PaidAmount-Tax
+mkdir customer_first_and_last_order_dates
+cd customer_first_and_last_order_dates
 tar -zxvf ../sample2.tar.gz 
 ```
-####Upload the datasets to HDFS
 
-```bash
-hadoop fs -mkdir -p /user/gpadmin/sample2/input
-hadoop fs -put /pivotal-samples/sample-data/orders.tsv.gz /user/gpadmin/sample2/input
-```
+####Upload the datasets to HDFS
+Please refer [here](../dataset.html) for loading data to hdfs. 
 
 ####Submit the Job
 
 ```bash
-hadoop jar target/PostalCodes-PaidAmount-Tax-1.0.jar com.pivotal.hadoop.PostalCodesPaidAmountTaxDriver /user/gpadmin/sample2/input /output-mr2
+hadoop jar target/customer_first_and_last_order_dates-1.0.jar com.pivotal.hadoop.CustomerFirstLastOrderDateDriver /retail_demo/orders/orders.tsv.gz /output-mr2
 ```
 
 ####Check the output
