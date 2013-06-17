@@ -301,7 +301,16 @@ h6.subhead {
     margin-bottom: 20px;
     line-height: 1.6;
 }
-
+ol li {
+    list-style-type: disc;
+    font-size: 16px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+ol.no-left-margin {
+    margin-left: -12px;
+}
 
 ul li {
     list-style-type: disc;
