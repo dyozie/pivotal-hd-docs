@@ -2,108 +2,22 @@
 title: Setting up the Development Environment
 ---
 
+Pre-requisites are common for both Pivotal HD virtual machine and Pivotal HD cluster
 
 ##Pre-requisites
-
 The development machine should have the following:
 
 * Desktop with Ubuntu 10.x or Centos 6.x and 4GB RAM
 * JDK 1.6 and above installed and set JAVA_HOME
 * Apache Maven installed and mvn command available in the $PATH variable
 * Eclipse with Maven plugin
-
-##Downloads
-* Download hadoop 2.x version [here](http://hadoop.apache.org/releases.html#Download)
-* Download maven from [here](http://apache.techartifact.com/mirror/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz) and extract it in the home directory
-
-##Set the environment variables
+* Clone the source from the git repository
 
 ```bash
-export MAVEN_HOME=/home/gpadmin/apache-maven-3.0.5
-export HADOOP_HOME=/home/gpadmin/hadoop-2.0.3-alpha
-HADOOP_HOME=/home/gpadmin/hadoop-2.0.3-alpha
-export HADOOP_COMMON_HOME=$HADOOP_HOME
-export HADOOP_HDFS_HOME=$HADOOP_HOME
-export HADOOP_YARN_HOME=$HADOOP_HOME
-export HADOOP_MAPRED_HOME=$HADOOP_HOME
-export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export PATH=$JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$MAVEN_HOME/bin
-```
-
-Note: The variables can be set in .bashrc(Linux) or .bash_profile(MacOS)
-
-##Verify the environment with the following steps
-
-####Create the cluster configuration `hadoop-mycluster.xml` as shown below.
-
-```xml
-<configuration>
-	<property>
-		<name>fs.default.name</name>
-		<value>hdfs://NAMENODE_SERVER:9000</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.address</name>
-		<value>RESOURCE_MANAGER:8032</value>
-	</property>
-</configuration>
-```
-
-Note: Make sure NAMENODE_SERVER and RESOURCE_MANAGER are replaced by host names where namenode and resourcemanager are deployed. Check Greenplum documentation to get these values.
-
-####Create and upload the input to HDFS
-Create a sample file `sample.txt` with the following content:
-
-```xml
-elephant hadoop resource node config cluster submit
-elephant hadoop resource node config cluster submit
-elephant hadoop resource node config cluster submit
-elephant hadoop resource node config cluster submit
-elephant hadoop resource node config cluster submit
-```
-
-```bash
-hadoop fs -put sample.txt /user/gpadmin/input
-```
-
-####(optional)For using third-party libraries, set HADOOP_CLASSPATH 
-
-For example 
-
-```bash
-export HADOOP_CLASSPATH=path1/jar1.jar:path2/jar2.jar
-```
-
-####Submit the job to the cluster
-
-```bash
-hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.0.3-alpha.jar wordcount -conf hadoop-mycluster.xml  /user/gpadmin/input /user/gpadmin/output
-```
-
-####Check the output
-
-You can check that the job is submitted in the Command Center dashboard.
-Monitor the job using Command Center -> MapReduce Job Monitor 
-
-Browse the hadoop file system and check for the output directory. 
-
-The output directory should contain the part-r-0000-file.
-
-Use the following command to see the output.
-
-```bash
-hadoop fs -cat /user/gpadmin/output/part-r-0000
+git clone https://github.com/rajdeepd/pivotal-samples.git
 ```
 
 ##Using Eclipse for running MapReduce programs
-
-
-###Clone the source from git repository
-
-```bash
-git clone http://github.com/rajdeepd/pivotal-samples
-```
 
 ###Importing source code to Eclipse
 
@@ -150,8 +64,8 @@ The output should be available on the output folder.
 
 Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
 
-##Running the tutorial in command line
-The following instructions can be used to the run the sample on the Pivotal Hd vitual machine.
+##Running the tutorial in Pivotal Hd virtual machine
+The following instructions can be used to the run the sample on the Pivotal Hd virtual machine.
 
 ####Building the project 
 
@@ -183,11 +97,8 @@ mvn test
 Submit the job with the following command
 
 ```bash
-```bash
 hadoop jar target/customer_first_and_last_order_dates-1.0.jar com.pivotal.hadoop.CustomerFirstLastOrderDateDriver /retail_demo/orders/orders.tsv.gz /output-mr2
 ```
-```
-
 ####Check the output
 See the output using the following command:
 
