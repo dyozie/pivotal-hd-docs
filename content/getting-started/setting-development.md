@@ -2,7 +2,7 @@
 title: Setting up the Development Environment
 ---
 
-Pre-requisites are common for both Pivotal HD virtual machine and Pivotal HD cluster
+Pre-requisites are common for both Pivotal HD Virtual Machine and Pivotal HD Cluster
 
 ##Pre-requisites
 The development machine should have the following:
@@ -64,8 +64,9 @@ The output should be available on the output folder.
 
 Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
 
-##Running the tutorial in Pivotal Hd virtual machine
-The following instructions can be used to the run the sample on the Pivotal Hd virtual machine.
+##Running the tutorial in Pivotal HD Virtual Machine and Pivotal HD Cluster
+The following instructions can be used to the run the sample on the Pivotal Hd Virtual Machine.
+Same instructions can be used for Pivotal HD Cluster.
 
 ####Building the project 
 
@@ -83,7 +84,7 @@ mvn package
 ```
 
 ####Upload the input
-Please refer [here](../dataset.html) for loading data to hdfs. 
+Please refer [here](./dataset.html) for loading data to hdfs. 
 
 ###Run the tests
 Run the unit tests with the following command.
@@ -104,78 +105,23 @@ See the output using the following command:
 
 ```bash
 hadoop fs -cat /output-mr2/part-r-00000
+
+137    8228753927    2010-10-02 09:26:40    6952760836    2010-10-10 23:46:16
+274    6952804085    2010-10-10 14:16:48    8038062167    2010-10-14 09:17:33
+411    5987514832    2010-10-05 23:49:40    6326675610    2010-10-11 11:32:28
+548    6734479225    2010-10-01 08:31:08    6953064348    2010-10-10 19:20:25
+1096    8181753531    2010-10-07 04:04:26    8181753531    2010-10-07 04:04:26
+1370    6326626699    2010-10-11 06:33:05    7412417661    2010-10-12 23:46:44
+1507    8238655247    2010-10-06 11:01:33    7412451029    2010-10-12 07:37:18
+1644    4876892978    2010-10-13 11:21:59    8038062935    2010-10-14 17:27:29
+2055    7570913900    2010-10-08 23:29:35    4877101631    2010-10-13 21:12:05
+2192    7136693581    2010-10-04 19:48:16    8037933831    2010-10-14 12:35:21
+2603    8502193355    2010-10-09 13:41:22    7412316965    2010-10-12 21:31:32
+2877    8456624891    2010-10-03 01:19:32    6952627429    2010-10-10 12:09:08
+3151    6326825025    2010-10-11 02:11:35    6326825025    2010-10-11 02:11:35
+
 ```
+You have successfully run the sample on Pivotal HD !.
 
-##Running the tutorial on Pivotal HD Cluster
 
-The following instructions will apply to all the tutorials.
-Create the file with the following contents:
-
-```xml
-<configuration>
-    <property>
-        <name>fs.default.name</name>
-            <value>hdfs://localhost:9000</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.address</name>
-        <value>http://localhost:8032</value>
-    </property>
-</configuration>
-```
-
-####Transfer the tutorial code to a node on the cluster. Let us assume it is historyserver.
-
-```bash
-tar -zcvf sample2.tar.gz target/*
-scp sample2.jar history_server_host_name:/home/gpadmin/sample2.tar.gz 
-```
-
-####Create the cluster configuration file
-Login to one of the Pivotal HD Cluster nodes. Let us assume it is the node where history server is running.
-
-Extract the sample into home folder.
-
-```bash
-mkdir sample1
-tar -zxvf ../sample2.tar.gz 
-```
-Create the file hadoop-mycluster.xml with the following contents:
-
-```xml
-<configuration>
-    <property>
-        <name>fs.default.name</name>
-            <value>hdfs://NAMENODE:9000</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.address</name>
-        <value>http://RESOURCE_MANAGER:8032</value>
-    </property>
-</configuration>
-```
-
-Replace NAMENODE and RESOURCE_MANAGER with hostnames of namenode and resourcemanager respectively.
-
-####Upload the complete data set to HDFS
-
-Please refer [here](../dataset.html) for loading data to hdfs.
-
-####Submit the job to the Pivotal HD Cluster
-
-```bash
-hadoop jar target/customer_first_and_last_order_dates-1.0.jar com.pivotal.hadoop.CustomerFirstLastOrderDateDriver /retail_demo/orders/orders.tsv.gz /output-mr2
-```
-
-####Check the output
-
-Verify the job in the hadoop cluster.
-
-Browse the hadoop file system and check the output directory `/output-mr2` contains the part-r-0000-file.
-
-See the output using the following command:
-
-```bash
-hadoop fs -cat /output-mr2/part-r-00000
-```
 
