@@ -23,56 +23,64 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
 3. Create gpxf external table to point to this text file (edit the namenode info accordingly)
 	
 	<pre class="terminal">
-	gpadmin# drop external table demo;
-	gpadmin# CREATE EXTERNAL TABLE demo (val INT)
+	demo# drop external table demo;
+	demo# CREATE EXTERNAL TABLE demo (val INT)
 	LOCATION ('gpxf://pivhdsne:50070/tmp/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
 	</pre>
 
 4. Look at the stats prior to analyze (default stats before collecting stats)
+
+	<pre class="terminal">	
+	demo=#select relpages,reltuples from pg_class where relname='demo';
+	relpages | reltuples
+	----------+-----------
+	1000 |     1e+06
+	(1 row)
+	Time: 4.578 ms
+	</pre>
 	
 	<pre class="terminal">
-	gpadmin=# select val from demo where val= 59999;
-        val
- 	------
-      	5999 
+	demo=#select val from demo where val=59999;
+	val 
+	-------
+	59999
 	(1 row)
+
+	Time: 6985.484 ms
 	</pre>
-
-5. Issue a query on the demo table and notice the time taken
-
-select val from demo where val= 59999;
 
 5. Run analyze on the gpxf table to gather statistics
 	
 	<pre class="terminal">
-	gpadmin=# analyze demo;
+	demo=#analyze demo;
 	ANALYZE
+	Time: 689.777 ms
 	</pre>
 
 6. Look at the stats after running analyze
 	
 	<pre class="terminal">
-	gpadmin=# select relpages,reltuples from pg_class where relname='demo';
- 	relpages | reltuples 
- 	----------+-----------
-      	4096 |     1e+07
+	demo=#select relpages,reltuples from pg_class where relname='demo';
+	relpages | reltuples
+	----------+-----------
+	4096 |     1e+07
 	(1 row)
+
+	Time: 1.450 ms
 	</pre>
 
-7. Issue the same query and observe the time taken the query
-
 	<pre class="terminal">
-	gpadmin=# select val from demo where val= 59999;
-        val
- 	------
-      	5999 
+	demo=#select val from demo where val = 59999;
+	val 
+	-------
+	59999
 	(1 row)
 	</pre>
 
 7. Drop this external table
 	
 	<pre class="terminal">
-	gpadmin# drop external table demo;
+	demo# drop external table demo;
 	</pre>
 
 
