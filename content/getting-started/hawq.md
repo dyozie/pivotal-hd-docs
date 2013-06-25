@@ -41,7 +41,22 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
      </ol>
 </li>
 </ol>
-
+<ol class="class-list">
+  <li>
+      <h3>GPXF Load data into HDFS :DataLoader</h3>
+      <span></span>
+  
+    <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
+      This tutorial provides instructions to Load data into HDFS using DataLoader
+    </p>
+    <ol class="lesson-list"><li>
+        <a href="/getting-started/hawq/data-loader.html">
+        gpxf-Load-data-into-hdfs
+        </a>
+     </li>
+   </ol>
+   </li>
+</ol>
 <ol class="class-list">
   <li>
       <h3>GPXF External Tables : HDFS</h3>
@@ -111,4 +126,5 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
    </li>
    <li></li>
 </ol>
+
 
