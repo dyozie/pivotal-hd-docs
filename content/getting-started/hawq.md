@@ -74,6 +74,41 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
      </li>
    </ol>
    </li>
+  
+</ol>
+<ol class="class-list">
+  <li>
+      <h3>GPXF External Tables predicate push-down : HBase</h3>
+   
+    <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
+      This tutorial provides instructions to showcase GPXF External table's predicate push-down feature
+    </p>
+    <ol class="lesson-list"><li>
+        <a href="/getting-started/hawq/gpxf-hbase-external-enable-filter-pushdown.html">
+        gpxf-external-tables-predicate-push-down-hbase
+        </a>
+     </li>
+   </ol>
+   </li>
+ 
+</ol>
+
+
+
+<ol class="class-list">
+  <li>
+      <h3>GPXF External Tables Statistics</h3>
+   
+    <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
+      This tutorial provides instructions to showcase GPXF External table's Statistics
+    </p>
+    <ol class="lesson-list"><li>
+        <a href="/getting-started/hawq/gpxf-external-tables-statistics.html">
+        gpxf-external-tables-statistics
+        </a>
+     </li>
+   </ol>
+   </li>
    <li></li>
 </ol>
 

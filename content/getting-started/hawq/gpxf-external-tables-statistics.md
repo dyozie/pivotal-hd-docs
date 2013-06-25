@@ -1,0 +1,87 @@
+---
+title: GPXF External Tables Statistics
+---
+
+Overview 
+--------
+
+Analyze command ensures that the query planner has up-to-date statistics about the table. With no statistics or obsolete statistics the planner may make poor decisions during query planning, leading to poor performance on any tables with inaccurate or nonexistant statistics.
+
+In this exercise we will `analyze` command to illustrate Statistics on External Tables.
+
+1. Create a dummy text file for the exercise (containing 1.0E+07 rows)
+
+	<pre class="terminal">
+	$ seq 1 10000000 > /tmp/demo.txt
+	</pre>
+
+2. Load this text file into hdfs
+
+	<pre class="terminal">
+	$ hadoop fs -put /tmp/demo.txt /
+	</pre>
+3. Create gpxf external table to point to this text file (edit the namenode info accordingly)
+	
+	<pre class="terminal">
+	gpadmin# drop external table demo;
+	gpadmin# CREATE EXTERNAL TABLE demo (val INT)
+	LOCATION ('gpxf://pivhdsne:50070/tmp/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
+	</pre>
+
+4. Look at the stats prior to analyze (default stats before collecting stats)
+	
+	<pre class="terminal">
+	gpadmin=# select val from demo where val= 59999;
+        val
+ 	------
+      	5999 
+	(1 row)
+	</pre>
+
+5. Issue a query on the demo table and notice the time taken
+
+select val from demo where val= 59999;
+
+5. Run analyze on the gpxf table to gather statistics
+	
+	<pre class="terminal">
+	gpadmin=# analyze demo;
+	ANALYZE
+	</pre>
+
+6. Look at the stats after running analyze
+	
+	<pre class="terminal">
+	gpadmin=# select relpages,reltuples from pg_class where relname='demo';
+ 	relpages | reltuples 
+ 	----------+-----------
+      	4096 |     1e+07
+	(1 row)
+	</pre>
+
+7. Issue the same query and observe the time taken the query
+
+	<pre class="terminal">
+	gpadmin=# select val from demo where val= 59999;
+        val
+ 	------
+      	5999 
+	(1 row)
+	</pre>
+
+7. Drop this external table
+	
+	<pre class="terminal">
+	gpadmin# drop external table demo;
+	</pre>
+
+
+8. Conclusion
+   With analyze command, the query planner has the statistics to use in query planning. If a table has significantly updated the data, use analyze command to update the statistics on the table using `analyze` command for better query performance.
+
+Notes: 
+By default, gpxf assumes that there are 1 million rows in the data source. By
+analyzing the table, we are giving the hawq engine better statistics about
+source data which will help the optimizer to come with optimal query execution
+plans (decisions related to redistribute vs broadcast, hash agg vs group agg,
+merge join vs hash join vs nested loop etc.)
