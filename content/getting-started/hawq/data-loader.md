@@ -2,17 +2,32 @@
 title: Loading data into HDFS using DataLoader
 ---
 
-#### Load the *.tsv.gz data files into HDFS using DataLoader
-    1. Start services: sudo -u dataloader /usr/local/gphd/dataloader-2.0.1/bin/dataloader.sh start -s
-    2. Open localhost:12380/manager in browser
-    3. Login as gpadmin/password
-    4. Create Job
-    5. Select localfs as source, click + next to retail_demo to select full directory
-    6. Select / on hdfs2 in destination
-    7. Click Submit then Submit on next screen
-    8. Data will copy and show complete on next screen
+Pre-requisites
+-------------
+   * [HAWQ - Internal Tables](./internal-tables.html)
 
-#### Verify that you get the expected result:
+Start DataLoader Services and Login
+------------------------
+   * Start services: sudo -u dataloader /usr/local/gphd/dataloader-2.0.1/bin/dataloader.sh start -s
+   * Open localhost:12380/manager in browser
+   * Login as gpadmin/password
+
+     ![Manager login](/images/gs/dataloader/dl1.png)
+
+Create Job and Submit
+---------------------
+   * Create Job
+   * Select localfs as source, click + next to retail_demo to select full directory
+
+     ![Manager login](/images/gs/dataloader/dl2.png)
+   * Select / on hdfs2 in destination
+   * Click Submit then Submit on next screen
+   * Data will copy and show complete on next screen
+
+     ![Manager login](/images/gs/dataloader/dl3.png)
+
+Verify The Result In Hdfs
+-------------------------
 
     $hdfs fsck /retail_demo -files
 
@@ -42,11 +57,16 @@ title: Loading data into HDFS using DataLoader
      Number of racks:        1
     FSCK ended at Tue Jun 25 07:09:39 EDT 2013 in 11 milliseconds
     
-####Verify one of the tables previously created is able to query this data
+Verify Tables Previously created
+--------------------------------
+We use `verify_data_load.sh` to test data in `retail_demo.retail_demo.orders_hawq` table which is created in [HAWQ - Internal Tables](./internal-tables.html).
 
-    - Run an SQL query using psql, or just ./verify_data_load.sh
+    - Run an SQL query using psql, or just 
 
-#### Why the need for the "customers_dim" directory -- it seems redundant?  
+    ./verify_data_load.sh
+
+#### Note:Why the need for the "customers_dim" directory -- it seems redundant?
+ 
     That will help, later, when we define the Hive external tables and also when
     we run out HBase build import, as both of these operations work with
     directory paths as opposed to files.

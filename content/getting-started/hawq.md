@@ -127,4 +127,3 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
    <li></li>
 </ol>
 
-
