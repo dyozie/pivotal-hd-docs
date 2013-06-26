@@ -4,7 +4,7 @@ title: Loading data into HDFS using DataLoader
 
 Pre-requisites
 -------------
-   * [HAWQ - Internal Tables](./internal-tables.html)
+   * The Dataloader installation can be done on any machine. In this tutorial, we will install the DataLoader in NameNode
 
 Start DataLoader Services and Login
 ------------------------
@@ -57,13 +57,6 @@ Verify The Result In Hdfs
      Number of racks:        1
     FSCK ended at Tue Jun 25 07:09:39 EDT 2013 in 11 milliseconds
     
-Verify Tables Previously created
---------------------------------
-We use `verify_data_load.sh` to test data in `retail_demo.retail_demo.orders_hawq` table which is created in [HAWQ - Internal Tables](./internal-tables.html).
-
-    - Run an SQL query using psql, or just 
-
-    ./verify_data_load.sh
 
 #### Note:Why the need for the "customers_dim" directory -- it seems redundant?
  
