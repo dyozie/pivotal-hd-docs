@@ -25,7 +25,7 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
 	<pre class="terminal">
 	demo# drop external table demo;
 	demo# CREATE EXTERNAL TABLE demo (val INT)
-	LOCATION ('gpxf://pivhdsne:50070/tmp/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
+	LOCATION ('gpxf://pivhdsne:50070/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
 	</pre>
 
 4. Look at the stats prior to analyze (default stats before collecting stats)
