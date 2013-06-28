@@ -8,27 +8,41 @@ Pre-requisites
 
 Start DataLoader Services and Login
 ------------------------
-   * Start services: sudo -u dataloader /usr/local/gphd/dataloader-2.0.1/bin/dataloader.sh start -s
-   * Open localhost:12380/manager in browser
-   * Login as gpadmin/password
 
-     ![Manager login](/images/gs/dataloader/dl1.png)
+####Start DataLoader services:
+
+```bash
+sudo -u dataloader /usr/local/gphd/dataloader-2.0.1/bin/dataloader.sh start -s
+```
+
+Open `localhost:12380/manager` in browser
+
+#### Login to DataLoader
+
+Use gpadmin/password to login 
+![Manager login](/images/gs/dataloader/dl1.png)
 
 Create Job and Submit
 ---------------------
-   * Create Job
-   * Select localfs as source, click + next to retail_demo to select full directory
+
+####Create a Job
+* Click on `Create Job` Menu
+* Select the Data Source to copy from
+* Select `localfs` option in `Source Datastore`
+* Click `+` to `retail_demo` to select full directory
 
      ![Manager login](/images/gs/dataloader/dl2.png)
-   * Select / on hdfs2 in destination
-   * Click Submit then Submit on next screen
-   * Data will copy and show complete on next screen
+* Select `hdfs2://localhost:8020/` in Target Datastore
+* Click `Submit` on screen
 
+Data will be copied from local file system to hdfs
+Once copied, the Dataloader screen will show the job as completed. The `Status` indicates the status of the Dataloader Job as shown below:
      ![Manager login](/images/gs/dataloader/dl3.png)
 
 Verify The Result In Hdfs
 -------------------------
 
+```bash
     $hdfs fsck /retail_demo -files
 
     Connecting to namenode via http://pivhdsne:50070
@@ -56,28 +70,4 @@ Verify The Result In Hdfs
      Number of data-nodes:        1
      Number of racks:        1
     FSCK ended at Tue Jun 25 07:09:39 EDT 2013 in 11 milliseconds
-    
-
-#### Note:Why the need for the "customers_dim" directory -- it seems redundant?
- 
-    That will help, later, when we define the Hive external tables and also when
-    we run out HBase build import, as both of these operations work with
-    directory paths as opposed to files.
-
-    Note on why we're using gzip compression, even though it's not splittable
-    in HDFS: gzip seems to have about a 4x speedup vs. bzip2 for reads.
-
-    [mac:retail_demo_export]$ time zcat orders.tsv.gz | wc -l
-      512071
-
-      real  0m3.179s
-      user  0m2.436s
-      sys 0m0.152s
-    [mac:retail_demo_export]$ gunzip orders.tsv.gz 
-    [mac:retail_demo_export]$ bzip2 orders.tsv 
-    [mac:retail_demo_export]$ time bzcat orders.tsv.bz2 | wc -l
-      512071
-
-      real  0m14.419s
-      user  0m13.593s
-      sys 0m0.283s
+```
