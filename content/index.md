@@ -42,6 +42,12 @@ This site provide developers with resources to get started with Pivotal HD.
         Hive
         </a>
      </li>
+
+      <li>
+        <a href="/getting-started/Pig.html">
+        Pig
+        </a>
+     </li>
      <li>
         <a href="/getting-started/spring-data-hadoop.html">
         Spring Data for Hadoop

@@ -19,7 +19,7 @@ You will use the [Retail Demo Data Set](/getting-started/dataset.html) format fo
    
     	<img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
       	This tutorial provides instructions to run a pig query for a Summarization Pattern.
-      	It lists top ten postal codes by highest revenue .
+      	It lists top ten postal codes by highest revenue.
     	</p>
     	<ol class="lesson-list">
 	<li>
@@ -37,7 +37,7 @@ You will use the [Retail Demo Data Set](/getting-started/dataset.html) format fo
    
     	<img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
       	This tutorial provides instructions to run a pig query for a Minimum Maximum Pattern.
-      	It lists Every customer with their first Order ID/date and last order ID/date .
+      	It lists Every customer with their first Order ID/date and last order ID/date.
     	</p>
     	<ol class="lesson-list">
 	<li>

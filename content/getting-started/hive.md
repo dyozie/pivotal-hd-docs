@@ -32,4 +32,6 @@ Exercises below cover the use cases on how to create hive tables, upload data an
         </li>
      </ol>
 </li>
+<li></li>
 </ol>
+
