@@ -28,6 +28,23 @@ You will use the [Retail Demo Data Set](/getting-started/dataset.html) format fo
      		</a>
 	</li>
 	</ol>
-<li></li>
+
 </li>
 
+<li>
+      <h3>First and Last Order ID/date</h3>
+      <span></span>
+   
+    	<img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
+      	This tutorial provides instructions to run a pig query for a Minimum Maximum Pattern.
+      	It lists Every customer with their first Order ID/date and last order ID/date .
+    	</p>
+    	<ol class="lesson-list">
+	<li>
+       	<a href="/getting-started/pig/firstandlastorderiddate.html">
+        	First and Last Order ID/date of every customer  
+     		</a>
+	</li>
+	</ol>
+<li></li>
+</li>

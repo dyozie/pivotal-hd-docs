@@ -30,6 +30,12 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
         Hive
         </a>
      </li>
+
+      <li>
+        <a href="/getting-started/pig.html">
+        Pig
+        </a>
+     </li>
      <li>
         <a href="/getting-started/spring-data-hadoop.html">
         Spring Data for Hadoop
