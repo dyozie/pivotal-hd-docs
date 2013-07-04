@@ -34,7 +34,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Create relation `orders` from orders.tsv 
 
    <pre class="terminal">
-   grunt>orders = LOAD 'order_data/orders.tsv.gz'
+   grunt>orders = LOAD '/retail_demo/orders/orders.tsv.gz'
    USING PigStorage('\t') AS (
    order_id : long,
    customer_id : int,
