@@ -19,11 +19,11 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Start the `Pig` interactive shell `grunt` by issuing `pig` 
 
    <pre class="terminal">
-   $ Pig
+   $ pig
    grunt> 
    </pre>
 
-* verify `orders.tsv.gz` available in Hdfs 
+* Verify that `orders.tsv.gz` is available in HDFS 
 
    <pre class="terminal">
    grunt> fs -ls /retail_demo/orders
@@ -34,7 +34,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Create relation `orders` from orders.tsv 
 
    <pre class="terminal">
-   grunt>orders = LOAD '/retail_demo/orders/orders.tsv.gz'
+   grunt> orders = LOAD '/retail_demo/orders/orders.tsv.gz'
    USING PigStorage('\t') AS (
    order_id : long,
    customer_id : int,
@@ -74,14 +74,14 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Group the records by `billing_address_postal_code`  
 
    <pre class="terminal">
-   grunt>pcode = GROUP orders BY billing_address_postal_code;
+   grunt> pcode = GROUP orders BY billing_address_postal_code;
    </pre>
-The `group` statement collects together records with the `billing_address_postal_code` as key
+The `group` statement collects together records with  `billing_address_postal_code` as a key
 
 * Calculate sums of `total_paid_amount` and `total_tax_amount` on each `pcode` record 
 
    <pre class="terminal">
-   grunt>revenue_counts = FOREACH pcode GENERATE group as zip,
+   grunt> revenue_counts = FOREACH pcode GENERATE group as zip,
 			SUM(orders.total_paid_amount) as total,SUM(orders.total_tax_amount); 
    </pre>
    `foreach` takes `sum` method and applies them to every record in the `pcode`
@@ -96,14 +96,14 @@ The `group` statement collects together records with the `billing_address_postal
 *  Get the top ten records  
 
    <pre class="terminal">
-   grunt>firstten = limit order_revenue 10;
+   grunt> firstten = limit order_revenue 10;
    </pre>
    The `limit` will return at most 10 records of `order_revenue`
 
 * We can use `dump` to see the output of script  
 	
    <pre class="terminal">
-   dump firstten;
+   grunt> dump firstten;
    (48001,111868.31999999999,6712.0992)
    (15329,107958.24,6477.4944)
    (42714,103244.58,6194.6748)
@@ -133,4 +133,6 @@ The `group` statement collects together records with the `billing_address_postal
    26178    66836.4    4010.1839999999997
    </pre>
 
-##
+##Summary##
+
+In this exercise you used  pig **relational operators** like `group`, `foreach`, `sum`, `order` and `limit` to calculate the top ten postal codes by revenue.
