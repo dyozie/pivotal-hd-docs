@@ -78,7 +78,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
    </pre>
 The `group` statement collects together records with  `billing_address_postal_code` as a key
 
-* Calculate sums of `total_paid_amount` and `total_tax_amount` on each `pcode` record 
+* Calculate sum of `total_paid_amount` and `total_tax_amount` on each `pcode` record 
 
    <pre class="terminal">
    grunt> revenue_counts = FOREACH pcode GENERATE group as zip,

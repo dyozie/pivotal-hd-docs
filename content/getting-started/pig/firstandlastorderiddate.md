@@ -1,24 +1,23 @@
 ---
-title: Recent and oldest order date/Orderid for every customer
+title: First and Last Order Date / Order Id for each Customer
 ---
 
 Overview 
 --------
-The use case demonstrates using Pig to retrieve the firs and last orders customer has ordered along with the order id's.
+The use case demonstrates using Pig to retrieve the first and last orders customer has ordered along with the order id's.
 The given dataset has information about the Orders. Each Order has customerid, ordered date, orderid and other attributes.
 
 ##Prerequisites ##
 
 *  Pivotal HD is installed 
 *  Single/Multi Node cluster has been started
-*  pivotal-samples have been downloaded from github.
 
 ##Installation ##
 Pig is shipped along with Pivotal HD distribution. You will use the this service to upload and query the data.
 
 ##Using Pig##
 
-* Start the `Pig` interactive shell `grunt` by issuing `pig` 
+* Start the `Pig` interactive shell `grunt` by using command `pig` on terminal
 
    <pre class="terminal">
    $ pig
@@ -34,7 +33,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
    -rw-r--r--   3 gpadmin hadoop   72797064 2013-06-25 10:13 /retail_demo/orders/orders.tsv.gz
    </pre>
 
-* Create relation `orders` from orders.tsv.tz 
+* Create relation `orders` from `orders.tsv.tz` 
 
    <pre class="terminal">
    grunt>orders = LOAD '/retail_demo/orders/orders.tsv.gz'
@@ -72,12 +71,12 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
      website_url : chararray
    );
    </pre>
-Note that Pig processes the compressed file.
+Note that Pig can process the compressed file directly.
 
 * Group records by `customer_id`
 
    <pre class="terminal">
-   records_group =GROUP orders BY customer_id;
+   grunt> records_group = GROUP orders BY customer_id;
    </pre>
 
    The `group` statement groups the records by `customer_id`
@@ -87,31 +86,31 @@ Note that Pig processes the compressed file.
 * Get the recent order using `max` function
 
    <pre class="terminal">
-   recent_order_date = FOREACH records_group GENERATE 
+   grunt> recent_order_date = FOREACH records_group GENERATE 
                        flatten(orders.customer_id) AS customer_id,
-                       flatten(orders.order_id) as order_id,
+                       flatten(orders.order_id) AS order_id,
                        MAX(orders.order_datetime) AS order_datetime;
    </pre>
 
-   We use `flatten` to remove the level of nesting.
+   `flatten` is used to remove the level of nesting from a bag for *orders.customer_id* and *orders.order_id*
 
 * Collect `distinct` records from `recent_order_date`
 
    <pre class="terminal">
-   distinct_order_date = distinct recent_order_date;
+   grunt> distinct_order_date = distinct recent_order_date;
    </pre>
 
 * Join `orders` and `distinct_order_date` by `customer_id`,`order_id`,`order_datetime` .
 
    <pre class="terminal">
-   rowOrder = join orders by (customer_id,order_id,order_datetime),
+   grunt> rowOrder = join orders by (customer_id,order_id,order_datetime),
 	      distinct_order_date by (customer_id,order_id,order_datetime);
    </pre>
 
 * Filter records in `rowOrder`
 
    <pre class="terminal">
-   joined_recent_order_date = filter rowOrder by 
+   grunt> joined_recent_order_date = filter rowOrder by 
                             orders::customer_id == distinct_order_date::customer_id and 
                             orders::order_id == distinct_order_date::order_id and 
                             orders::order_datetime == distinct_order_date::order_datetime;
@@ -120,7 +119,7 @@ Note that Pig processes the compressed file.
 * Project the required fields from `joined_recent_order_date`
 
    <pre class="terminal">
-   resMx = FOREACH joined_recent_order_date GENERATE 
+   grunt> res_max = FOREACH joined_recent_order_date GENERATE 
 	   orders::customer_id,
 	   orders::order_id ,
 	   orders::order_datetime;
@@ -131,7 +130,7 @@ Note that Pig processes the compressed file.
 * Get the oldest orderdate using `min` function
 
    <pre class="terminal">
-   old_order_date = FOREACH records_group GENERATE 
+   grunt> old_order_date = FOREACH records_group GENERATE 
 	            flatten(orders.customer_id) AS customer_id,
                     flatten(orders.order_id) as order_id,
                     MIN(orders.order_datetime) AS order_datetime;
@@ -141,20 +140,20 @@ Note that Pig processes the compressed file.
 * Collect `distinct` records of `old_order_date`
 
    <pre class="terminal">
-   dist_old_order_date = distinct old_order_date;
+   grunt> dist_old_order_date = distinct old_order_date;
    </pre>
 
 * Join `orders` and `dist_old_order_date` by `customer_id`,`order_id`,`order_datetime` .
 
    <pre class="terminal">
-   rowOrdermn = join orders by (customer_id,order_id,order_datetime),
+   grunt> rowOrdermn = join orders by (customer_id,order_id,order_datetime),
 	        dist_old_order_date by (customer_id,order_id,order_datetime);
    </pre> 
 
 * Filter records in `rowOrdermn`
 
    <pre class="terminal">
-   joined_old_order_date = filter rowOrdermn by 
+   grunt> joined_old_order_date = filter rowOrdermn by 
                          orders::customer_id == dist_old_order_date::customer_id and 
                          orders::order_id == dist_old_order_date::order_id and   
                          orders::order_datetime == dist_old_order_date::order_datetime;
@@ -162,18 +161,18 @@ Note that Pig processes the compressed file.
 * project the required fields from `joined_old_order_date`
 
    <pre class="terminal">
-   resMn = FOREACH joined_old_order_date GENERATE 
+   grunt> res_min = FOREACH joined_old_order_date GENERATE 
            orders::customer_id,
            orders::order_id ,
            orders::order_datetime;
    </pre>
 
 #   Join Old Date and Latest Date adOrderId of every Customer #
-* Join `resMn` and `resMn`.
+* Join `res_max` and `res_min`.
 
    <pre class="terminal">
-   result = join resMn by customer_id,
-	    resMx by customer_id; 
+   grunt> result = join res_min by customer_id,
+	    res_max by customer_id; 
    </pre>
 
 *  Get the first ten records  
@@ -205,7 +204,6 @@ Note that Pig processes the compressed file.
    grunt> store firstten into '/user/gpadmin/output2/' ;
    grunt> fs -cat /user/gpadmin/output2/part*
    
-   dump firstten;
    137    8228753927    2010-10-02 09:26:40    137    6952760836    2010-10-10 23:46:16
    274    8228753207    2010-10-02 06:49:05    274    8038062167    2010-10-14 09:17:33
    411    8228659208    2010-10-02 02:45:08    411    6326675610    2010-10-11 11:32:28
