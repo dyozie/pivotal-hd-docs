@@ -9,7 +9,7 @@ In this exercise we will create HAWQ tables and load data into them using the `C
 
 ##Create Internal HAWQ tables
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_tables_hawq.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/create_hawq_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_tables_hawq.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/create_hawq_tables.sql)
 
 1. Create <code>retail_demo</code> Schema
 
@@ -199,12 +199,12 @@ zcat payment_methods.tsv.gz | psql -c "COPY retail_demo.payment_methods_hawq FRO
 zcat date_dim.tsv.gz | psql -c "COPY retail_demo.date_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
 ```
 
-You can also run a perl script [load_hawq_data_perl.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/load_hawq_tables_perl.sh) which will upload all the files from folder with extension `.gz`. 
+You can also run a perl script [load_hawq_data_perl.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/load_hawq_tables_perl.sh) which will upload all the files from folder with extension `.gz`. 
 
 ##Verifying Data loaded ##
 
 Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_hawq_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/hawq_tables/verify_load_hawq_tables.sh)
+[verify_load_hawq_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/verify_load_hawq_tables.sh)
 
 Output of the sh script should look like
 

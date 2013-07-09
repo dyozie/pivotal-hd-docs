@@ -19,7 +19,7 @@ HIVE is shipped along with Pivotal HD distribution. You will use the this servic
 
 ##Create HIVE tables
 
-Execute the following `create table` commands to create the tables in . You can also execute the script [create_hive_tables.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hive/create_hive_tables.sql)
+Execute the following `create table` commands to create the tables in. You can also execute the script [create_hive_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hive/create_hive_tables.sql)
 
 1. Start the `hive` command line interface - cli. 
 

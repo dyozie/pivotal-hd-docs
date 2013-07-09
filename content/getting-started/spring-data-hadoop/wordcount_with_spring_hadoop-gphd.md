@@ -41,7 +41,7 @@ Designing and writing of Mapper and Reducer classes does not change with Hadoop.
 ###Step 1: Clone the source from the git repository
 
 ```bash
-git clone https://github.com/rajdeepd/pivotal-samples.git
+git clone https://github.com/PivotalHD/pivotal-samples.git
 ```
 This will create pivotal-samples directory. Change directory to project directory.
 

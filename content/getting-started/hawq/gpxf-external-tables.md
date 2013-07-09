@@ -14,7 +14,7 @@ Please make sure the `.tsv.gz` files from Retail Data set have been loaded into 
 
 ##Create External GPXF tables using HdfsDataFragmenter
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql]( https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/create_gpxf_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql]( https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_tables/create_gpxf_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -229,7 +229,7 @@ demo=# \dx retail_demo.*_gpxf
 ##Verifying Data Loaded ##
 
 Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_gpxf_tables.sh](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_tables/verify_load_gpxf_tables.sh))
+[verify_load_gpxf_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_tables/verify_load_gpxf_tables.sh))
 
 Output of the sh script should look like
 

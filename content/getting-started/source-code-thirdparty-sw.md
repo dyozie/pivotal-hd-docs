@@ -4,7 +4,7 @@ title: Source Code and Third Party Software
 
 
 ###Source code for the tutorials
-The source code for the tutorials is available [here](https://github.com/rajdeepd/pivotal-samples.git)
+The source code for the tutorials is available [here](https://github.com/PivotalHD/pivotal-samples.git)
 
 ###Third Party Software
 The following software should be installed to run the map-reduce java tutorials:

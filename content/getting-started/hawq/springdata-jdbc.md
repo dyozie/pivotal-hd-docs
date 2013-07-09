@@ -23,12 +23,12 @@ Make sure the table `retail_demo.orders_hawq` has been created and appropriate v
 
 ### Source Code ###
 
-Source code for the sample can be found at [github.com/rajdeepd/pivotal-samples/](https://github.com/rajdeepd/pivotal-samples).
+Source code for the sample can be found at [github.com/PivotalHD/pivotal-samples/](https://github.com/PivotalHD/pivotal-samples).
 
 Clone the github repo into a local directory on the machine running Name Node
 
 ```bash
-$git clone https://github.com/rajdeepd/pivotal-samples
+$git clone https://github.com/PivotalHD/pivotal-samples.git
 ```
 
 The sample source can be found under the directory `pivotal-samples/spring-data-jdbc/spring-jdbc-topten-business-zipcode`

@@ -11,7 +11,7 @@ We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ cr
 
 ##Create GPXF External Tables with HBase Fragmenter
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_hbase_tables.sql](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_hbase_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -236,7 +236,7 @@ demo=# \dx retail_demo.*hbase
 
 ##Create tables in HBase ##
 
-Execute the  Perl Script [create_hbase_tables.pl](https://github.com/rajdeepd/pivotal-samples/blob/master/hawq/gpxf_hbase_tables/create_hbase_tables.pl) to create corresponding tables in HBase. 
+Execute the  Perl Script [create_hbase_tables.pl](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_hbase_tables/create_hbase_tables.pl) to create corresponding tables in HBase. 
 
 The script does the following
 

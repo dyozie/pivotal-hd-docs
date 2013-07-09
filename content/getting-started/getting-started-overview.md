@@ -159,7 +159,7 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
 ##Working with Tutorials
 
 ###Source code for the tutorials
-The source code for the tutorials is available [here](https://github.com/rajdeepd/pivotal-samples.git)
+The source code for the tutorials is available [here](https://github.com/PivotalHD/pivotal-samples.git)
 
 ###Pre-requisites
 The following software should be installed to run the tutorials:

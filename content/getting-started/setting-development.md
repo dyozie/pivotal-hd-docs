@@ -14,7 +14,7 @@ The development machine should have the following:
 * Clone the source from the git repository
 
 ```bash
-git clone https://github.com/rajdeepd/pivotal-samples.git
+git clone https://github.com/PivotalHD/pivotal-samples.git
 ```
 
 ##Using Eclipse for running MapReduce programs
