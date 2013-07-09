@@ -74,37 +74,46 @@ If the files have been successfully loaded your output will be similar to the li
 
 ```bash
 Connecting to namenode via http://pivhdsne:50070
-FSCK started by gpadmin (auth:SIMPLE) from /127.0.0.1 for path /retail_demo at Wed Jun 05 00:46:49 EDT 2013
-/retail_demo <dir>
-/retail_demo/customer_addresses_dim <dir>
-/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz 53995977 bytes, 1 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_-3444967948050158773_3347. Target Replicas is 3 but found 1 replica(s).
-/retail_demo/customers_dim <dir>
-/retail_demo/customers_dim/customers_dim.tsv.gz 4646775 bytes, 1 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_-634814030839628602_3349. Target Replicas is 3 but found 1 replica(s).
-/retail_demo/email_addresses_dim <dir>
-/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz 7760971 bytes, 1 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_4366275706078040799_3351. Target Replicas is 3 but found 1 replica(s).
-/retail_demo/order_lineitems <dir>
-/retail_demo/order_lineitems/order_lineitems.tsv.gz 137780165 bytes, 2 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_-1448686265800988512_3353. Target Replicas is 3 but found 1 replica(s).
- Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_-5238730078283780219_3354. Target Replicas is 3 but found 1 replica(s).
-/retail_demo/orders <dir>
-/retail_demo/orders/orders.tsv.gz 72797064 bytes, 1 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_2747787889934219069_3356. Target Replicas is 3 but found 1 replica(s).
-/retail_demo/products_dim <dir>
-/retail_demo/products_dim/products_dim.tsv.gz 23333203 bytes, 1 block(s):  Under replicated BP-1801932862-127.0.0.1-1365034401630:blk_-8464904072467287261_3358. Target Replicas is 3 but found 1 replica(s).
+FSCK started by gpadmin (auth:SIMPLE) from /127.0.0.1 for path /retail_demo at Tue Jul 09 00:25:59 EDT 2013
+.
+/retail_demo/categories_dim/categories_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_5968091463222355492_2817. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_-4875484741672585545_2819. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/customers_dim/customers_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_-6836584912720581197_2821. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/date_dim/date_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_-2570524376762075821_2823. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_5638230189209458384_2825. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/order_lineitems/order_lineitems.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_1040364891077656135_2827. Target Replicas is 3 but found 1 replica(s).
+
+/retail_demo/order_lineitems/order_lineitems.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_4746464352650439858_2828. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/orders/orders.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_59429671209988123_2830. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/payment_methods/payment_methods.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_6615105348023851323_2832. Target Replicas is 3 but found 1 replica(s).
+.
+/retail_demo/products_dim/products_dim.tsv.gz:  Under replicated BP-1552558461-127.0.0.1-1370125227629:blk_6775814360242838123_2834. Target Replicas is 3 but found 1 replica(s).
 Status: HEALTHY
- Total size:	300314155 B
- Total dirs:	7
- Total files:	6
- Total blocks (validated):	7 (avg. block size 42902022 B)
- Minimally replicated blocks:	7 (100.0 %)
+ Total size:	300332616 B
+ Total dirs:	10
+ Total files:	9
+ Total blocks (validated):	10 (avg. block size 30033261 B)
+ Minimally replicated blocks:	10 (100.0 %)
  Over-replicated blocks:	0 (0.0 %)
- Under-replicated blocks:	7 (100.0 %)
+ Under-replicated blocks:	10 (100.0 %)
  Mis-replicated blocks:		0 (0.0 %)
  Default replication factor:	3
  Average block replication:	1.0
  Corrupt blocks:		0
- Missing replicas:		14 (66.666664 %)
+ Missing replicas:		20 (66.666664 %)
  Number of data-nodes:		1
  Number of racks:		1
-FSCK ended at Wed Jun 05 00:46:49 EDT 2013 in 10 milliseconds
+FSCK ended at Tue Jul 09 00:25:59 EDT 2013 in 17 milliseconds
+
+
+The filesystem under path '/retail_demo' is HEALTHY
 ```
 
 This completes the process of loading retail_demo sample data into HDFS.
