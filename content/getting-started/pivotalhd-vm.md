@@ -26,7 +26,7 @@ Pivotal HD VM is shipped with the following contents:
 
 * HDFS - Hadoop File System, a distributed storage system.
 * YARN - A framework for running distributed applications. MapReduce is one such application.
-* HBase - A columnar, sparsely distributed data base.
+* HBase - A columnar, sparsely distributed database.
 * Hive - A framework for running SQL like queries.
 * Pig - A data flow language somewhat similar to Hive.
 * ZooKeeper - A quorum of servers for configuration management
