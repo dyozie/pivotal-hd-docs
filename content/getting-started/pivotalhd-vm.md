@@ -21,6 +21,20 @@ title: Pivotal HD VM
 *	Start Pivotal HD and HAWQ using the `~/Desktop/start_piv_hd.sh script`
 *	Stop Pivotal HD and HAWQ using the `~/Desktop/stop_piv_hd.sh script`
 
+##Pivotal HD VM contents
+Pivotal HD VM is shipped with the following contents:
+
+* HDFS - Hadoop File System, a distributed storage system.
+* YARN - A framework for running distributed applications. MapReduce is one such application.
+* HBase - A columnar, sparsely distributed data base.
+* Hive - A framework for running SQL like queries.
+* Pig - A data flow language somewhat similar to Hive.
+* ZooKeeper - A quorum of servers for configuration management
+* HAWQ - A massively parallel SQL query engine
+* DataLoader - Data ingestion management tool for HDFS.
+* Sqoop - A tool for importing data from Database to HDFS and vice versa
+* Flume - A scalable data system for importing data importing to Hadoop
+
 __Notes__:
 * 	`sudo` is configured, so the `gpadmin` (default user for this VM) account can run commands via sudo without providing a password, and this can be used to access any of the other system accounts
   (mapred, hdfs, hadoop, etc.)
