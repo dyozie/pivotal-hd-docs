@@ -36,5 +36,5 @@ Pivotal HD VM is shipped with the following contents:
 * Flume - A scalable data system for importing data importing to Hadoop
 
 __Notes__:
-* 	`sudo` is configured, so the `gpadmin` (default user for this VM) account can run commands via sudo without providing a password, and this can be used to access any of the other system accounts
+* 	`sudo` is configured so that the `gpadmin` (default user for this VM) account can run commands via sudo without providing a password, and this can be used to access any of the other system accounts
   (mapred, hdfs, hadoop, etc.)

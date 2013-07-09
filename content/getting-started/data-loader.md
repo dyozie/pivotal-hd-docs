@@ -21,6 +21,6 @@ The guide provides a step by step tutorial on how to start DataLoader,create a j
         Load Retail DataSet to HDFS
         </a>
         </li>
-
+	<li></li>
      </ol>
 <li></li>
