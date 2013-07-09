@@ -15,13 +15,13 @@ title: Spring Data for Hadoop
     </p>
     <ol class="lesson-list">
       <li>
-        <a href="spring-data-hadoop/wordcount_with_spring_hadoop.html">
-          Using Spring Data for Hadoop with Open Source Hadoop  2.0.3 Alpha
+        <a href="spring-data-hadoop/wordcount_with_spring_hadoop-gphd.html">
+          Using Spring Data for Hadoop with Pivotal HD</a>
         </a>
       </li>
       <li>
-        <a href="spring-data-hadoop/wordcount_with_spring_hadoop-gphd.html">
-          Using Spring Data for Hadoop with Pivotal HD</a>
+        <a href="spring-data-hadoop/wordcount_with_spring_hadoop.html">
+          Using Spring Data for Hadoop with Open Source Hadoop  2.0.3 Alpha
       </li>
   </li>
  

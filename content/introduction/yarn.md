@@ -13,7 +13,7 @@ The distributed storage is provided by the HDFS, and the MapReduce provides the 
 
 ##About YARN
 
-RN (Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processing framework. YARN provides a generic framework for writing distributed processing frameworks and applications. It is a sub-project of Apache Hadoop in the ASF.
+YARN (Yet-Another-Resource-Negotiator) is the next-generation Hadoop data-processing framework. YARN provides a generic framework for writing distributed processing frameworks and applications. It is a sub-project of Apache Hadoop in the ASF.
 
 YARN provides the following key changes compared to 1.x:
 
@@ -64,7 +64,9 @@ Clients submit the application requests to the ResourceManager, triggering a ser
 * [5] Node Manager creates the Application Master
 * [6] ApplicationMaster  creates the request for allocation of resources to the Resource Manager. Application Master is responsible for the Job execution till it completes. 
 * [7] The ResourceManager returns a list of containers.
-* [8] Application Master requests the Node Manager to launch the containers for that particular job * [9] Node Manager creates the container. Container executes the client specific code on the container * [10] Application master manages the job execution till the job is complete
+* [8] Application Master requests the Node Manager to launch the containers for that particular job 
+* [9] Node Manager creates the container. Container executes the client specific code on the container 
+* [10] Application master manages the job execution till the job is complete
 * [11] Client asks for Application status report
 
 ###Migrating Applications from Hadoop 1.x

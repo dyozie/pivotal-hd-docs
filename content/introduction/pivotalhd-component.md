@@ -31,9 +31,9 @@ An overview of Pivotal HD components is shown in FIG. 1
 
 * HAWQ - A massively parallel SQL query engine
 
-* DataLoader - A massively parallel SQL query engine
+* DataLoader -  Pivotal's data ingestion management tool for HDFS
 
 * Sqoop - A tool for importing data from Database to HDFS and vice versa 
 
-* Flume - A scalable data system for importing data importing to Hadoop
+* Flume - A scalable data system for importing data to Hadoop
 

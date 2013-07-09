@@ -1,5 +1,5 @@
 ---
-title: Loading data into HDFS using DataLoader
+title: Load Retail DataSet to HDFS
 ---
 
 Pre-requisites
