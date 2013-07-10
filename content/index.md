@@ -44,7 +44,7 @@ This site provide developers with resources to get started with Pivotal HD.
      </li>
 
       <li>
-        <a href="/getting-started/Pig.html">
+        <a href="/getting-started/pig.html">
         Pig
         </a>
      </li>

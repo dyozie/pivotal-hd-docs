@@ -13,6 +13,7 @@ title: Spring Data for Hadoop
     <p class="description">
       These tutorials provide instructions to run Word Count sample using Spring Data for Hadoop on both Open Source Hadoop 2.0.3 alpha and Pivotal HD 1.0
     </p>
+
     <ol class="lesson-list">
       <li>
         <a href="spring-data-hadoop/wordcount_with_spring_hadoop-gphd.html">
@@ -22,8 +23,9 @@ title: Spring Data for Hadoop
       <li>
         <a href="spring-data-hadoop/wordcount_with_spring_hadoop.html">
           Using Spring Data for Hadoop with Open Source Hadoop  2.0.3 Alpha
+        </a>
       </li>
-  </li>
- 
+    </li>
+
 </ol>
 <li></li>
