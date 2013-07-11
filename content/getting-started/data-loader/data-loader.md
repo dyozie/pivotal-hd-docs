@@ -20,24 +20,22 @@ Open `localhost:12380/manager` in browser
 #### Login to DataLoader
 
 Use gpadmin/password to login 
-![Manager login](/images/gs/dataloader/dl1.png)
+![DataLoader](/images/gs/dataloader/dl1.png)
 
 Create Job and Submit
 ---------------------
 
 ####Create a Job
 * Click on `Create Job` Menu
-* Select the Data Source to copy from
 * Select `localfs` option in `Source Datastore`
-* Click `+` to `retail_demo` to select full directory
-
-     ![Manager login](/images/gs/dataloader/dl2.png)
+* Click `+` to `/retail_demo` to select full directory
+![DataLoader](/images/gs/dataloader/dl2.png)
 * Select `hdfs2://localhost:8020/` in Target Datastore
 * Click `Submit` on screen
 
-Data will be copied from local file system to hdfs
+Data will be copied from local file system to HDFS.
 Once copied, the Dataloader screen will show the job as completed. The `Status` indicates the status of the Dataloader Job as shown below:
-     ![Manager login](/images/gs/dataloader/dl3.png)
+![DataLoader](/images/gs/dataloader/dl3.png)
 
 Verify The Result In Hdfs
 -------------------------

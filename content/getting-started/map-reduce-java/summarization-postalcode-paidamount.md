@@ -2,14 +2,14 @@
 title: Top Ten Postal Codes by Revenue
 ---
 
-The given dataset has information about the Orders. Each Order has postal code of the customer. This use case is a simple example on how to get top ten postal codes by revenue .
+The given dataset has information about the Orders. Each Order has postal code of the customer. This use case is a simple example on how to get top ten postal codes by revenue.
 
 * Approximate time: 45 mins
 * Level: Basic
 
 Use case
 --------
-The goal of the exercise is to get top ten postal codes by revenue .
+The goal of the exercise is to get top ten postal codes by revenue.
 
 Pre-requisites
 -------------
@@ -96,11 +96,11 @@ Since we are interested in finding the top ten postal codes by revenue, we will 
     @Override
     protected void reduce(IntWritable key, Iterable<Text> counts,
         Context context) throws IOException, InterruptedException {
-    StringBuffer temp;
-    double total_tax_amount = 0;
-    double total_paid_amount = 0;
-    Text result = new Text();
-    for (Text val : counts) {
+        StringBuffer temp;
+        double total_tax_amount = 0;
+        double total_paid_amount = 0;
+        Text result = new Text();
+        for (Text val : counts) {
         String[] rawTokens = val.toString().split(",");
         StringBuffer tax_amount = new StringBuffer(rawTokens[0]);
         StringBuffer paid_amount = new StringBuffer(rawTokens[1]);
@@ -171,7 +171,7 @@ The following instructions can be used to run the sample on the Pivotal Hd Virtu
 Go to the project directory
 
 ```bash
-cd  pivotal-samples
+cd  pivotal-samples/map­reduce­java
 ls
 cd taxpaid_by_postalcode
 ```
@@ -200,7 +200,7 @@ Check the output directory in hadoop file system. The output directory should co
 See the output using
 
 ```bash
-hadoop fs -cat /user/gpadmin/sample1/output/part-r-00000
+hadoop fs ­-cat /output-mr1/part­r­00000
 
 48001    111868.31999999998    6712.0992
 15329    107958.24    6477.4944

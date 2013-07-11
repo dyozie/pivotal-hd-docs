@@ -125,7 +125,7 @@ Note that Pig can process the compressed file directly.
 	   orders::order_datetime;
    </pre>
 
-###Find the oldest oldest orderdate for each customer
+###Find the oldest order date for each customer
 
 * Get the oldest orderdate using `min` function
 

@@ -1,7 +1,7 @@
 ---
 title: Pig Getting Started
 ---
-The guide provides a set by step tutorial on how to design, build and run Pig queries on Pivotal HD 2.0 distribution.
+The guide provides a step by step tutorial on how to design, build and run Pig queries on Pivotal HD 2.0 distribution.
 
 ### Prerequisites
 

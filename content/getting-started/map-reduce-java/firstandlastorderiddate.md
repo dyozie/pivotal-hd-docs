@@ -9,7 +9,7 @@ The given dataset has information about the Orders. Each Order has cutomer id of
 
 Use case
 --------
-The goal of the exercise is to get Every customer with their first order ID/date and last order ID/date .
+The goal of the exercise is to get every customer with their first order ID/date and last order ID/date .
 
 Pre-requisites
 -------------
@@ -19,8 +19,8 @@ Pre-requisites
 
 Approach
 --------
-*  Understand the Data formats
-*  Decide on the Input and output formats
+*  Understand the data formats
+*  Decide on the input and output formats
 *  Design the Mapper
 *  Design the Reducer
 
@@ -77,13 +77,13 @@ In the Mapper code. we will extract `customer_id` as key and  `order_id` and `or
     @Override
     protected void map(LongWritable offset, Text text, Context context)
     throws IOException, InterruptedException {
-    String[] tokens = text.toString().split("\t");
-    String order_id = tokens[0];
-    String customer_id = tokens[1];
-    String order_datetime = tokens[3];
-    key.set(Integer.parseInt(customer_id));
-    val.set(order_id + "," + order_datetime);
-    context.write(key, val);
+        String[] tokens = text.toString().split("\t");
+        String order_id = tokens[0];
+        String customer_id = tokens[1];
+        String order_datetime = tokens[3];
+        key.set(Integer.parseInt(customer_id));
+        val.set(order_id + "," + order_datetime);
+        context.write(key, val);
     }
 ```
 
@@ -111,7 +111,7 @@ The Reducer is also a simple one similar to the classic wordcount example. In th
 	context.write(NullWritable.get(), result);
 	}
 
-    public static String lastOrderDatelastOrderDate(IntWritable key, Iterable<Text> counts) throws ParseException {
+    public static String lastOrderDate(IntWritable key, Iterable<Text> counts) throws ParseException {
         ........
 	........
         return valDate;

@@ -14,12 +14,14 @@ title: Pivotal HD VM
 
 *	Download the VM (compressed) from: _LOCATION_
 * 	Uncompress using 7z: `7za x ~/VMWare/PIVHDSNE_102_VM.7z`
-    *	7z can be obtained here: `http://www.7-zip.org/`
+*	7z can be obtained here: `http://www.7-zip.org/`
 *	Start the VM by double-clicking the .vmx file within the newly-created `PIVHDSNE_102_VM` directory
 *	Once the VM is booted, log in to the "gpadmin" user account using the password "password" (note: this is also the root password)
-*	Once logged in, you can start up the Firefox web browser to see the Command Center UI at `http://localhost:5000/` since Command Center is started automatically at boot time.
-*	Start Pivotal HD and HAWQ using the `~/Desktop/start_piv_hd.sh script`
-*	Stop Pivotal HD and HAWQ using the `~/Desktop/stop_piv_hd.sh script`
+*	Once logged in, you can start up the Firefox web browser to see the Command Center UI at `http://localhost:5000/` since 
+        Command Center is started automatically at boot time.
+*       We can login to the Command Center "gpadmin" as user and "gpadmin"
+*	Start Pivotal HD and HAWQ using the `~/Desktop/start_piv_hd.sh` script
+*	Stop Pivotal HD and HAWQ using the `~/Desktop/stop_piv_hd.sh` script
 
 ##Pivotal HD VM contents
 Pivotal HD VM is shipped with the following contents:

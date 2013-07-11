@@ -37,7 +37,7 @@ Click `Deselect All` and check the box for the project we are interested in and 
 
 ###Build the project
 Go to package Explorer, select the project and right click to get properties.
-Click `Run As -> Maven Install` to build the project.
+Click `Run As -> Maven install` to build the project.
 
 ###Running the project
 
@@ -68,12 +68,16 @@ Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
 The following instructions can be used to the run the sample on the Pivotal Hd Virtual Machine.
 Same instructions can be used for Pivotal HD Cluster.
 
+Running the mapreduce job requires the services, refer [Installing the VM](./pivotalhd-vm.html) to start services.
+
+
 ####Building the project 
 
 Go to the project directory
 
 ```bash
-cd  pivotal-samples
+cd  pivotal­samples/map­reduce­java
+
 ls
 cd customer_first_and_last_order_dates
 ```
@@ -84,8 +88,13 @@ mvn package
 ```
 
 ####Upload the input
-Please refer [here](./dataset.html) for loading data to hdfs. 
 
+Load [DataSet](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) using `load_data_to_HDFS.sh`
+
+```bash
+cd sample-data
+./load_data_to_HDFS.sh
+```
 ###Run the tests
 Run the unit tests with the following command.
 
