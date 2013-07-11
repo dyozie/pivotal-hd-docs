@@ -19,7 +19,7 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
     	<ol class="lesson-list">
 	<li>
        	<a href="/getting-started/map-reduce-java/summarization-postalcode-paidamount.html">
-        	Top ten postal codes by highest revenue  
+        	Top ten postal codes by highest revenue 
      		</a>
 	</li>
 	</ol>

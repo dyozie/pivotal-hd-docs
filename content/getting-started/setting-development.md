@@ -68,7 +68,7 @@ Go to eclipse Main Menu, Select `Run As -> Junit Test` to run the unit tests
 The following instructions can be used to the run the sample on the Pivotal Hd Virtual Machine.
 Same instructions can be used for Pivotal HD Cluster.
 
-Running the mapreduce job requires the services, refer [Installing the VM](./pivotalhd-vm.html) to start services.
+Running the mapreduce job requires starting Pivotal HD services in Pivotal HD VM, refer to [Installing the VM](./pivotalhd-vm.html) for instructions.
 
 
 ####Building the project 
@@ -89,7 +89,7 @@ mvn package
 
 ####Upload the input
 
-Load [DataSet](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) using `load_data_to_HDFS.sh` in `sample-data`
+Load [DataSet](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) by running `load_data_to_HDFS.sh` in `sample-data` folder
 
 ```bash
 cd sample-data
