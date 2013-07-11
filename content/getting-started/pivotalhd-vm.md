@@ -19,7 +19,7 @@ title: Pivotal HD VM
 *	Once the VM is booted, log in to the "gpadmin" user account using the password "password" (note: this is also the root password)
 *	Once logged in, you can start up the Firefox web browser to see the Command Center UI at `http://localhost:5000/` since 
         Command Center is started automatically at boot time.
-*       We can login to the Command Center "gpadmin" as user and "gpadmin"
+*       Login to the Command Center "gpadmin" as user and "gpadmin" as password
 *	Start Pivotal HD and HAWQ using the `~/Desktop/start_piv_hd.sh` script
 *	Stop Pivotal HD and HAWQ using the `~/Desktop/stop_piv_hd.sh` script
 

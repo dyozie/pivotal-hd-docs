@@ -76,7 +76,7 @@ Running the mapreduce job requires the services, refer [Installing the VM](./piv
 Go to the project directory
 
 ```bash
-cd  pivotal­samples/map­reduce­java
+cd  pivotal-­samples/map­-reduce­-java
 
 ls
 cd customer_first_and_last_order_dates
@@ -89,7 +89,7 @@ mvn package
 
 ####Upload the input
 
-Load [DataSet](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) using `load_data_to_HDFS.sh`
+Load [DataSet](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) using `load_data_to_HDFS.sh` in `sample-data`
 
 ```bash
 cd sample-data

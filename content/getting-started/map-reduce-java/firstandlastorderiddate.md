@@ -153,7 +153,7 @@ The following instructions can be used to run the sample on the Pivotal Hd Virtu
 Go to the project directory
 
 ```bash
-cd  pivotal-samples
+cd  pivotal-samples/map-reduce-java
 ls
 cd customer_first_and_last_order_dates
 ```
