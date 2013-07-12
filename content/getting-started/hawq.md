@@ -51,7 +51,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
     </p>
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/pxf-external-tables.html">
-        gpxf-external-tables-hdfs
+        pxf-external-tables-hdfs
         </a>
      </li>
    </ol>
@@ -68,7 +68,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
     </p>
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/pxf-hbase-external-tables.html">
-        gpxf-external-tables-hbase
+        pxf-external-tables-hbase
         </a>
      </li>
    </ol>
@@ -84,7 +84,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
     </p>
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/pxf-hbase-external-enable-filter-pushdown.html">
-        gpxf-external-tables-predicate-push-down-hbase
+        pxf-external-tables-predicate-push-down-hbase
         </a>
      </li>
    </ol>
@@ -96,7 +96,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
 
 <ol class="class-list">
   <li>
-      <h3>GPXF External Tables Statistics</h3>
+      <h3>PXF External Tables Statistics</h3>
    
     <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
       This tutorial provides instructions to showcase PXF External table's Statistics
