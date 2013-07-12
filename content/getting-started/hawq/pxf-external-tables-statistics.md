@@ -1,5 +1,5 @@
 ---
-title: GPXF External Tables Statistics
+title: PXF External Tables Statistics
 ---
 
 Overview 
@@ -20,12 +20,14 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
 	<pre class="terminal">
 	$ hadoop fs -put /tmp/demo.txt /
 	</pre>
-3. Create gpxf external table to point to this text file (edit the namenode info accordingly)
+3. Create pxf external table to point to this text file (edit the namenode info accordingly)
 	
 	<pre class="terminal">
 	demo# drop external table demo;
 	demo# CREATE EXTERNAL TABLE demo (val INT)
-	LOCATION ('gpxf://pivhdsne:50070/demo.txt?FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer') FORMAT 'TEXT' (DELIMITER = '|');
+	LOCATION ('pxf://pivhdsne:50070/demo.txt?
+        FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer&Accessor=TextFileAccessor&Resolver=TextResolver') 
+        FORMAT 'TEXT' (DELIMITER = '|');
 	</pre>
 
 4. Look at the stats prior to analyze (default stats before collecting stats)
@@ -49,7 +51,7 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
 	Time: 6985.484 ms
 	</pre>
 
-5. Run analyze on the gpxf table to gather statistics
+5. Run analyze on the pxf table to gather statistics
 	
 	<pre class="terminal">
 	demo=#analyze demo;
@@ -88,7 +90,7 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
    With analyze command, the query planner has the statistics to use in query planning. If a table has significantly updated the data, use analyze command to update the statistics on the table using `analyze` command for better query performance.
 
 Notes: 
-By default, gpxf assumes that there are 1 million rows in the data source. By
+By default, pxf assumes that there are 1 million rows in the data source. By
 analyzing the table, we are giving the hawq engine better statistics about
 source data which will help the optimizer to come with optimal query execution
 plans (decisions related to redistribute vs broadcast, hash agg vs group agg,

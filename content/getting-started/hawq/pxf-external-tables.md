@@ -1,20 +1,20 @@
 ---
-title: HAWQ -- GPXF External Tables - HDFS
+title: HAWQ -- PXF External Tables - HDFS
 ---
 
 Overview 
 --------
 
-In this exercise we will create GPXF External tables. 
+In this exercise we will create PXF External tables. 
 We will use `HdfsDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
 ##Pre-Requsities ##
 
 Please make sure the `.tsv.gz` files from Retail Data set have been loaded into HDFS. Please refer to [Loading Data into HDFS](/getting-started/dataset.html) section in the document for Data Set.
 
-##Create External GPXF tables using HdfsDataFragmenter
+##Create External pxf tables using HdfsDataFragmenter
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_tables.sql]( https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_tables/create_gpxf_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_pxf_tables.sql]( https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/create_pxf_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -22,35 +22,38 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	CREATE SCHEMA retail_demo;
 	</pre>
 
-2. Create table `retail_demo.categories_dim_gpxf`
+2. Create table `retail_demo.categories_dim_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.categories_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.categories_dim_pxf
 	(
 	    category_id integer,
 	    category_name character varying(400)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/categories_dim/categories_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
-	FORMAT 'TEXT' (DELIMITER = E'\t');
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/categories_dim/categories_dim.tsv.gz?
+	Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')	
+        FORMAT 'TEXT' (DELIMITER = E'\t');
 		</pre>
 	
-3. Create table `retail_demo.customers_dim_gpxf`
+3. Create table `retail_demo.customers_dim_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.customers_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.customers_dim_pxf
 	(
 	    customer_id TEXT,
 	    first_name TEXT,
 	    last_name TEXT,
 	    gender TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customers_dim/customers_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
-	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/customers_dim/customers_dim.tsv.gz?        
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
+	FORMAT 'TEXT' (DELIMITER = E'\t');	
+        </pre>
 		
-4. Create table `retail_demo.order_lineitems_gpxf`
+4. Create table `retail_demo.order_lineitems_pxf`
 
 	<pre class="terminal">
-	CREATE  EXTERNAL TABLE retail_demo.order_lineitems_gpxf
+	CREATE  EXTERNAL TABLE retail_demo.order_lineitems_pxf
 	(
 	    order_id TEXT,
 	    order_item_id TEXT,
@@ -85,14 +88,15 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    ordering_session_id TEXT,
 	    website_url TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/order_lineitems/order_lineitems.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/order_lineitems/order_lineitems.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');
 	</pre>
 	
-5. Create table `retail_demo.orders_gpxf`
+5. Create table `retail_demo.orders_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.orders_gpxf
+	CREATE EXTERNAL TABLE retail_demo.orders_pxf
 	(
 	    order_id TEXT,
 	    customer_id TEXT,
@@ -126,14 +130,15 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    ordering_session_id TEXT,
 	    website_url TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/orders/orders.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/orders/orders.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');
 	</pre>
 	
-6. Create table `retail_demo.customer_addresses_dim_gpxf`
+6. Create table `retail_demo.customer_addresses_dim_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.customer_addresses_dim_pxf
 	(
 	    customer_address_id TEXT,
 	    customer_id TEXT,
@@ -149,13 +154,14 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    country TEXT,
 	    phone_number TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-7. Create table `retail_demo.date_dim_gpxf`
+7. Create table `retail_demo.date_dim_pxf`
 
     <pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.date_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.date_dim_pxf
 	(
 	    calendar_day date,
 	    reporting_year smallint,
@@ -164,44 +170,48 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    reporting_week smallint,
 	    reporting_dow smallint
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/date_dim/date_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/date_dim/date_dim.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');
 	   </pre>
 
 
-8. Create table `retail_demo.email_addresses_dim_gpxf`
+8. Create table `retail_demo.email_addresses_dim_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_pxf
 	(
 	    customer_id TEXT,
 	    email_address TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-9. Create table `retail_demo.payment_methods_gpxf`
+9. Create table `retail_demo.payment_methods_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.payment_methods_gpxf
+	CREATE EXTERNAL TABLE retail_demo.payment_methods_pxf
 	(
 	    payment_method_id smallint,
 	    payment_method_code character varying(20)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
-10. Create table `retail_demo.products_dim_hawq
+10. Create table `retail_demo.products_dim_pxf`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.products_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.products_dim_pxf
 	(
 	    product_id TEXT,
 	    category_id TEXT,
 	    price TEXT,
 	    product_name TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/products_dim/products_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/products_dim/products_dim.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');
       </pre>
 
@@ -210,31 +220,31 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables have been created
 
 ```bash
-demo=# \dx retail_demo.*_gpxf
+demo=# \dx retail_demo.*_pxf
                            List of relations
    Schema    |            Name             | Type  |  Owner  | Storage  
 -------------+-----------------------------+-------+---------+----------
- retail_demo | categories_dim_gpxf         | table | gpadmin | external
- retail_demo | customer_addresses_dim_gpxf | table | gpadmin | external
- retail_demo | customers_dim_gpxf          | table | gpadmin | external
- retail_demo | date_dim_gpxf               | table | gpadmin | external
- retail_demo | email_addresses_dim_gpxf    | table | gpadmin | external
- retail_demo | order_lineitems_gpxf        | table | gpadmin | external
- retail_demo | orders_gpxf                 | table | gpadmin | external
- retail_demo | payment_methods_gpxf        | table | gpadmin | external
- retail_demo | products_dim_gpxf           | table | gpadmin | external
+ retail_demo | categories_dim_pxf         | table | gpadmin | external
+ retail_demo | customer_addresses_dim_pxf | table | gpadmin | external
+ retail_demo | customers_dim_pxf          | table | gpadmin | external
+ retail_demo | date_dim_pxf               | table | gpadmin | external
+ retail_demo | email_addresses_dim_pxf    | table | gpadmin | external
+ retail_demo | order_lineitems_pxf        | table | gpadmin | external
+ retail_demo | orders_pxf                 | table | gpadmin | external
+ retail_demo | payment_methods_pxf        | table | gpadmin | external
+ retail_demo | products_dim_pxf           | table | gpadmin | external
 (9 rows)
 ```
 
 ##Verifying Data Loaded ##
 
 Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_gpxf_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_tables/verify_load_gpxf_tables.sh))
+[verify_load_pxf_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/verify_load_pxf_tables.sh))
 
 Output of the sh script should look like
 
 ```bash
-[gpadmin@pivhdsne gpxf_tables]$ ./verify_load_gpxf_tables.sh							    
+[gpadmin@pivhdsne pxf_tables]$ ./verify_load_pxf_tables.sh							    
         Table Name           |    Count 
 -----------------------------+------------------------
  customers_dim_hawq          |   401430  
@@ -252,11 +262,11 @@ Output of the sh script should look like
 
 ###Use Case 1 ###
 
-Query `retail_demo.orders_gpxf` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+Query `retail_demo.orders_pxf` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
 
 ```bash
 select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax
-from retail_demo.orders_gpxf
+from retail_demo.orders_pxf
 group by billing_address_postal_code
 order by total desc limit 10;
 ```

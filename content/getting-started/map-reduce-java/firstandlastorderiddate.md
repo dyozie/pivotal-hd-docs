@@ -2,14 +2,14 @@
 title: Every customer with their first order ID/date and last order ID/date
 ---
 
-The given dataset has information about the Orders. Each Order has cutomer id of the customer. This use case is a simple example on how to get every customer with their first order ID/date and last order ID/date .
+The given dataset has information about the Orders. Each Order has cutomer id of the customer. This use case is a simple example on how to get every customer with their first order ID/date and last order ID/date.
 
 * Approximate time: 45 mins
 * Level: Basic
 
 Use case
 --------
-The goal of the exercise is to get every customer with their first order ID/date and last order ID/date .
+The goal of the exercise is to get every customer with their first order ID/date and last order ID/date.
 
 Pre-requisites
 -------------
