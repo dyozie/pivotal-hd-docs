@@ -200,8 +200,8 @@ This will create target directory with `spring-hadoop-wordcount-0.0.1.jar` file
 ####Customize **hadoop-properties** in `resources` directory
 
 ```xml
-wordcount.input.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/input/animals.txt
-wordcount.output.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/output
+wordcount.input.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount/input/animals.txt
+wordcount.output.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount/output
 hd.fs=hdfs://NAMENODE:8020
 #replace NAMENODE with the hostname where NAMENODE is running.
 LIB_DIR=file:///PROJECT_DIR/target
