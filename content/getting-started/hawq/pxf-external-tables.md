@@ -245,16 +245,16 @@ Output of the sh script should look like
 
 ```bash
 [gpadmin@pivhdsne pxf_tables]$ ./verify_load_pxf_tables.sh							    
-        Table Name           |    Count 
+       Table Name           |    Count
 -----------------------------+------------------------
- customers_dim_hawq          |   401430  
- categories_dim_hawq         |   56 
- customer_addresses_dim_hawq |   1130639
- email_addresses_dim_hawq    |   401430
- order_lineitems_hawq        |   1024158
- orders_hawq                 |   512071
- payment_methods_hawq        |   5
- products_dim_hawq           |   698911
+ customers_dim_pxf          |   401430 
+ categories_dim_pxf         |   56
+ customer_addresses_dim_pxf |   1130639
+ email_addresses_dim_pxf    |   401430
+ order_lineitems_pxf        |   1024158
+ orders_pxf                 |   512071
+ payment_methods_pxf        |   5
+ products_dim_pxf           |   698911
 -----------------------------+------------------------
 ```
 
