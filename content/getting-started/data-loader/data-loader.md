@@ -6,10 +6,20 @@ Pre-requisites
 -------------
    * The Dataloader installation can be done on any machine. In this tutorial, we will install the DataLoader in NameNode
 
+
 Start DataLoader Services and Login
 ------------------------
 
 ####Start DataLoader services:
+
+* Check status of the DataLoader
+
+<pre class="terminal">
+sudo /etc/init.d/dataloader-manager status
+sudo /etc/init.d/dataloader-scheduler status
+</pre>
+
+* If the DataLoader is not running, start the DataLoader as shown below:
 
 ```bash
 sudo -u dataloader /usr/local/gphd/dataloader-2.0.1/bin/dataloader.sh start -s
@@ -27,8 +37,10 @@ Create Job and Submit
 
 ####Create a Job
 * Click on `Create Job` Menu
-* Select `localfs` option in `Source Datastore`
-* Click `+` to `/retail_demo` to select full directory
+* Select `localfs` option in `Source Datastore`.
+* Click `/` below to see the list of directories
+* Click `+` to `/retail_demo` to select full directory. 
+Note: If your data is in some other directory, make sure permissions are available for `gpadmin` user
 ![DataLoader](/images/gs/dataloader/dl2.png)
 * Select `hdfs2://localhost:8020/` in Target Datastore
 * Click `Submit` on screen
