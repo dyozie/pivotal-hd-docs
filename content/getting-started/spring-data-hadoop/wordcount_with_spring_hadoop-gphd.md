@@ -392,11 +392,12 @@ public class WordCount {
 ####Customize **hadoop-properties** in `resources` directory
 
 ```xml
-wordcount.input.path=/user/gpadmin/spring-hadoop-wordcount-gphd/input
-wordcount.output.path=/user/gpadmin/spring-hadoop-wordcount-gphd/output
+wordcount.input.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/input
+wordcount.output.path=/user/gpadmin/pivotal-samples/spring-hadoop-wordcount-gphd/output
 hd.fs=hdfs://NAMENODE:8020
-LIB_DIR=file:///PROJECT_DIR/pivotal-samples/spring-hadoop-wordcount-gphd/target
+LIB_DIR=file:///PROJECT_DIR/target
 ```
+Replace NAMENODE with the `hostname` where namenode is running.
 Change the PROJECT_DIR to the `spring-hadoop-wordcount-gphd` project directory.
 
 ####Upload the input

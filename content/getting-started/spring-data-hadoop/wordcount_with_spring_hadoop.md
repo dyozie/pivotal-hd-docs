@@ -67,9 +67,8 @@ The tutorial comes with pom.xml, which has the following entries. This will take
 Build the project using maven
 
 ```bash
-cd spring-hadoop-wordcount`
-mvn clean
-mvn compile package
+cd pivotal-samples/spring-hadoop-wordcount
+mvn clean compile package
 ```
 
 ###Step 2: Importing the project to Eclipse IDE
