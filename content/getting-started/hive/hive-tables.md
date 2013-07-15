@@ -226,15 +226,15 @@ Execute the following `create table` commands to create the tables in. You can a
 Run the following commands on the Hive CLI to load data from a Local File System into Hive. You will use `LOAD` command in the format listed below. It can directed load data in `.tsv.gz` format into a Hive table which has a row format delimited fields set as `\t`
 
 ```bash
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/order_lineitems.tsv.gz' OVERWRITE INTO TABLE retail_demo.order_lineitems_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/orders.tsv.gz' OVERWRITE INTO TABLE retail_demo.orders_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/products_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.products_dim_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/categories_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.categories_dim_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/email_addresses_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.email_addresses_dim_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/date_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.date_dim_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/customers_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.customers_dim_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/payment_methods.tsv.gz' OVERWRITE INTO TABLE retail_demo.payment_methods_hive;
-LOAD DATA LOCAL INPATH '/home/gpadmin/pivotal-samples/sample-data/customer_addresses_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.customer_addresses_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/order_lineitems/order_lineitems.tsv.gz' OVERWRITE INTO TABLE retail_demo.order_lineitems_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/orders/orders.tsv.gz' OVERWRITE INTO TABLE retail_demo.orders_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/products_dim/products_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.products_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/categories_dim/categories_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.categories_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.email_addresses_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/date_dim/date_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.date_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/customers_dim/customers_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.customers_dim_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/payment_methods/payment_methods.tsv.gz' OVERWRITE INTO TABLE retail_demo.payment_methods_hive;
+LOAD DATA LOCAL INPATH '/retail_demo/customer_addresses_dim/customer_addresses_dim.tsv.gz' OVERWRITE INTO TABLE retail_demo.customer_addresses_dim_hive;
 ```
 
 
