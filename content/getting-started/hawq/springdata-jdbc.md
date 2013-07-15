@@ -13,18 +13,16 @@ In this document we will cover the basics of how to get started with using Sprin
 
 ###Use Case
 
-We will be implementing the use case : Top ten Revenue Generating Postal codes
+We will be implementing the use case: Top ten Revenue Generating Postal codes
 
 ### DataSet
 
-You will use the [Retail Demo](/getting-started/dataset.html) format for this Spring JDBC Sample. For this particular sample we will use the same data set as used in [hawq exercise](/getting-started/hawq/internal-tables.html)
-
+You will use the [Retail Demo](/getting-started/dataset.html) dataset for this Spring JDBC Sample.
 Make sure the table `retail_demo.orders_hawq` has been created and appropriate values inserted using `COPY` psql command as specified in the [hawq exercise](/getting-started/hawq/internal-tables.html)
 
 ### Source Code ###
 
 Source code for the sample can be found at [github.com/PivotalHD/pivotal-samples/](https://github.com/PivotalHD/pivotal-samples).
-
 Clone the github repo into a local directory on the machine running Name Node
 
 ```bash
