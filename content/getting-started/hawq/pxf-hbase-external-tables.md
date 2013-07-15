@@ -1,17 +1,17 @@
 ---
-title: HAWQ -- GPXF External Tables - HBase
+title: HAWQ -- PXF External Tables - HBase
 ---
 
 Overview 
 --------
 
-In this exercise we will create GPXF External tables.
+In this exercise we will create PXF External tables.
 We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
 
 
-##Create GPXF External Tables with HBase Fragmenter
+##Create pxf External Tables with HBase Fragmenter
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_gpxf_hbase_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_hbase_tables/create_gpxf_hbase_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_pxf_hbase_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_hbase_tables/create_pxf_hbase_tables.sql)
 
 1. Create <code>retail_demo</code> Schema if it is not already created
 
@@ -28,8 +28,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    recordkey integer,
 	    "cf1:category_name" character(400)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/categories_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 	</pre>
 	
 3. Create table `retail_demo.customers_dim_hbase`
@@ -43,8 +43,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:last_name" TEXT,
 	    "cf1:gender" character(1)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 		</pre>
 		
 4. Create table `retail_demo.order_lineitems_hbase`
@@ -86,8 +86,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:ordering_session_id" TEXT,
 	    "cf1:website_url" TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/order_lineitems?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 	
 	</pre>
 	
@@ -128,8 +128,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:ordering_session_id" TEXT,
 	    "cf1:website_url" TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/orders?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/orders?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 		</pre>
 	
 6. Create table `retail_demo.customer_addresses_dim_hbase`
@@ -153,8 +153,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:country" TEXT,
 	    "cf1:phone_number" TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/customer_addresses_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/customer_addresses_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 		</pre>
 		
 7. Create table `retail_demo.date_dim_hbase`
@@ -170,31 +170,33 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:reporting_week" integer,
 	    "cf1:reporting_dow" integer
 	)
-	LOCATION ('gpxf://pivhdsne:50070/date_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/date_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 	    </pre>
 
 
 8. Create table `retail_demo.email_addresses_dim_hbase`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_gpxf
+	CREATE EXTERNAL TABLE retail_demo.email_addresses_dim_pxf
 	(
 	    customer_id TEXT,
 	    email_address TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/email_addresses_dim/email_addresses_dim.tsv.gz?  
+        Fragmenter=HdfsDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
 9. Create table `retail_demo.payment_methods_hbase`
 
 	<pre class="terminal">
-	CREATE EXTERNAL TABLE retail_demo.payment_methods_gpxf
+	CREATE EXTERNAL TABLE retail_demo.payment_methods_pxf
 	(
 	    payment_method_id smallint,
 	    payment_method_code character varying(20)
 	)
-	LOCATION ('gpxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?Fragmenter=HdfsDataFragmenter')
+	LOCATION ('pxf://pivhdsne:50070/retail_demo/payment_methods/payment_methods.tsv.gz?
+        Fragmenter=HdfsDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
 	FORMAT 'TEXT' (DELIMITER = E'\t');	</pre>
 		
 10. Create table `retail_demo.products_dim_hbase`
@@ -209,8 +211,8 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    "cf1:price" TEXT,
 	    "cf1:product_name" TEXT
 	)
-	LOCATION ('gpxf://pivhdsne:50070/products_dim?FRAGMENTER=HBaseDataFragmenter')
-	FORMAT 'CUSTOM' (formatter='gpxfwritable_import');
+	LOCATION ('pxf://pivhdsne:50070/products_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver')
+	FORMAT 'CUSTOM' (formatter='pxfwritable_import');
       </pre>
 
 ##Verifying Table Creation
@@ -236,7 +238,7 @@ demo=# \dx retail_demo.*hbase
 
 ##Create tables in HBase ##
 
-Execute the  Perl Script [create_hbase_tables.pl](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/gpxf_hbase_tables/create_hbase_tables.pl) to create corresponding tables in HBase. 
+Execute the  Perl Script [create_hbase_tables.pl](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_hbase_tables/create_hbase_tables.pl) to create corresponding tables in HBase. 
 
 The script does the following
 
@@ -384,4 +386,4 @@ demo=# select "cf1:billing_address_postal_code", sum("cf1:total_paid_amount"::fl
 ```
 
 
-This completes the exercises on GPXF tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase. Finally we created gpxf tables pointing to these HBase tables.
+This completes the exercises on pxf tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase. Finally we created pxf tables pointing to these HBase tables.
