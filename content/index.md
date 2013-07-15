@@ -2,7 +2,7 @@
 title: Pivotal HD
 ---
 
-This site provide developers with resources to get started with Pivotal HD. 
+This site provides developers with resources to get started with Pivotal HD. 
 
 <ol class="class-list">
   <li>
@@ -12,11 +12,25 @@ This site provide developers with resources to get started with Pivotal HD.
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      This section gives an overview about BigData problem and Pivotal HD product.
-      It also talks about hadoop and various hadoop versions
+      This section covers HDFS, Yarn and Hive conceptually.
     </p>
-
-  </li>
+     <ol class="lesson-list">
+       <li>
+          <a href="/introduction/hdfs.html">
+          HDFS      
+         </a>
+      </li>
+      <li>
+        <a href="/introduction/yarn.html">
+        YARN
+        </a>
+     </li>
+     <li>
+        <a href="/introduction/hive.html">
+        Hive
+        </a>
+     </li>
+     </ol>  </li>
   <li>
     <a class="title" href="/getting-started-overview.html">
       <h2>Getting Started</h2>
