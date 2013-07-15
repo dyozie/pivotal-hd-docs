@@ -26,7 +26,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Verify that `orders.tsv.gz` is available in HDFS 
 
    <pre class="terminal">
-   grunt> fs -ls /retail_demo/orders
+   grunt> fs -ls /retail_demo/orders;
    Found 1 items
    -rw-r--r--   3 gpadmin hadoop   72797064 2013-06-25 10:13 /retail_demo/orders/orders.tsv.gz
    </pre>

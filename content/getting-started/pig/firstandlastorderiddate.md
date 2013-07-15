@@ -28,7 +28,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * verify `orders.tsv.gz` available in Hdfs 
 
    <pre class="terminal">
-   grunt> fs -ls /retail_demo/orders
+   grunt> fs -ls /retail_demo/orders;
    Found 1 items
    -rw-r--r--   3 gpadmin hadoop   72797064 2013-06-25 10:13 /retail_demo/orders/orders.tsv.gz
    </pre>
@@ -36,7 +36,7 @@ Pig is shipped along with Pivotal HD distribution. You will use the this service
 * Create relation `orders` from `orders.tsv.tz` 
 
    <pre class="terminal">
-   grunt>orders = LOAD '/retail_demo/orders/orders.tsv.gz'
+   grunt> orders = LOAD '/retail_demo/orders/orders.tsv.gz'
      USING PigStorage('\t') AS (
      order_id : long,
      customer_id : int,
