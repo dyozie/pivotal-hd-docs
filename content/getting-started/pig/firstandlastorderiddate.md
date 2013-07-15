@@ -178,14 +178,14 @@ Note that Pig can process the compressed file directly.
 *  Get the first ten records  
 
    <pre class="terminal">
-   grunt>firstten = limit result 10;
+   grunt> firstten = limit result 10;
    </pre>
    The `limit` will return at most 10 records of `result`
 
 * We can use `dump` to see the output of script  
 	
    <pre class="terminal">
-   dump firstten;
+   grunt> dump firstten;
    137    8228753927    2010-10-02 09:26:40    137    6952760836    2010-10-10 23:46:16
    274    8228753207    2010-10-02 06:49:05    274    8038062167    2010-10-14 09:17:33
    411    8228659208    2010-10-02 02:45:08    411    6326675610    2010-10-11 11:32:28
@@ -201,8 +201,8 @@ Note that Pig can process the compressed file directly.
 * Save the output to a file using `store` 
 
    <pre class="terminal">
-   grunt> store firstten into '/user/gpadmin/output2/' ;
-   grunt> fs -cat /user/gpadmin/output2/part*
+   grunt> store firstten into '/user/gpadmin/output2/';
+   grunt> fs -cat /user/gpadmin/output2/part*;
    
    137    8228753927    2010-10-02 09:26:40    137    6952760836    2010-10-10 23:46:16
    274    8228753207    2010-10-02 06:49:05    274    8038062167    2010-10-14 09:17:33
