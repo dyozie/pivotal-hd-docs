@@ -200,7 +200,7 @@ Check the output directory in hadoop file system. The output directory should co
 See the output using
 
 ```bash
-hadoop fs ­-cat /output-mr1/part­r­00000
+hadoop fs -cat /output-mr1/part-r-00000
 
 48001    111868.31999999998    6712.0992
 15329    107958.24    6477.4944
