@@ -2,7 +2,7 @@
 HAWQ: Getting started	
 ---
 
-In this document we will cover the basics of how to get started with using HAWQ to insert and query data from Pivotal HD
+In this document, we will cover the basics of how to get started with using HAWQ to insert and query data from Pivotal HD
 
 ### Prerequisites
 
@@ -11,7 +11,7 @@ In this document we will cover the basics of how to get started with using HAWQ 
 
 ### DataSet
 
-We will use the [..] data set format for our HAWQ Samples
+We will use the [Retail Demo Dataset](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) for HAWQ Samples.
 
 ## Exercises ##
 Exercises below cover the use cases we listed earlier with HAWQ instead of MapReduce
@@ -80,7 +80,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
       <h3>PXF External Tables predicate push-down : HBase</h3>
    
     <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
-      This tutorial provides instructions to showcase PXF External table's predicate push-down feature
+      This tutorial provides instructions to showcase PXF External tables predicate push-down feature
     </p>
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/pxf-hbase-external-enable-filter-pushdown.html">
@@ -99,7 +99,7 @@ Exercises below cover the use cases we listed earlier with HAWQ instead of MapRe
       <h3>PXF External Tables Statistics</h3>
    
     <img src="/images/elephant_rgb_sq.png" alt=""><p class="description">
-      This tutorial provides instructions to showcase PXF External table's Statistics
+      This tutorial provides instructions to showcase PXF External tables Statistics
     </p>
     <ol class="lesson-list"><li>
         <a href="/getting-started/hawq/pxf-external-tables-statistics.html">

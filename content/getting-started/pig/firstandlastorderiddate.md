@@ -79,7 +79,7 @@ Note that Pig can process the compressed file directly.
    grunt> records_group = GROUP orders BY customer_id;
    </pre>
 
-   The `group` statement groups the records by `customer_id`
+   The `group` statement groups the records.
 
 ###Finding the recent order date for the customer
 
@@ -92,7 +92,7 @@ Note that Pig can process the compressed file directly.
                        MAX(orders.order_datetime) AS order_datetime;
    </pre>
 
-   `flatten` is used to remove the level of nesting from a bag for *orders.customer_id* and *orders.order_id*
+   `flatten` is used to remove the level of nesting from a bag.
 
 * Collect `distinct` records from `recent_order_date`
 
@@ -119,7 +119,7 @@ Note that Pig can process the compressed file directly.
 * Project the required fields from `joined_recent_order_date`
 
    <pre class="terminal">
-   grunt> res_max = FOREACH joined_recent_order_date GENERATE 
+   grunt> max_orders_result = FOREACH joined_recent_order_date GENERATE 
 	   orders::customer_id,
 	   orders::order_id ,
 	   orders::order_datetime;
@@ -146,43 +146,43 @@ Note that Pig can process the compressed file directly.
 * Join `orders` and `dist_old_order_date` by `customer_id`,`order_id`,`order_datetime` .
 
    <pre class="terminal">
-   grunt> rowOrdermn = join orders by (customer_id,order_id,order_datetime),
+   grunt> min_order_list = join orders by (customer_id,order_id,order_datetime),
 	        dist_old_order_date by (customer_id,order_id,order_datetime);
    </pre> 
 
-* Filter records in `rowOrdermn`
+* Filter records in `min_order_list`
 
    <pre class="terminal">
-   grunt> joined_old_order_date = filter rowOrdermn by 
+   grunt> joined_old_order_date = filter min_order_list by 
                          orders::customer_id == dist_old_order_date::customer_id and 
                          orders::order_id == dist_old_order_date::order_id and   
                          orders::order_datetime == dist_old_order_date::order_datetime;
    </pre> 
-* project the required fields from `joined_old_order_date`
+* Project the required fields from `joined_old_order_date`
 
    <pre class="terminal">
-   grunt> res_min = FOREACH joined_old_order_date GENERATE 
+   grunt> min_orders_result = FOREACH joined_old_order_date GENERATE 
            orders::customer_id,
            orders::order_id ,
            orders::order_datetime;
    </pre>
 
-#   Join Old Date and Latest Date adOrderId of every Customer #
-* Join `res_max` and `res_min`.
+#   Join Old Date and Latest Date and OrderId of every Customer #
+* Join `max_orders_result` and `min_orders_result`.
 
    <pre class="terminal">
-   grunt> result = join res_min by customer_id,
-	    res_max by customer_id; 
+   grunt> result = join min_orders_result by customer_id,
+	    max_orders_result by customer_id; 
    </pre>
 
-*  Get the first ten records  
+*  Get the first ten records.
 
    <pre class="terminal">
    grunt> firstten = limit result 10;
    </pre>
-   The `limit` will return at most 10 records of `result`
+   The `limit` will return at most 10 records.
 
-* We can use `dump` to see the output of script  
+* We can use `dump` to see the records. 
 	
    <pre class="terminal">
    grunt> dump firstten;
@@ -216,4 +216,9 @@ Note that Pig can process the compressed file directly.
    2192    7136693581    2010-10-04 19:48:16    2192    8037933831    2010-10-14 12:35:21
  
    </pre>
+
+###Conclusion
+The lab demonstrated using `Pig` to retrieve the first and last orders customer.
+
+
 

@@ -6,10 +6,10 @@ Overview
 --------
 
 In this exercise we will create PXF External tables.
-We will use `HBaseDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
+We will use `HBaseDataFragmenter`,`HBaseAccessor` and `HBaseResolver` while specifying the `LOCATION` in the HAWQ create statement.
 
 
-##Create pxf External Tables with HBase Fragmenter
+##Create pxf External Tables
 
 Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_pxf_hbase_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_hbase_tables/create_pxf_hbase_tables.sql)
 
@@ -273,7 +273,7 @@ foreach my $table (%tables){
 
 ###Using importtsv Utility ###
 
-You will use `ImportTsv` utility shipped with HBase to bulk import `.tsv.gz` data into HBase. The command is give in the format `hadoop jar /path/to/hbase-VERSION.jar importtsv`
+You will use `Importtsv` utility shipped with HBase to bulk import `.tsv.gz` data into HBase.
 
 Execute the following commands
 
@@ -384,6 +384,4 @@ demo=# select "cf1:billing_address_postal_code", sum("cf1:total_paid_amount"::fl
  26178                           |   66836.4 |  4010.184
 (10 rows)
 ```
-
-
-This completes the exercises on pxf tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase. Finally we created pxf tables pointing to these HBase tables.
+This completes the exercises on pxf tables with data in HBase. We created the HBase tables, used importtsv to import data from hdfs into HBase.

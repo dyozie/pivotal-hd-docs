@@ -5,7 +5,7 @@ title: HAWQ - Internal Tables
 Overview 
 --------
 
-In this exercise we will create HAWQ tables and load data into them using the `COPY` Command
+In this exercise, we will create HAWQ tables and load data into them using the `COPY` Command
 
 ##Create Internal HAWQ tables
 
@@ -14,7 +14,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 1. Create <code>retail_demo</code> Schema
 
 	<pre class="terminal">
-	CREATE SCHEMA retail_demo;
+        CREATE SCHEMA retail_demo;
 	</pre>
 
 2. Create table `retail_demo.categories_dim_hawq`
@@ -185,7 +185,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 
 ##Load Data into HAWQ tables	 ##
 
-Run the following sql scripts from the `pivotal_samples/sample_data` folder to upload data into HAWQ tables.
+Run the following commands from the `pivotal_samples/sample_data` folder to upload data into HAWQ tables.
 
 ```bash
 zcat customers_dim.tsv.gz | psql -c "COPY retail_demo.customers_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
@@ -203,10 +203,9 @@ You can also run a perl script [load_hawq_data_perl.sh](https://github.com/Pivot
 
 ##Verifying Data loaded ##
 
-Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_hawq_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/verify_load_hawq_tables.sh)
+Run the script [verify_load_hawq_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/verify_load_hawq_tables.sh) to check the count of all the tables in schema `retail_demo`.
 
-Output of the sh script should look like
+Output of the script should look like
 
 ```bash
 [gpadmin@pivhdsne hawq_tables]$ ./verify_load_hawq_tables.sh							    
@@ -225,7 +224,7 @@ Output of the sh script should look like
 
 ##Running HAWQ Queries ##
 
-Query `retail_demo.orders_hawq` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+Issue the following query on `retail_demo.orders_hawq` Table to get the top ten postal codes with a maximum total paid amounts and tax collected for orders.
 
 ```bash
 select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax

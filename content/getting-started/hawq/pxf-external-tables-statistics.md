@@ -7,7 +7,7 @@ Overview
 
 Analyze command ensures that the query planner has up-to-date statistics about the table. With no statistics or obsolete statistics the planner may make poor decisions during query planning, leading to poor performance on any tables with inaccurate or nonexistant statistics.
 
-In this exercise we will `analyze` command to illustrate Statistics on External Tables.
+In this exercise, we will `analyze` command to illustrate Statistics on External Tables.
 
 1. Create a dummy text file for the exercise (containing 1.0E+07 rows)
 
@@ -86,8 +86,8 @@ In this exercise we will `analyze` command to illustrate Statistics on External 
 	</pre>
 
 
-8. Conclusion
-   With analyze command, the query planner has the statistics to use in query planning. If a table has significantly updated the data, use analyze command to update the statistics on the table using `analyze` command for better query performance.
+###Conclusion
+With analyze command, the query planner has the statistics to use in query planning. If a table has significantly updated the data, use analyze command to update the statistics on the table using `analyze` command for better query performance.
 
 Notes: 
 By default, pxf assumes that there are 1 million rows in the data source. By

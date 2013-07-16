@@ -79,7 +79,8 @@ The sample uses `org.springframework.jdbc.core.JdbcTemplate` to access the datas
 </dependency>
 ```
 
-Following step outline the flow of the application login
+
+The following steps outline the flow of application
 
 *  This sample is a Java Application with the main entry point being `BusinessCount`. This class has following methods
 
@@ -140,7 +141,7 @@ public void executeQuery() {
 
 ###Compiling the Sample ###
 
-Sample can be compiled by executing the following `mvn` command from the shell. This will download all the jars this sample has dependencies on.
+Sample can be compiled by executing the following `mvn` command from the shell. This will download all the required jars.
 
 ```bash
 $mvn clean compile
@@ -153,7 +154,7 @@ Sample can be run from within eclipse. *Right click* on `BusinessCount` class an
 
 ###Output ###
 
-The output can be see in the Eclipse console
+The output can be seen in the Eclipse console as shown below.
 
 ```bash
 Returned: [Returned: [{total=111868}{billing_address_postal_code=48001}{tax=6712.099}, {total=107958}{billing_address_postal_code=15329}{tax=6477.4946}, {total=103244}{billing_address_postal_code=42714}{tax=6194.675}, {total=101365}{billing_address_postal_code=41030}{tax=6081.93}, {total=100511}{billing_address_postal_code=50223}{tax=6030.698}, {total=83566}{billing_address_postal_code=03106}{tax=0.0}, {total=77383}{billing_address_postal_code=57104}{tax=3095.3452}, {total=73673}{billing_address_postal_code=23002}{tax=3683.683}, {total=68282}{billing_address_postal_code=25703}{tax=4096.9272}, {total=66836}{billing_address_postal_code=26178}{tax=4010.184}]]

@@ -6,13 +6,13 @@ Overview
 --------
 
 In this exercise we will create PXF External tables. 
-We will use `HdfsDataFragmenter` while specifying the `LOCATION` in the HAWQ create statement.
+We will use `HdfsDataFragmenter`,`TextFileAccessor` and `TextFileResolver` while specifying the `LOCATION` in the HAWQ create statement.
 
 ##Pre-Requsities ##
 
 Please make sure the `.tsv.gz` files from Retail Data set have been loaded into HDFS. Please refer to [Loading Data into HDFS](/getting-started/dataset.html) section in the document for Data Set.
 
-##Create External pxf tables using HdfsDataFragmenter
+##Create External pxf tables
 
 Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_pxf_tables.sql]( https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/create_pxf_tables.sql)
 
@@ -217,7 +217,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 
 ##Verifying Table Creation
 
-Execute the following command on HAWQ shell to verify all the `EXTERNAL` tables have been created
+Execute the following command on HAWQ shell to verify that all the `EXTERNAL` tables have been created
 
 ```bash
 demo=# \dx retail_demo.*_pxf
@@ -238,10 +238,10 @@ demo=# \dx retail_demo.*_pxf
 
 ##Verifying Data Loaded ##
 
-Run the following script to check the count of all the tables in schema `retail_demo`.
-[verify_load_pxf_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/verify_load_pxf_tables.sh))
+Run the [verify_load_pxf_tables.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/verify_load_pxf_tables.sh) script to check the count of all the tables in `retail_demo` schema.
 
-Output of the sh script should look like
+
+Output of the shell script should look like
 
 ```bash
 [gpadmin@pivhdsne pxf_tables]$ ./verify_load_pxf_tables.sh							    
@@ -261,8 +261,7 @@ Output of the sh script should look like
 ##Running HAWQ Queries ##
 
 ###Use Case 1 ###
-
-Query `retail_demo.orders_pxf` to show the  Orders placed and Tax collected based on `billing_address_postal_code` for 10 highest entries.
+Issue the following query on `retail_demo.orders_pxf` Table to get the top ten postal codes with a maximum total paid amounts and tax collected for orders.
 
 ```bash
 select billing_address_postal_code, sum(total_paid_amount::float8) as total, sum(total_tax_amount::float8) as tax

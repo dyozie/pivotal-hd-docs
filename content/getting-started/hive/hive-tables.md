@@ -15,20 +15,27 @@ In this exercise we will create Hive tables and load data into them using the `L
 
 ##Introduction ##
 
-HIVE is shipped along with Pivotal HD distribution. You will use the this service to upload and query the data. 
+HIVE is shipped along with Pivotal HD distribution. You will use Hive to load and query the data. 
 
 ##Create HIVE tables
 
-Execute the following `create table` commands to create the tables in. You can also execute the script [create_hive_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hive/create_hive_tables.sql)
+Execute the following commands to create tables in Hive.
 
 1. Start the `hive` command line interface - cli. 
 
 	<pre class="terminal">
-    $ hive
-    hive> 
+        $ hive
+        hive> 
 	</pre>
 
-2. Create table `retail_demo.order_lineitems_hive`
+2. Create database `retail_demo`.
+
+	<pre class="terminal">
+        CREATE DATABASE IF NOT EXISTS retail_demo;
+        USE retail_demo;
+	</pre>
+
+3. Create table `retail_demo.order_lineitems_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.order_lineitems_hive
@@ -71,7 +78,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  STORED AS TEXTFILE
 	  LOCATION '/retail_demo/order_lineitems/';	</pre>
 		
-3. Create table `retail_demo.orders_hive`
+4. Create table `retail_demo.orders_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.orders_hive
@@ -114,7 +121,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  STORED AS TEXTFILE
 	  LOCATION '/retail_demo/orders/';	</pre>
 		
-4. Create table `retail_demo.products_dim_hive`
+5. Create table `retail_demo.products_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.products_dim_hive
@@ -128,7 +135,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  STORED AS TEXTFILE
 	  LOCATION '/retail_demo/products_dim/';	</pre>
 		
-5. Create table `retail_demo.categories_dim_hive`
+6. Create table `retail_demo.categories_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.categories_dim_hive
@@ -140,7 +147,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  STORED AS TEXTFILE
 	  LOCATION '/retail_demo/categories_dim/';	</pre>
 		
-6. Create table `retail_demo.email_addresses_dim_hive`
+7. Create table `retail_demo.email_addresses_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.email_addresses_dim_hive
@@ -153,7 +160,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  LOCATION '/retail_demo/email_addresses_dim/';
 		</pre>
 	
-7. Create table `retail_demo.date_dim_hive`
+8. Create table `retail_demo.date_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.date_dim_hive
@@ -169,7 +176,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  STORED AS TEXTFILE
 	  LOCATION '/retail_demo/date_dim/';	</pre>
 	
-8. Create table `retail_demo.customers_dim_hive`
+9. Create table `retail_demo.customers_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.customers_dim_hive
@@ -184,7 +191,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  LOCATION '/retail_demo/customers_dim/';	
 	</pre>
 	
-9. Create table `retail_demo.payment_methods_hive`
+10. Create table `retail_demo.payment_methods_hive`
 
       <pre class="terminal">
 	CREATE TABLE retail_demo.payment_methods_hive
@@ -197,7 +204,7 @@ Execute the following `create table` commands to create the tables in. You can a
 	  LOCATION '/retail_demo/payment_methods/';	
 	</pre>
 		
-10. Create table `retail_demo.customer_addresses_dim_hive`
+11. Create table `retail_demo.customer_addresses_dim_hive`
 
 	<pre class="terminal">
 	CREATE TABLE retail_demo.customer_addresses_dim_hive
@@ -221,7 +228,9 @@ Execute the following `create table` commands to create the tables in. You can a
 	  LOCATION '/retail_demo/customer_addresses_dim/';
 	</pre>
 	
-##Load Data into Hive tables	 ##
+Note: You can also execute the script [create_hive_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hive/create_hive_tables.sql).
+
+##Load Data into Hive tables##
 
 Run the following commands on the Hive CLI to load data from a Local File System into Hive. You will use `LOAD` command in the format listed below. It can directed load data in `.tsv.gz` format into a Hive table which has a row format delimited fields set as `\t`
 
@@ -274,7 +283,8 @@ You can run the Hive queries on the data loaded. Following are some simple queri
 
 ##Cleaning up the Environment ##
 
-In case you want to drop all the tables and start afresh, you can execute this following queries from Hive Cli. These will drop all the tables.
+In case you want to drop all the tables and start fresh, you can execute this following queries from Hive Cli. 
+Issue the following commands will drop all the tables.
 
 ```bash
 DROP TABLE IF EXISTS retail_demo.order_lineitems_hive;

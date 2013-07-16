@@ -135,4 +135,4 @@ The `group` statement collects together records with  `billing_address_postal_co
 
 ##Summary##
 
-In this exercise you used  pig **relational operators** like `group`, `foreach`, `sum`, `order` and `limit` to calculate the top ten postal codes by revenue.
+In this exercise we used  pig **relational operators** like `group`, `foreach`, `sum`, `order` and `limit` to calculate the top ten postal codes by revenue.

@@ -8,11 +8,11 @@ Overview
 The parameter `pxf_enable_filter_pushdown` when set, passes the predicates to the `RecordReader/InputFormat` improving the performance of the HAWQ queries.
 
 In this exercise we will showcase PXF predicate push-down feature.
-We will use `pxf_enable_filter_pushdown` statement .
+We will use `pxf_enable_filter_pushdown` statement.
 
 ##Pre-Requsities ##
-* We reuse the table created in the [PXF External Tables](/getting-started/hawq/pxf-hbase-external-tables.html). Hence complete this Lab before proceding further, if you have not already done.
-* Make sure that HBase is running,if not start HBase using
+* We reuse the table created in the [PXF External Tables](/getting-started/hawq/pxf-hbase-external-tables.html) lab. Ensure to complete [PXF External Tables](/getting-started/hawq/pxf-hbase-external-tables.html) Lab before proceding further.
+* Make sure that HBase is running, if not start HBase using
 
 	<pre class="terminal">
 	sudo /etc/init.d/hbase-master start
@@ -42,7 +42,7 @@ We will use `pxf_enable_filter_pushdown` statement .
 	External location: pxf://pivhdsne:50070/customers_dim?FRAGMENTER=HBaseDataFragmenter&Accessor=HBaseAccessor&Resolver=HBaseResolver
 	</pre>
 
-3. Set the pxf_enable_filter_pushdown variable value to off if not set
+3. Set the pxf_enable_filter_pushdown variable value to `off` if not set
 
 	<pre class="terminal">
     demo=#show pxf_enable_filter_pushdown;
@@ -54,7 +54,7 @@ We will use `pxf_enable_filter_pushdown` statement .
 	demo=#set pxf_enable_filter_pushdown=off;
 	</pre>
 
-4. Issue a query with the parameter `pxf_enable_filter_pushdown` set to off. Notice the time take for the query.
+4. Issue a query with the parameter `pxf_enable_filter_pushdown` set to `off`. Notice the time take for the query.
 
 	<pre class="terminal">
 	demo=#select "cf1:customer_id","cf1:city" from retail_demo.customer_addresses_dim_hbase where "cf1:customer_id" = 41556895;
@@ -67,13 +67,13 @@ We will use `pxf_enable_filter_pushdown` statement .
 	Time: 278099.006 ms
 	</pre>
 
-7. Set gpxf_enable_filter_pushdown to on 
+7. Set `gpxf_enable_filter_pushdown` to `on`
 
 	<pre class="terminal">
 	demo=#set pxf_enable_filter_pushdown=on;
 	</pre>
 
-8. Issue a the same query  and notice the time taken for query
+8. Issue the same query and notice the time taken for query
 
 	<pre class="terminal">
 	demo=#select "cf1:customer_id","cf1:city" from retail_demo.customer_addresses_dim_hbase where "cf1:customer_id" = 41556895;
