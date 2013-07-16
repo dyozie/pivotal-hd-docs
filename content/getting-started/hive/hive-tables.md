@@ -228,7 +228,7 @@ Execute the following commands to create tables in Hive.
 	  LOCATION '/retail_demo/customer_addresses_dim/';
 	</pre>
 	
-Note: You can also execute the script [create_hive_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hive/create_hive_tables.sql).
+Note: You can also execute the script [create_hive_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hive/create_hive_tables.sql) to create tables.
 
 ##Load Data into Hive tables##
 

@@ -5,7 +5,7 @@ title: Example Data Set :Retail Demo
 Overview 
 --------
 
-The DataSet  [here](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) is a sample retail data made up of following entities delimited by `|`
+The DataSet  [here](https://github.com/PivotalHD/pivotal-samples/tree/master/sample-data) is a sample retail data made up of following entities.
 
 ##Schema
 
