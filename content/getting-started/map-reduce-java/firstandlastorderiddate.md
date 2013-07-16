@@ -242,7 +242,7 @@ Check the output directory in hadoop file system. The output directory should co
 See the output using
 
 ```bash
-hadoop fs -cat /user/gpadmin/sample2/output/part-r-00000
+hadoop fs -cat /output-mr2/part-r-00000
 
 137    8228753927    2010-10-02 09:26:40    6952760836    2010-10-10 23:46:16
 274    8228753207    2010-10-02 06:49:05    8038062167    2010-10-14 09:17:33
