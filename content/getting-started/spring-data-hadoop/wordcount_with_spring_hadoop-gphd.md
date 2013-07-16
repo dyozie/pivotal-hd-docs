@@ -439,7 +439,7 @@ Click View more job details to see the job details as shown below:
 
 ![Job Details](/images/gs/spring-hadoop/job-pivotal-details.png)
 
-Check the output directory in hadoop file system. The output directory should contain the part-r-0000-file.
+Check the output directory in hadoop file system. The output directory should contain the part-r-00000-file.
 
 See the output using
 

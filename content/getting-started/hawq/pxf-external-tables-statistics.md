@@ -23,11 +23,10 @@ In this exercise, we will `analyze` command to illustrate Statistics on External
 3. Create pxf external table to point to this text file (edit the namenode info accordingly)
 	
 	<pre class="terminal">
-	demo# drop external table demo;
-	demo# CREATE EXTERNAL TABLE demo (val INT)
-	LOCATION ('pxf://pivhdsne:50070/demo.txt?
-        FRAGMENTER=HdfsDataFragmenter&Analyzer=HdfsAnalyzer&Accessor=TextFileAccessor&Resolver=TextResolver') 
-        FORMAT 'TEXT' (DELIMITER = '|');
+demo# drop external table demo;
+demo# CREATE EXTERNAL TABLE demo (val INT)
+LOCATION ('pxf://pivhdsne:50070/demo.txt?Fragmenter=HdfsDataFragmenter&Analyzer=HdfsAnalyzer&Accessor=TextFileAccessor&Resolver=TextResolver') 
+FORMAT 'TEXT' (DELIMITER = '|');
 	</pre>
 
 4. Look at the stats prior to analyze (default stats before collecting stats)
