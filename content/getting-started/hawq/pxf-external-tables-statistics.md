@@ -8,6 +8,7 @@ Overview
 Analyze command ensures that the query planner has up-to-date statistics about the table. With no statistics or obsolete statistics the planner may make poor decisions during query planning, leading to poor performance on any tables with inaccurate or nonexistant statistics.
 
 In this exercise, we will `analyze` command to illustrate Statistics on External Tables.
+Note: While issuing the SQL queries in this lab, make sure the line with `LOCATION` keyword is all in one single line.
 
 1. Create a dummy text file for the exercise (containing 1.0E+07 rows)
 

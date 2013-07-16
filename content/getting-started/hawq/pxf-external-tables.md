@@ -16,6 +16,8 @@ Please make sure the `.tsv.gz` files from Retail Data set have been loaded into 
 
 Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_pxf_tables.sql]( https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/pxf_tables/create_pxf_tables.sql)
 
+Note: While issuing the SQL queries in this lab, make sure the line with `LOCATION` keyword is all in one single line.
+
 1. Create <code>retail_demo</code> Schema if it is not already created
 
 	<pre class="terminal">
@@ -31,10 +33,10 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	    category_name character varying(400)
 	)
 	LOCATION ('pxf://pivhdsne:50070/retail_demo/categories_dim/categories_dim.tsv.gz?
-	Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')	
+        Fragmenter=HdfsDataFragmenter&Accessor=TextFileAccessor&Resolver=TextResolver')
         FORMAT 'TEXT' (DELIMITER = E'\t');
-		</pre>
-	
+        </pre>
+
 3. Create table `retail_demo.customers_dim_pxf`
 
 	<pre class="terminal">
