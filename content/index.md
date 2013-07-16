@@ -12,7 +12,7 @@ This site provides developers with resources to get started with Pivotal HD.
     </a>
     <img src="images/elephant_rgb_sq.png" alt="">
     <p class="description">
-      This section covers HDFS, Yarn and Hive conceptually.
+      This section gives introduction to HDFS, Yarn and Hive.
     </p>
      <ol class="lesson-list">
        <li>
