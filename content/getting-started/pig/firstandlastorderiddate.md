@@ -218,7 +218,5 @@ Note that Pig can process the compressed file directly.
    </pre>
 
 ###Conclusion
-The lab demonstrated using `Pig` to retrieve the first and last orders customer.
-
-
+The lab demonstrated using `Pig` to retrieve the first and last orders of customers.
 
