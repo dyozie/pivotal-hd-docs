@@ -77,14 +77,13 @@ Go to the project directory
 
 ```bash
 cd  pivotal-­samples/map­-reduce­-java
-
 ls
 cd customer_first_and_last_order_dates
 ```
 
 ```bash
 mvn clean compile
-mvn package
+mvn -DskipTests package
 ```
 
 ####Upload the input
