@@ -231,16 +231,17 @@
     / FOOTER
     .footer-wrap
       .container
-        .footer-logo
-          %p
-            %img{:alt => "Logo Gray", :src => "/images/logo_gray.png"}/
         .span-2
           %p.fss.link-list
-            %a{:href => "/about-us/contact-us"} Contact Us
+            %a{:href => "http://www.gopivotal.com/about-pivotal/contact-us"} Contact Us
             |
-            %a{:href => "http://www.emc.com/legal/emc-corporation-privacy-statement.htm", :target => "_blank"} Privacy Policy
+            %a{:href => "http://www.gopivotal.com/privacy-policy"} Privacy Policy
             |
-            %a{:href => "/about-us/legal"} Legal
+            %a{:href => "http://www.gopivotal.com/terms-of-use"} Terms of Use
         .span-4.last
           %p.fss.fclightgray.right
-            EMC2, EMC, Greenplum, Greenplum Chorus, and where information lives are registered trademarks or trademarks of EMC Corporation in the United States and other countries. © 2009-2012 EMC Corporation. All rights reserved
+            &copy;
+            :javascript
+              var d = new Date();
+              document.write(d.getFullYear());
+            GoPivotal, Inc. All rights reserved.
