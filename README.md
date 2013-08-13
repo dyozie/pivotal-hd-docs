@@ -1,27 +1,26 @@
 Pivotal HD 
 ===========
 
-In this document we explain various components and services of Pivotal HD, a Hadoop implementation from Greenplum.
+This documentation explains various components and services of Pivotal HD.  The Getting Started section walks through the installation and gives an overview of Hadoop with simple examples.
 
 
-Getting Started
---------------
-This section is for new bees to Hadoop. It walks through the installation and gives an overview of hadoop with simple examples.
-
-
-
-Deep Dive
---------
-This section is for advanced users. 
-
-
-How to use
+Run & Deploy
 ----------
-Clone and do the following to get the site up and running.
+Clone and do the following to get the site up and running locally:
 
 ```ruby
 bundle install
 nanoc compile
 nanoc view
 ```
+
+When you're ready to push to Cloud Foundry:
+
+```ruby
+cd output
+bundle install
+cf push
+```
+
+You don't need any services to run this app.
 
