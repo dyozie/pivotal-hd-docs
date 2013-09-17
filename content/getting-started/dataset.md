@@ -36,32 +36,8 @@ hadoop fs -rm -r /retail_demo
 
 ###Load the Files into HDFS ###
 
-In the following commands we are doing the following steps
-
-*  Creating a root folder `/retail_demo` in HDFS.
-*  Creating subdirectory for each data type.
-*  Executing `hadoop fs -put` command on each `.tsv.gz` file.
-
 ```bash
-hadoop fs -mkdir /retail_demo
-hadoop fs -mkdir /retail_demo/categories_dim
-hadoop fs -put categories_dim.tsv.gz /retail_demo/categories_dim/
-hadoop fs -mkdir /retail_demo/customer_addresses_dim
-hadoop fs -put customer_addresses_dim.tsv.gz /retail_demo/customer_addresses_dim/
-hadoop fs -mkdir /retail_demo/customers_dim
-hadoop fs -put customers_dim.tsv.gz /retail_demo/customers_dim/
-hadoop fs -mkdir /retail_demo/email_addresses_dim
-hadoop fs -put email_addresses_dim.tsv.gz /retail_demo/email_addresses_dim/
-hadoop fs -mkdir /retail_demo/order_lineitems
-hadoop fs -put order_lineitems.tsv.gz /retail_demo/order_lineitems/
-hadoop fs -mkdir /retail_demo/orders
-hadoop fs -put orders.tsv.gz /retail_demo/orders/
-hadoop fs -mkdir /retail_demo/products_dim
-hadoop fs -put products_dim.tsv.gz /retail_demo/products_dim/
-hadoop fs -mkdir /retail_demo/date_dim/
-hadoop fs -put date_dim.tsv.gz /retail_demo/date_dim/
-hadoop fs -mkdir /retail_demo/payment_methods/
-hadoop fs -put payment_methods.tsv.gz /retail_demo/payment_methods/
+hadoop fs -put /retail_demo/ /
 ```
 
 Verify Existence of the files with the  command `hdfs fsck` : This is a HDFS filesystem checking utility.

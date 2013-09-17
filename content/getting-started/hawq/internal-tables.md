@@ -146,6 +146,18 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 	
 7. Create table `retail_demo.date_dim_hawq`
 
+	<pre class="terminal">
+  CREATE TABLE retail_demo.date_dim_hawq
+  (
+      calendar_day date,
+      reporting_year smallint,
+      reporting_quarter smallint,
+      reporting_month smallint,
+      reporting_week smallint,
+      reporting_dow smallint
+  )
+  WITH (appendonly=true) DISTRIBUTED RANDOMLY;
+	</pre>
 
 8. Create table `retail_demo.email_addresses_dim_hawq`
 
@@ -185,7 +197,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 
 ##Load Data into HAWQ tables	 ##
 
-Run the following commands from the `pivotal_samples/sample_data` folder to upload data into HAWQ tables.
+Run the following commands from the `pivotal_samples/retail_demo` folder to upload data into HAWQ tables.
 
 ```bash
 zcat customers_dim.tsv.gz | psql -c "COPY retail_demo.customers_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
