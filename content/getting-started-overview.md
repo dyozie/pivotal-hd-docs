@@ -41,6 +41,11 @@ If you are new to Pivotal HD or Hadoop, you should complete each tutorial in the
         Spring Data for Hadoop
         </a>
      </li>
+     <li>
+        <a href="/getting-started/gemfirexd.html">
+        GemFire XD (Beta)
+        </a>
+      </li>
     </ol>
     </li>
     <li></li>

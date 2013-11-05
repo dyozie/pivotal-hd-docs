@@ -67,6 +67,11 @@ This site provides developers with resources to get started with Pivotal HD.
         Spring Data for Hadoop
         </a>
      </li>
+     <li>
+        <a href="/getting-started/gemfirexd.html">
+        GemFire XD (Beta)
+        </a>
+     </li>
   </ol>
   </li>
  <li></li>
