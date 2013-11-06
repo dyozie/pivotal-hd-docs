@@ -9,7 +9,7 @@ In this document we will cover the basics of how to get started with using Sprin
 *  This tutorial assumes you have a working Pivotal HD installation
 *  HAWQ has been configured.
 *  You are familiar with Spring Framework
-*  [Eclipse IDE for Java](http://www.eclipse.org) or [Spring Source Tool Suite](http://www.springsource.org/sts) has been Installed on the Name Node
+*  A Java IDE is installed: either [Eclipse](http://www.eclipse.org) or [Spring Source Tool Suite](http://www.springsource.org/sts)
 
 ###Use Case
 
@@ -18,12 +18,12 @@ We will be implementing the use case: Top ten Revenue Generating Postal codes
 ### DataSet
 
 You will use the [Retail Demo](/getting-started/dataset.html) dataset for this Spring JDBC Sample.
-Make sure the table `retail_demo.orders_hawq` has been created and appropriate values inserted using `COPY` psql command as specified in the [hawq exercise](/getting-started/hawq/internal-tables.html)
+Make sure the table `retail_demo.orders_hawq` has been created and loaded as described in the [hawq exercise](/getting-started/hawq/internal-tables.html)
 
 ### Source Code ###
 
 Source code for the sample can be found at [github.com/PivotalHD/pivotal-samples/](https://github.com/PivotalHD/pivotal-samples).
-Clone the github repo into a local directory on the machine running Name Node
+Clone the github repo into a local directory
 
 ```bash
 $git clone https://github.com/PivotalHD/pivotal-samples.git
@@ -31,13 +31,13 @@ $git clone https://github.com/PivotalHD/pivotal-samples.git
 
 The sample source can be found under the directory `pivotal-samples/spring-data-jdbc/spring-jdbc-topten-business-zipcode`
 
-### Import the Project into Eclipse###
+### Import the Project into the IDE ###
 
 Select File->Import and select `Existing projects into Workspace`
 
 ![import](/images/gs/hawq/count-business/spring-jdbc/import-maven.png)
 
-Click `Browse` to select the directory where source code is present
+Click `Browse` to select the directory containing the source code
 
 ![import](/images/gs/hawq/count-business/spring-jdbc/browse.png)
 
@@ -82,12 +82,12 @@ The sample uses `org.springframework.jdbc.core.JdbcTemplate` to access the datas
 
 The following steps outline the flow of application
 
-*  This sample is a Java Application with the main entry point being `BusinessCount`. This class has following methods
+*  This sample is a Java Application with the main entry point being `PostalZip`. This class has following methods
 
 ```java
-public Class BusinessCount {
+public Class PostalZip {
     ...
-    public BusinessCount() {
+    public PostalZip() {
         ..
     }  
     public void executeQuery {
@@ -108,9 +108,9 @@ public Class BusinessCount {
 ApplicationContext context;
 JdbcTemplate template;
 ```
-*    In the BusinessCount constructor `ApplicationContext` and `JdbcTemplate` are initialized 
+*    In the PostalZip constructor `ApplicationContext` and `JdbcTemplate` are initialized 
 ```java
-public BusinessCount() {
+public PostalZip() {
     context = new ClassPathXmlApplicationContext("datasources-beans.xml");
     dataSource = context.getBean("postGresDataSource", DataSource.class);
     template = new JdbcTemplate(dataSource);
@@ -150,7 +150,7 @@ $mvn install
 
 ###Running the Sample###
 
-Sample can be run from within eclipse. *Right click* on `BusinessCount` class and click `Run as Java Application`.
+Sample can be run from within eclipse. *Right click* on `PostalZip` class and click `Run as Java Application`.
 
 ###Output ###
 

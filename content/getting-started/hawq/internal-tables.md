@@ -2,24 +2,30 @@
 title: HAWQ - Internal Tables
 ---
 
-Overview 
+Overview
 --------
 
 In this exercise, we will create HAWQ tables and load data into them using the `COPY` Command
 
 ##Create Internal HAWQ tables
 
-Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_tables_hawq.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/create_hawq_tables.sql)
+Execute the following `create table` commands to create the tables in HAWQ. You can also execute the script [create_hawq_tables.sql](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/create_hawq_tables.sql)
 
-1. Create <code>retail_demo</code> Schema
+1. Start the `psql` HAWQ client
 
 	<pre class="terminal">
-        CREATE SCHEMA retail_demo;
+        [pivhdsne:~]$ psql
+        Timing is on.
+        psql (8.2.15)
+        Type "help" for help.
+
+        gpadmin=#
 	</pre>
 
 2. Create table `retail_demo.categories_dim_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.categories_dim_hawq;
 	CREATE TABLE retail_demo.categories_dim_hawq
 	(
 	    category_id integer NOT NULL,
@@ -31,6 +37,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 3. Create table `retail_demo.customers_dim_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.customers_dim_hawq;
 	CREATE TABLE retail_demo.customers_dim_hawq
 	(
 	    customer_id TEXT,
@@ -44,6 +51,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 4. Create table `retail_demo.order_lineitems_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.order_lineitems_hawq;
 	CREATE  TABLE retail_demo.order_lineitems_hawq
 	(
 	    order_id TEXT,
@@ -85,6 +93,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 5. Create table `retail_demo.orders_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.orders_hawq;
 	CREATE TABLE retail_demo.orders_hawq
 	(
 	    order_id TEXT,
@@ -125,6 +134,7 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 6. Create table `retail_demo.customer_addresses_dim_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.customer_addresses_dim_hawq;
 	CREATE TABLE retail_demo.customer_addresses_dim_hawq
 	(
 	    customer_address_id TEXT,
@@ -147,21 +157,23 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 7. Create table `retail_demo.date_dim_hawq`
 
 	<pre class="terminal">
-  CREATE TABLE retail_demo.date_dim_hawq
-  (
-      calendar_day date,
-      reporting_year smallint,
-      reporting_quarter smallint,
-      reporting_month smallint,
-      reporting_week smallint,
-      reporting_dow smallint
-  )
-  WITH (appendonly=true) DISTRIBUTED RANDOMLY;
+	DROP TABLE IF EXISTS retail_demo.date_dim_hawq;
+	CREATE TABLE retail_demo.date_dim_hawq
+  	(
+      	   calendar_day date,
+           reporting_year smallint,
+      	   reporting_quarter smallint,
+      	   reporting_month smallint,
+      	   reporting_week smallint,
+      	   reporting_dow smallint
+  	)
+  	WITH (appendonly=true) DISTRIBUTED RANDOMLY;
 	</pre>
 
 8. Create table `retail_demo.email_addresses_dim_hawq`
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.email_addresses_dim_hawq;
 	CREATE TABLE retail_demo.email_addresses_dim_hawq
 	(
 	    customer_id TEXT,
@@ -173,18 +185,19 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 9. Create table `retail_demo.payment_methods_hawq
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.payment_methods_hawq;
 	CREATE TABLE retail_demo.payment_methods_hawq
 	(
 	    payment_method_id smallint,
 	    payment_method_code character varying(20)
 	)
 	WITH (appendonly=true, compresstype=quicklz) DISTRIBUTED RANDOMLY;
-	ALTER TABLE retail_demo.payment_methods_hawq OWNER TO gpadmin;
 	</pre>
 	
 10. Create table `retail_demo.products_dim_hawq
 
 	<pre class="terminal">
+	DROP TABLE IF EXISTS retail_demo.products_dim_hawq;
 	CREATE TABLE retail_demo.products_dim_hawq
 	(
 	    product_id TEXT,
@@ -197,21 +210,19 @@ Execute the following `create table` commands to create the tables in HAWQ. You 
 
 ##Load Data into HAWQ tables	 ##
 
-Run the following commands from the `pivotal_samples/retail_demo` folder to upload data into HAWQ tables.
+Run the following commands from the `/retail_demo` directory to load data into HAWQ AO tables:
 
 ```bash
-zcat customers_dim.tsv.gz | psql -c "COPY retail_demo.customers_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat categories_dim.tsv.gz | psql -c "COPY retail_demo.categories_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat order_lineitems.tsv.gz | psql -c "COPY retail_demo.order_lineitems_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat orders.tsv.gz | psql -c "COPY retail_demo.orders_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat customer_addresses_dim.tsv.gz | psql -c "COPY retail_demo.customer_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat email_addresses_dim.tsv.gz | psql -c "COPY retail_demo.email_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat products_dim.tsv.gz | psql -c "COPY retail_demo.products_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat payment_methods.tsv.gz | psql -c "COPY retail_demo.payment_methods_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
-zcat date_dim.tsv.gz | psql -c "COPY retail_demo.date_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./customers_dim/customers_dim.tsv.gz | psql -c "COPY retail_demo.customers_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./categories_dim/categories_dim.tsv.gz | psql -c "COPY retail_demo.categories_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./order_lineitems/order_lineitems.tsv.gz | psql -c "COPY retail_demo.order_lineitems_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./orders/orders.tsv.gz | psql -c "COPY retail_demo.orders_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./customer_addresses_dim/customer_addresses_dim.tsv.gz | psql -c "COPY retail_demo.customer_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./email_addresses_dim/email_addresses_dim.tsv.gz | psql -c "COPY retail_demo.email_addresses_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./products_dim/products_dim.tsv.gz | psql -c "COPY retail_demo.products_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./payment_methods/payment_methods.tsv.gz | psql -c "COPY retail_demo.payment_methods_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
+zcat ./date_dim/date_dim.tsv.gz | psql -c "COPY retail_demo.date_dim_hawq FROM STDIN DELIMITER E'\t' NULL E'';"
 ```
-
-You can also run a perl script [load_hawq_data_perl.sh](https://github.com/PivotalHD/pivotal-samples/tree/master/hawq/hawq_tables/load_hawq_tables_perl.sh) which will upload all the files from folder with extension `.gz`. 
 
 ##Verifying Data loaded ##
 
@@ -259,5 +270,5 @@ order by total desc limit 10;
  25703                       |  68282.12 | 4096.9272
  26178                       |   66836.4 |  4010.184
 (10 rows)
-Time: 2120.214 ms
+Time: 1218.411 ms
 ```
